@@ -8,9 +8,46 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>BodyState</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<nav>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">FAQ</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+
+		{/* Main page content will go here */}
+
 	</body>
 </html>
+
+<style is:global>
+	body {
+		background-color: black;
+		color: white;
+		margin: 0;
+		font-family: sans-serif;
+	}
+	nav {
+		background-color: #111;
+		padding: 1rem 2rem;
+	}
+	nav ul {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		gap: 2rem;
+	}
+	nav a {
+		color: white;
+		text-decoration: none;
+		font-size: 1rem;
+	}
+	nav a:hover {
+		text-decoration: underline;
+	}
+</style>
