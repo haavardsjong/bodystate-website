@@ -1,0 +1,693 @@
+---
+// src/layouts/BaseLayout.astro
+import { languages, defaultLang, getLangFromUrl, useTranslations } from '../i18n/utils'; // Import updated utils
+
+// Props interface allows passing data like title to the layout
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const currentPath = Astro.url.pathname;
+const currentYear = new Date().getFullYear();
+// Ensure t.footer and t.footer.copyright exist before trying to replace
+const copyrightText = t?.footer?.copyright?.replace('{year}', currentYear.toString()) || `© ${currentYear} BodyState by 2001 Ventures AS. All rights reserved.`;
+
+// Helper function to create localized paths
+function localizedPath(path, targetLang) {
+	const targetLocale = targetLang || lang; // Use current lang if target not specified
+	
+	// Handle root path for default language
+	if (targetLocale === defaultLang && path === '/') return '/'; 
+	if (targetLocale === defaultLang) return path.startsWith('/') ? path : '/' + path; 
+
+	// Handle other languages (prefix required)
+	if (path === '/') return `/${targetLocale}/`;
+	return `/${targetLocale}${path.startsWith('/') ? path : '/' + path}`;
+}
+
+// Get the base path without the language prefix (if any)
+let basePath = currentPath;
+if (currentPath.startsWith(`/${lang}/`)) {
+	basePath = currentPath.substring(lang.length + 1) || '/';
+} else if (currentPath === `/${lang}`) { // Handles case like /es for index page
+	basePath = '/';
+}
+
+const availableLocales = Object.keys(languages);
+
+const localeDisplayInfo = {
+	en: { name: 'English', flag: '🇺🇸' },
+	es: { name: 'Español', flag: '🇪🇸' },
+	da: { name: 'Dansk', flag: '🇩🇰' },
+	fr: { name: 'Français', flag: '🇫🇷' },
+	de: { name: 'Deutsch', flag: '🇩🇪' },
+	it: { name: 'Italiano', flag: '🇮🇹' },
+	ja: { name: '日本語', flag: '🇯🇵' },
+	ko: { name: '한국어', flag: '🇰🇷' },
+	nb: { name: 'Norsk Bokmål', flag: '🇳🇴' },
+	pt: { name: 'Português', flag: '🇵🇹' },
+	ru: { name: 'Русский', flag: '🇷🇺' },
+	'zh-CN': { name: '简体中文', flag: '🇨🇳' },
+	sv: { name: 'Svenska', flag: '🇸🇪' },
+	'zh-TW': { name: '繁體中文', flag: '🇹🇼' }
+};
+
+const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLang]; // Fallback to default
+---
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<header class="glass">
+			<nav class="content-container">
+				<div class="brand-name">{t?.header?.brandName}</div>
+				<div class="nav-right">
+					<ul class="nav-links">
+						<li><a href={localizedPath('/')} class:list={{ active: currentPath === localizedPath('/') }}>{t?.header?.homeLink}</a></li>
+						<li><a href={localizedPath('/faq')} class:list={{ active: currentPath === localizedPath('/faq') }}>{t?.header?.faqLink}</a></li>
+						<li><a href={localizedPath('/contact')} class:list={{ active: currentPath === localizedPath('/contact') }}>{t?.header?.contactLink}</a></li>
+					</ul>
+					{/* Language Switcher Dropdown */}
+					<div class="language-switcher-dropdown">
+						<button type="button" class="switcher-button" aria-label="Select language" aria-haspopup="true" aria-expanded="false">
+							<span class="current-lang-flag">{currentLocaleInfo.flag}</span>
+							<svg class="chevron-down" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							{availableLocales.map(localeCode => {
+								const displayInfo = localeDisplayInfo[localeCode] || { name: localeCode, flag: '🌐' }; // Fallback for missing info
+								return (
+									<li role="presentation">
+										<a 
+											href={localizedPath(basePath, localeCode)} 
+											role="menuitem"
+											class:list={{ active: lang === localeCode }}
+											lang={localeCode} // Indicate the language of the link target
+										>
+											<span class="flag">{displayInfo.flag}</span> {displayInfo.name}
+										</a>
+									</li>
+								);
+							})}
+						</ul>
+					</div>
+					{/* The download button link points to the App Store */}
+					<a href="https://apps.apple.com/no/app/bodystate/id6479940325" class="nav-download-btn apple-button-style" target="_blank" rel="noopener noreferrer">{t?.header?.downloadButton}</a>
+				</div>
+				{/* TODO: Add hamburger button for mobile */}
+			</nav>
+		</header>
+		<main class="content-container">
+			<slot /> {/* Page content will be injected here */}
+		</main>
+		<footer class="site-footer glass">
+			<div class="content-container footer-content-grid">
+				<div class="footer-links">
+					<h4>{t?.footer?.quickLinks}</h4>
+					<ul>
+						<li><a href={localizedPath('/')}>{t?.footer?.homeLink}</a></li>
+						<li><a href={localizedPath('/faq')}>{t?.footer?.faqLink}</a></li>
+						<li><a href={localizedPath('/contact')}>{t?.footer?.contactLink}</a></li>
+						<li><a href="#">{t?.footer?.appStoreLink}</a></li> 
+					</ul>
+				</div>
+				<div class="footer-legal">
+					<h4>{t?.footer?.legal}</h4>
+					<ul>
+						<li><a href={localizedPath('/privacy-policy')}>{t?.footer?.privacyPolicyLink}</a></li> 
+						<li><a href={localizedPath('/terms-of-service')}>{t?.footer?.termsOfServiceLink}</a></li> 
+					</ul>
+				</div>
+				<div class="footer-social">
+					<h4>{t?.footer?.connect}</h4>
+					<ul class="social-icons">
+						<li><a href="#" aria-label="Twitter">{t?.footer?.twitterLink}</a></li>
+						<li><a href="#" aria-label="Instagram">{t?.footer?.instagramLink}</a></li>
+						<li><a href="#" aria-label="TikTok">{t?.footer?.tiktokLink}</a></li>
+					</ul>
+				</div>
+				<div class="footer-extra-links">
+					<h4>{t?.footer?.resources}</h4>
+					<ul>
+						<li><a href="#">{t?.footer?.blogLink}</a></li>
+						<li><a href="#">{t?.footer?.supportLink}</a></li>
+						<li><a href="#">{t?.footer?.careersLink}</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="content-container footer-copyright">
+				<p>{copyrightText}</p>
+			</div>
+		</footer>
+		<script>
+			const header = document.querySelector('header');
+			
+			const handleScroll = () => {
+				if (window.scrollY > 10) { // Add class after scrolling down a bit
+					header.classList.add('scrolled');
+				} else {
+					header.classList.remove('scrolled');
+				}
+			};
+			
+			// Listen for scroll events
+			window.addEventListener('scroll', handleScroll);
+			
+			// Initial check in case the page loads already scrolled
+			handleScroll();
+		</script>
+
+    {/* Dropdown Interaction Script */}
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const dropdownContainer = document.querySelector('.language-switcher-dropdown');
+        const button = dropdownContainer?.querySelector('.switcher-button');
+        const menu = dropdownContainer?.querySelector('.dropdown-menu');
+
+        if (!dropdownContainer || !button || !menu) return;
+
+        const toggleDropdown = (event) => {
+          event.stopPropagation(); // Prevent click from immediately propagating to document listener
+          const isOpen = dropdownContainer.getAttribute('data-open') === 'true';
+          dropdownContainer.setAttribute('data-open', !isOpen);
+          button.setAttribute('aria-expanded', !isOpen);
+        };
+
+        const closeDropdown = () => {
+          if (dropdownContainer.getAttribute('data-open') === 'true') {
+            dropdownContainer.setAttribute('data-open', 'false');
+            button.setAttribute('aria-expanded', 'false');
+          }
+        };
+
+        button.addEventListener('click', toggleDropdown);
+        
+        // Close dropdown if clicking outside
+        document.addEventListener('click', (event) => {
+          if (!dropdownContainer.contains(event.target)) {
+            closeDropdown();
+          }
+        });
+
+        // Close dropdown on Escape key
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            closeDropdown();
+          }
+        });
+      });
+    </script>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		/* visionOS-inspired design tokens */
+		--font-main: 'Inter', system-ui, sans-serif;
+		--radius-sm: 10px;
+		--radius-md: 16px;
+		--radius-lg: 24px;
+		
+		/* Glass effect variables */
+		--glass-bg: rgba(30, 30, 33, 0.65);
+		--glass-border: rgba(255, 255, 255, 0.08);
+		--glass-glow: rgba(120, 235, 255, 0.1);
+		--glass-shadow: rgba(0, 0, 0, 0.3);
+		
+		/* Primary teal accent color (visible in the iPhone image) */
+		--color-accent: rgb(96, 221, 220);
+		--color-accent-glow: rgba(96, 221, 220, 0.4);
+		
+		/* Text colors */
+		--text-primary: rgba(255, 255, 255, 0.95);
+		--text-secondary: rgba(255, 255, 255, 0.7);
+		--text-tertiary: rgba(255, 255, 255, 0.5);
+		
+		/* Spacing */
+		--space-xs: 0.5rem;
+		--space-sm: 1rem;
+		--space-md: 1.5rem;
+		--space-lg: 2rem;
+		--space-xl: 3rem;
+		
+		--nav-height: 64px;
+	}
+	
+	html {
+		font-family: var(--font-main);
+		background-color: #000;
+		color: var(--text-primary);
+		overflow-x: hidden;
+	}
+	
+	body {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		position: relative;
+		line-height: 1.6;
+	}
+	
+	main {
+		flex-grow: 1;
+		position: relative;
+		margin-bottom: var(--space-xl); /* Add margin to prevent overlap with footer */
+	}
+	
+	/* Glassmorphism class */
+	.glass {
+		background: var(--glass-bg);
+		backdrop-filter: blur(15px);
+		-webkit-backdrop-filter: blur(15px);
+		border-top: 1px solid var(--glass-border);
+		border-bottom: 1px solid var(--glass-border);
+		box-shadow: 0 5px 20px var(--glass-shadow);
+	}
+	
+	/* Bento box styling */
+	.bento-box {
+		background: var(--glass-bg);
+		backdrop-filter: blur(15px);
+		-webkit-backdrop-filter: blur(15px);
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--glass-border);
+		padding: var(--space-md);
+		box-shadow: 0 8px 32px var(--glass-shadow);
+		transition: all 0.3s ease;
+	}
+	
+	.bento-box:hover {
+		box-shadow: 0 8px 40px var(--glass-shadow), 0 0 15px var(--glass-glow);
+		border-color: rgba(255, 255, 255, 0.15);
+	}
+	
+	/* Buttons */
+	.btn {
+		background: var(--glass-bg);
+		color: var(--text-primary);
+		border: 1px solid var(--glass-border);
+		border-radius: var(--radius-md);
+		padding: var(--space-sm) var(--space-lg);
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		display: inline-block;
+		text-align: center;
+	}
+	
+	.btn:hover {
+		background: rgba(50, 50, 55, 0.8);
+		border-color: var(--color-accent);
+		box-shadow: 0 0 15px var(--color-accent-glow);
+	}
+	
+	.btn-accent {
+		background: rgba(96, 221, 220, 0.15);
+		border-color: var(--color-accent);
+	}
+	
+	.btn-accent:hover {
+		background: rgba(96, 221, 220, 0.25);
+	}
+	
+	.btn-large {
+		padding: var(--space-md) var(--space-xl);
+		font-size: 1.1rem;
+		font-weight: 400;
+		letter-spacing: 0.5px;
+	}
+	
+	/* Typography */
+	h1 {
+		font-weight: 600;
+		font-size: 2.5rem;
+		margin-bottom: var(--space-lg);
+		letter-spacing: -0.5px;
+	}
+	
+	h2 {
+		font-weight: 500;
+		font-size: 1.75rem;
+		color: var(--text-primary);
+		letter-spacing: -0.3px;
+	}
+	
+	p {
+		color: var(--text-secondary);
+		font-weight: 400;
+	}
+	
+	a {
+		color: var(--text-primary);
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+	
+	a:hover {
+		color: var(--color-accent);
+	}
+	
+	/* Content container */
+	.content-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 var(--space-md);
+		width: 100%;
+		box-sizing: border-box;
+	}
+	
+	/* Download button overlay */
+	.download-overlay {
+		position: fixed;
+		bottom: var(--space-lg);
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 100;
+	}
+</style>
+
+<style>
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		width: 100%;
+		/* Default transparent state */
+		background: transparent;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		border-top: none;
+		border-bottom: none;
+		box-shadow: none;
+		transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+	}
+	
+	header.scrolled {
+		/* Apply glass effect when scrolled */
+		background: var(--glass-bg);
+		backdrop-filter: blur(15px);
+		-webkit-backdrop-filter: blur(15px);
+		border-bottom: 1px solid var(--glass-border);
+		box-shadow: 0 5px 20px var(--glass-shadow);
+	}
+	
+	nav {
+		height: var(--nav-height);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	
+	.brand-name {
+		font-size: 24px;
+		font-weight: 500;
+		letter-spacing: 0px;
+		color: var(--text-primary);
+		font-family: var(--font-main);
+	}
+	
+	.nav-right {
+		display: flex;
+		align-items: center;
+		gap: var(--space-lg);
+	}
+	
+	nav ul.nav-links {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		gap: var(--space-lg);
+	}
+	
+	nav a {
+		padding: var(--space-xs) 0;
+		font-weight: 300;
+		letter-spacing: 0.3px;
+		position: relative;
+		font-family: var(--font-main);
+		font-size: 14px;
+	}
+	
+	nav ul.nav-links > li > a.active { /* Made selector more specific */
+		color: var(--color-accent);
+		font-weight: 400;
+	}
+	
+	nav ul.nav-links > li > a.active::after { /* Made selector more specific */
+		content: '';
+		position: absolute;
+		bottom: -3px;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background: var(--color-accent);
+		border-radius: 1px;
+		box-shadow: 0 0 8px var(--color-accent-glow);
+	}
+	
+	/* Style for the new nav download button */
+	.nav-download-btn.apple-button-style {
+		background-color: #0071e3 !important; /* Apple's blue */
+		color: white !important;
+		padding: 5px 5px !important; /* Adjusted padding for better spacing */
+		border-radius: 100px !important; /* Pill shape */
+		font-family: var(--font-main) !important;
+		font-size: 14px !important; /* Match navigation font size exactly */
+		font-weight: 300 !important; /* Match regular nav links */
+		letter-spacing: 0.3px !important; /* Match nav links */
+		text-decoration: none !important;
+		transition: background-color 0.2s ease !important;
+		line-height: 1.4 !important;
+		display: inline-block !important;
+		text-align: center !important;
+		min-width: 80px !important;
+	}
+	
+	.nav-download-btn.apple-button-style:hover {
+		background-color: #0077ed !important;
+		color: white !important; /* Ensure text stays white on hover */
+	}
+	
+	.site-footer {
+		/* background: var(--glass-bg); Already applied by .glass class */
+		/* backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); from .glass */
+		/* border-top: 1px solid var(--glass-border); from .glass */
+		/* box-shadow: 0 5px 20px var(--glass-shadow); from .glass */
+		color: var(--text-secondary);
+		padding-top: var(--space-xl);
+		padding-bottom: var(--space-xl);
+		margin-top: var(--space-xl); /* Ensure space above footer */
+		border-bottom: none; /* Remove default bottom border from .glass if footer is last element */
+		font-size: 0.9rem;
+	}
+
+	.footer-content-grid {
+		display: grid;
+		grid-template-columns: repeat(4, auto); /* 4 columns, size to content */
+		gap: var(--space-lg);
+		margin-bottom: var(--space-lg);
+		justify-content: space-between; /* Distribute space between columns */
+	}
+
+	.footer-brand .brand-name {
+		/* This style will no longer be used but can be kept or removed */
+		/* font-size: 1.5rem; */
+		/* font-weight: 500; */
+		/* color: var(--text-primary); */
+		/* margin-bottom: var(--space-xs); */
+	}
+
+	.footer-links h4, .footer-legal h4, .footer-social h4, .footer-extra-links h4 {
+		font-size: 1rem;
+		font-weight: 500;
+		color: var(--text-primary);
+		margin-bottom: var(--space-md);
+	}
+
+	.footer-links ul, .footer-legal ul, .footer-extra-links ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.footer-links li, .footer-legal li, .footer-extra-links li {
+		margin-bottom: var(--space-sm);
+	}
+
+	.footer-links a, .footer-legal a, .footer-extra-links a {
+		color: var(--text-secondary);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+	.footer-links a:hover, .footer-legal a:hover, .footer-extra-links a:hover {
+		color: var(--color-accent);
+	}
+
+	.footer-social ul.social-icons { /* Changed div to ul and adjusted selector */
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		/* Removed display: flex; and gap: var(--space-md); */
+	}
+
+	.footer-social li { /* Added rule for li elements */
+		margin-bottom: var(--space-sm);
+	}
+
+	.footer-social .social-icons a {
+		color: var(--text-secondary);
+		font-size: 0.9rem; /* Adjusted to match other footer links */
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+	.footer-social .social-icons a:hover {
+		color: var(--color-accent);
+	}
+
+	.footer-copyright {
+		text-align: center;
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--glass-border);
+		font-size: 0.85rem;
+		color: var(--text-tertiary);
+	}
+
+	/* Responsive adjustments for footer grid */
+	@media (max-width: 768px) {
+		.footer-content-grid {
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: var(--space-md);
+		}
+		.footer-brand,
+		.footer-links,
+		.footer-legal,
+		.footer-social {
+			margin-bottom: var(--space-lg); /* Add space between stacked items */
+		}
+		.footer-brand {
+			grid-column: 1 / -1; /* Span full width if needed or let auto-fit handle */
+			text-align: center;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.footer-content-grid {
+			grid-template-columns: 1fr; /* Stack everything */
+			text-align: center;
+		}
+		.footer-social ul.social-icons { /* Adjusted selector */
+			justify-content: center; /* This will only apply if display is flex, which it isn't anymore. Text-align on parent will handle it. */
+		}
+	}
+
+	/* Language Switcher Dropdown Styles */
+	.language-switcher-dropdown {
+		position: relative;
+	}
+
+	.switcher-button {
+		background: none;
+		border: 1px solid var(--glass-border);
+		color: var(--text-secondary);
+		padding: 6px 10px;
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-family: inherit;
+		transition: all 0.2s ease;
+	}
+	.switcher-button:hover {
+		border-color: rgba(255, 255, 255, 0.3);
+		color: var(--text-primary);
+	}
+	.current-lang-flag {
+		font-size: 16px; /* Adjust emoji flag size */
+		display: inline-block;
+		line-height: 1;
+	}
+	.chevron-down {
+		width: 10px;
+		height: auto;
+		transition: transform 0.2s ease;
+	}
+	.switcher-button[aria-expanded="true"] .chevron-down {
+		transform: rotate(180deg);
+	}
+
+	.dropdown-menu {
+		position: absolute;
+		top: calc(100% + 8px); /* Position below button with gap */
+		right: 0;
+		background: var(--glass-bg);
+		border: 1px solid var(--glass-border);
+		border-radius: var(--radius-md);
+		padding: var(--space-xs);
+		margin: 0;
+		list-style: none;
+		min-width: 150px;
+		box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(10px);
+		transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+		z-index: 1000;
+	}
+
+	.language-switcher-dropdown[data-open="true"] .dropdown-menu {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.dropdown-menu li a {
+		display: flex; /* Use flex for alignment */
+		align-items: center;
+		gap: var(--space-sm);
+		padding: var(--space-sm);
+		border-radius: var(--radius-sm);
+		text-decoration: none;
+		color: var(--text-secondary);
+		font-size: 14px;
+		white-space: nowrap;
+		transition: background-color 0.2s ease, color 0.2s ease;
+	}
+	.dropdown-menu li a:hover {
+		background-color: rgba(255, 255, 255, 0.05); /* Make hover even more subtle */
+		color: var(--text-primary);
+	}
+	.dropdown-menu li a.active {
+		color: var(--text-primary);
+		font-weight: 600; /* Slightly bolder */
+		background-color: rgba(255, 255, 255, 0.12); /* A bit more prominent than hover */
+		/* border-left: 3px solid var(--color-accent); */ /* Example of border accent - keeping it commented */
+    /* padding-left: calc(var(--space-sm) - 3px); */ /* Adjust padding if border-left is used */
+	}
+	.dropdown-menu li a.active::after {
+		content: none !important;
+	}
+	.dropdown-menu li a .flag {
+		font-size: 18px; /* Adjust emoji flag size */
+		display: inline-block;
+		line-height: 1;
+	}
+</style> 

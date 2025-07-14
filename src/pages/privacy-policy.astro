@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import * as i18nUtils from '../i18n/utils'; // Import as namespace
+
+const lang = i18nUtils.getLangFromUrl(Astro.url); // Use namespace
+const langStrings = i18nUtils.useTranslations(lang); // Get the language object
+const pp = langStrings.privacyPolicy; // Access the privacyPolicy property
+---
+
+<BaseLayout title={pp.pageTitle}>
+  <article class="privacy-content">
+    <h1>{pp.h1_1}</h1>
+    <p>{pp.p1_1}</p>
+
+    <h2>{pp.h2_1}</h2>
+    <ul>
+      <li>{pp.li1_1}</li>
+      <li>{pp.li1_2}</li>
+      <li>{pp.li1_3}</li>
+      <li>{pp.li1_4}</li>
+    </ul>
+
+    <h2>{pp.h2_2}</h2>
+    <p>{pp.p2_1}</p>
+
+    <h3>{pp.h3_2_1}</h3>
+    <p>{pp.p2_2}</p>
+
+    <h3>{pp.h3_2_2}</h3>
+    <p>{pp.p2_3}</p>
+
+    <h3>{pp.h3_2_3}</h3>
+    <p>{pp.p2_4}</p>
+
+    <h2>{pp.h2_3}</h2>
+    <h3>{pp.h3_3_1}</h3>
+    <p>{pp.p3_1}</p>
+    <h3>{pp.h3_3_2}</h3>
+    <p>{pp.p3_2}</p>
+    <p>{pp.p3_3}</p>
+
+    <h2>{pp.h2_4}</h2>
+    <p>{pp.p4_1}</p>
+
+    <h2>{pp.h2_5}</h2>
+    <p set:html={pp.p5_1?.replace('{contactLink}', `<a href="/contact">${pp.contactLinkText}</a>`)} />
+
+  </article>
+</BaseLayout>
+
+<style>
+  /* Styles are the same as before, ensuring readability */
+  .privacy-content {
+    max-width: 800px;
+    margin: var(--space-xl) auto;
+    padding: 0 var(--space-md);
+  }
+  .privacy-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-lg);
+    text-align: center;
+    font-weight: 600;
+  }
+  .privacy-content h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: var(--space-xs);
+  }
+  .privacy-content h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+  }
+  .privacy-content p {
+    margin-bottom: var(--space-md);
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .privacy-content ul {
+    list-style: disc;
+    margin-left: var(--space-lg);
+    margin-bottom: var(--space-md);
+    padding-left: var(--space-sm);
+  }
+  .privacy-content li {
+    margin-bottom: var(--space-sm);
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .privacy-content a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+  .privacy-content a:hover {
+    text-decoration: none;
+  }
+</style> 

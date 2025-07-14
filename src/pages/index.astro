@@ -1,53 +1,678 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Example: Fetching App Store Reviews (SERVER-SIDE in Astro frontmatter)
+// IMPORTANT: This is a conceptual example. You MUST handle authentication (JWT) securely.
+
+// const APP_ID = '6479940325';
+// const APP_STORE_CONNECT_API_TOKEN = import.meta.env.APP_STORE_CONNECT_API_TOKEN; // Store your JWT as an environment variable
+
+// Define placeholder reviews first, to be used as a fallback
+const placeholderReviews = [
+    { id: '1', attributes: { rating: 5, title: 'Passionate developer', body: 'Don\'t like writing reviews, but this deserves one since the developer chose not to have ads, but you can support with a small contribution to have some cool themes.', reviewerNickname: 'SimSalabimse', createdDate: '2024-08-12T10:00:00Z', territory: 'NOR' } },
+    { id: '2', attributes: { rating: 5, title: 'Great body battery alternative', body: 'Does everything you expect it to do, no predatoty monetization either! This is a slightly longer review to test the filtering, it should ideally be kept as it is under 200 characters but we will see how it goes.', reviewerNickname: 'Sesamusus', createdDate: '2025-04-13T14:30:00Z', territory: 'NOR' } },
+    { id: '3', attributes: { rating: 5, title: 'Endelig Body Battery på Apple Watch', body: 'Har savnet dette fra Garmin. Appen fungerer veldig bra, godt jobbet!', reviewerNickname: 'Eilhag', createdDate: '2025-04-13T09:15:00Z', territory: 'NOR' } },
+    { id: '4', attributes: { rating: 5, title: 'Super Long Review Test', body: 'This is a very long review designed specifically to test the character filtering. It needs to be well over two hundred characters to ensure that the client-side filtering logic correctly identifies it as a long review and potentially excludes it or truncates it depending on the final implementation. We are adding more and more text to make sure it surpasses the threshold significantly. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. This should definitely be filtered out.', reviewerNickname: 'LongReviewer', createdDate: '2025-05-01T10:00:00Z', territory: 'USA' } },
+];
+
+let fetchedReviewsRaw = placeholderReviews; // Default to placeholders
+
+// Fetch reviews if in Netlify production OR Netlify dev environment
+// import.meta.env.NETLIFY_DEV might not be directly available in Astro like this.
+// A common way Netlify dev indicates itself is by providing a different port or specific env vars set by its own process.
+// For now, let's assume we will run `netlify dev` which makes the function available.
+// The `fetch` will only succeed if the function endpoint is actually live (via `netlify dev` or deployed).
+
+// We will try to fetch. If it fails (e.g. not running via netlify dev, or other error), we stick to placeholders.
+if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered components / on-demand builds
+    try {
+        // When running `netlify dev`, the functions are at /.netlify/functions/
+        // The port might differ, but `fetch` from server-side context in Astro can use relative paths.
+        // If running `astro dev` (not `netlify dev`), this fetch will likely fail if the Netlify function isn't served.
+        const siteUrl = import.meta.env.SITE || 'http://localhost:8888'; // Fallback for local, SITE is set by Netlify
+        const reviewApiUrl = new URL('/.netlify/functions/getAppReviews', siteUrl).toString();
+
+        console.log(`Attempting to fetch reviews from: ${reviewApiUrl}`);
+        const response = await fetch(reviewApiUrl);
+        console.log(`Response status from ${reviewApiUrl}: ${response.status}`);
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.length > 0) {
+                fetchedReviewsRaw = data;
+                console.log('Successfully fetched and parsed reviews locally/on server.');
+            } else {
+                console.warn('Fetched reviews, but the list is empty or invalid. Using placeholders.');
+            }
+        } else {
+            const errorText = await response.text();
+            console.error(`Failed to fetch reviews. Status: ${response.status}, Body: ${errorText}`);
+        }
+    } catch (error) {
+        console.error('Error during server-side fetch for reviews:', error);
+    }
+} else {
+    console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch). Using placeholder reviews for client.');
+}
+
+// Client-side filtering for review length (max 200 chars for body)
+const reviews = fetchedReviewsRaw.filter(review => review.attributes.body.length <= 200);
+
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+}
 
 ---
+<BaseLayout title="BodyState - Give Your Body a Voice">
+	<div class="hero">
+		<h1>Give your body a voice.</h1>
+		<p class="subtitle">Your body is complex. BodyState helps you understand it. It translates your health data into a battery for body and mind.</p>
+		<div class="hero-image">
+			<img src="/bodystate_hand.png" alt="BodyState App on Hand" />
+		</div>
+	</div>
+	
+	<!-- Bento grid section with full-width background -->
+	<div class="bento-area-wrapper">
+		<div class="bento-container">
+			<div class="bento-grid">
+				<div class="bento-item bento-item-tall"></div>
+				
+				<div class="bento-item bento-item-small-1"></div>
+				<div class="bento-item bento-item-small-2"></div>
+			</div>
+		</div>
+	</div>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>BodyState</title>
-	</head>
-	<body>
-		<nav>
-			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">FAQ</a></li>
-				<li><a href="#">Contact</a></li>
-			</ul>
-		</nav>
+	<!-- Section 1: Text over gray background -->
+	<div class="full-width-gray-area">
+		<div class="content-container">
+			<div class="content-section">
+				<h2>Understanding Your Body's Signals</h2>
+				<p>BodyState translates complex physiological data into intuitive insights. Discover how your daily activities, sleep patterns, and stress levels coalesce to define your unique bodily rhythm and energy reserves. It's more than data; it's your body's narrative.</p>
+			</div>
+		</div>
+	</div>
 
-		{/* Main page content will go here */}
+	<!-- Section 2: Full-width black background with contained text -->
+	<div class="full-width-black-area">
+		<div class="reviews-outer-container">
+			<div class="reviews-header-container content-container">
+				<h2>What Our Users Say</h2>
+			</div>
+			<div class="reviews-carousel-wrapper" id="reviewsCarouselWrapper">
+				<div class="reviews-grid" id="reviewsGrid">
+					{reviews.length > 0 ? reviews.map(review => (
+						<div class="review-card">
+							<div class="review-rating">
+								{'★'.repeat(review.attributes.rating)}
+								{'☆'.repeat(5 - review.attributes.rating)}
+							</div>
+							<h3 class="review-title">{review.attributes.title}</h3>
+							<p class="review-body">{review.attributes.body}</p>
+							<p class="review-meta">
+								<span class="review-nickname">– {review.attributes.reviewerNickname}</span>
+								<span class="review-date">{formatDate(review.attributes.createdDate)}</span>
+							</p>
+						</div>
+					)) : (
+						<div class="content-container">
+							<p class="no-reviews-message">No 5-star US reviews (under 200 characters) found. Check back later!</p>
+						</div>
+					)}
+				</div>
+			</div>
+			{reviews.length > 1 && (
+				<div class="reviews-nav-buttons-container content-container">
+					<div class="reviews-nav-buttons">
+						<button id="prevReview" aria-label="Previous review">
+							<svg width="12" height="20" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L1 7L8 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</button>
+						<button id="nextReview" aria-label="Next review">
+							<svg width="12" height="20" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L8 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</button>
+					</div>
+				</div>
+			)}
+		</div>
+	</div>
+	
+	<!-- Floating Download Button Overlay -->
+	<div id="download-overlay" class="download-overlay">
+		<a href="https://apps.apple.com/no/app/bodystate/id6479940325" class="visionos-button" target="_blank" rel="noopener noreferrer">
+			<span class="button-text">Download on App Store</span>
+			<div class="blue-circle-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M9 18l6-6-6-6"></path>
+				</svg>
+			</div>
+		</a>
+	</div>
 
-	</body>
-</html>
+</BaseLayout>
 
-<style is:global>
-	body {
-		background-color: black;
-		color: white;
-		margin: 0;
-		font-family: sans-serif;
+<style>
+	/* Hero section */
+	.hero {
+		text-align: center;
+		margin-bottom: var(--space-xl);
+		max-width: 800px;
+		margin-left: auto;
+		margin-right: auto;
+		padding-top: var(--space-xl);
 	}
-	nav {
-		background-color: #111;
-		padding: 1rem 2rem;
+	
+	.hero h1 {
+		font-size: 3.5rem;
+		margin-bottom: var(--space-md);
+		font-weight: 600;
+		line-height: 1.2;
 	}
-	nav ul {
-		display: flex;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		gap: 2rem;
+	
+	.subtitle {
+		font-size: 1.3rem;
+		max-width: 650px;
+		margin-left: auto;
+		margin-right: auto;
+		font-weight: 300;
+		line-height: 1.6;
+		margin-bottom: var(--space-lg);
 	}
-	nav a {
-		color: white;
+	
+	.hero-image {
+		max-width: 100%;
+		margin: 0 auto;
+		padding: var(--space-md) 0;
+	}
+	
+	.hero-image img {
+		max-width: 100%;
+		height: auto;
+	}
+	
+	/* VisionOS-style button */
+	.visionos-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		background: var(--glass-bg);
+		color: var(--text-primary);
+		padding: 10px 10px 10px 25px; 
+		border-radius: 100px;
+		backdrop-filter: blur(15px);
+		-webkit-backdrop-filter: blur(15px);
+		min-width: 220px;
+		width: auto;
 		text-decoration: none;
-		font-size: 1rem;
+		font-weight: 500; /* Keep user's change */
+		border: 1px solid var(--glass-border);
+		box-shadow: 0 8px 32px var(--glass-shadow);
+		transition: all 0.2s ease;
 	}
-	nav a:hover {
-		text-decoration: underline;
+	
+	.visionos-button:hover {
+		border-color: rgba(255, 255, 255, 0.15);
+		box-shadow: 0 8px 40px var(--glass-shadow), 0 0 15px var(--glass-glow);
 	}
+	
+	.button-text {
+		font-size: 18px; 
+		font-weight: 500;
+		letter-spacing: -0.022em;
+	}
+	
+	.blue-circle-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 50px; /* Increased size */
+		height: 50px; /* Increased size */
+		background: #0071e3; /* Apple's blue */
+		border-radius: 50%;
+		flex-shrink: 0;
+		margin-left: 20px;
+		box-shadow: 0 0 10px rgba(0, 113, 227, 0.5);
+	}
+	
+	.blue-circle-icon svg {
+		color: white;
+		stroke-width: 3;
+	}
+	
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.hero h1 {
+			font-size: 2.5rem;
+		}
+		
+		.subtitle {
+			font-size: 1.1rem;
+			padding: 0 var(--space-sm);
+		}
+		
+		.visionos-button {
+			min-width: 200px;
+		}
+	}
+	
+	/* Bento grid styles */
+	.bento-area-wrapper {
+		background: linear-gradient(to bottom, #000000 0%, #121212 50%, #242424 100%); /* Darker grays */
+		padding-bottom: var(--space-xl); /* Add some padding if gradient ends abruptly */
+		width: 100vw;
+		position: relative;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.bento-container {
+		margin: 6rem auto 0 auto; /* Centered, top margin, no bottom margin as wrapper has padding */
+		max-width: 1200px;
+		box-sizing: border-box; 
+		/* Background moved to bento-area-wrapper */
+		/* padding-bottom moved to bento-area-wrapper */
+	}
+	
+	.bento-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-auto-rows: 400px; /* User confirmed this value */
+		gap: 1.5rem;
+	}
+	
+	.bento-item {
+		background: var(--glass-bg);
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--glass-border);
+		backdrop-filter: blur(15px);
+		-webkit-backdrop-filter: blur(15px);
+		box-shadow: 0 8px 32px var(--glass-shadow);
+		transition: all 0.3s ease;
+		overflow: hidden;
+	}
+	
+	.bento-item:hover {
+		border-color: rgba(255, 255, 255, 0.15);
+		box-shadow: 0 8px 40px var(--glass-shadow), 0 0 15px var(--glass-glow);
+	}
+	
+	/* Playful sizing variants */
+	.bento-item-tall {
+		grid-column: 1;
+		grid-row: span 2;
+	}
+	
+	.bento-item-small-1 {
+		grid-column: 2;
+		grid-row: 1;
+	}
+	
+	.bento-item-small-2 {
+		grid-column: 2;
+		grid-row: 2;
+	}
+	
+	/* Responsive bento grid */
+	@media (max-width: 768px) {
+		.bento-grid {
+			grid-auto-rows: 247px; /* Adjusted to maintain aspect ratio with 400px desktop rows */
+		}
+	}
+	
+	@media (max-width: 640px) {
+		.bento-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+		
+		.bento-item {
+			grid-column: 1 !important;
+			grid-row: auto !important;
+		}
+		
+		.bento-item-tall {
+			grid-row: span 1 !important; 
+		}
+	}
+
+	/* Content sections styling */
+	.content-section {
+		padding-top: var(--space-xl);
+		padding-bottom: var(--space-xl);
+		text-align: center;
+		/* Ensure content sections are not wider than their parent .content-container if nested */
+		width: 100%; 
+		box-sizing: border-box;
+	}
+
+	.content-section h2 {
+		font-size: 2.5rem;
+		margin-bottom: var(--space-md);
+		font-weight: 600;
+		color: var(--text-primary); /* Default for these sections */
+	}
+
+	.content-section p {
+		font-size: 1.3rem;
+		max-width: 650px;
+		margin-left: auto;
+		margin-right: auto;
+		font-weight: 300;
+		line-height: 1.6;
+		color: var(--text-secondary); /* Default, can be overridden if needed */
+	}
+
+	/* Section 1: Full Width Gray Area */
+	.full-width-gray-area {
+		background-color: #242424; /* Match end color of bento gradient */
+		position: relative; 
+		width: 100vw;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 0; /* Ensure it's above default, below higher z-index elements */
+	}
+	.full-width-gray-area h2,
+	.full-width-gray-area p {
+		color: var(--text-primary); /* Brighter text for contrast on gray */
+	}
+
+	/* Section 2: Full Width Black Area */
+	.full-width-black-area {
+		background-color: #000;
+		position: relative; 
+		z-index: 1; /* To draw above the fixed .bg-gradient-transition */
+		width: 100vw;
+		left: 50%;
+		transform: translateX(-50%);
+		padding-bottom: calc(var(--space-xl) + 60px); /* Ensure space for buttons if they are outside */
+	}
+	/* Text color for p in black section will use .content-section p default (var(--text-secondary)) */
+	/* Text color for h2 in black section will use .content-section h2 default (var(--text-primary)) */
+
+	.reviews-outer-container {
+		/* This container is full-width black */
+		/* It allows the .reviews-carousel-wrapper to be offset for the peek effect */
+		padding-bottom: var(--space-lg); /* Space below buttons */
+	}
+
+	.reviews-header-container {
+		/* Uses .content-container for max-width and padding */
+		text-align: center;
+		padding-top: var(--space-xl);
+		margin-bottom: var(--space-lg);
+	}
+	.reviews-header-container h2 {
+		font-size: 2.5rem;
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+
+	.reviews-carousel-wrapper {
+		position: relative;
+		max-width: 1200px;
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: var(--space-md); 
+		padding-right: var(--space-md); 
+		overflow-x: hidden; 
+	}
+
+	.reviews-grid {
+		display: flex;
+		overflow-x: auto; 
+		gap: var(--space-md); 
+		padding-left: 0; /* Start at the edge of the padded parent */
+		padding-right: 0; /* Remove right padding here; add to last card or use margin */
+		/* Add a pseudo-element for spacing after the last card to ensure it's fully visible before wrapper padding cuts it off */
+		/* OR ensure wrapper's right padding is enough */
+		padding-bottom: var(--space-md); 
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none; 
+	}
+	.reviews-grid::-webkit-scrollbar {
+    	display: none; 
+	}
+
+	.review-card {
+		background-color: rgba(30,30,30,0.7); 
+		border: 1px solid rgba(255,255,255,0.07);
+		border-radius: var(--radius-lg); 
+		padding: var(--space-lg);
+		display: flex;
+		flex-direction: column;
+		scroll-snap-align: start;
+		box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+		flex-shrink: 0; 
+		width: clamp(280px, 85vw, 340px);
+		box-sizing: border-box; /* Add box-sizing */
+	}
+
+	/* Show 1 full card on small screens, with peeking next card */
+	/* Handled by clamp() and overflow of the parent */
+
+	/* Aim for 2 full cards */
+	@media (min-width: 768px) { 
+		.review-card {
+			/* Aim for 2 cards. Wrapper inner width (e.g. 768 - 48 = 720). (720 - 24_gap) / 2 = 348px */
+			width: clamp(300px, calc((100% - var(--space-md)) / 2), 348px); 
+		}
+	}
+
+	/* Aim for 3 full cards */
+	@media (min-width: 1200px) { 
+		.review-card {
+			width: 367px; /* Fine-tuning: (1152 - 48) / 3 = 368. Try 367px for a tiny bit of slack. */
+		}
+	}
+
+	.no-reviews-message {
+		color: var(--text-secondary);
+		width: 100%;
+		text-align: center;
+		padding: var(--space-lg) 0;
+		font-style: italic;
+	}
+
+	.review-rating {
+		font-size: 1rem; /* Slightly smaller stars */
+		color: #f5a623; 
+		margin-bottom: var(--space-sm);
+	}
+
+	.review-title {
+		font-size: 1.125rem; /* 18px */
+		font-weight: 500;
+		color: var(--text-primary);
+		margin-bottom: var(--space-xs);
+		line-height: 1.3;
+	}
+
+	.review-body {
+		font-size: 0.9rem; /* 14.4px */
+		color: var(--text-secondary);
+		line-height: 1.6;
+		flex-grow: 1; 
+		margin-bottom: var(--space-md);
+	}
+
+	.review-meta {
+		font-size: 0.8rem; /* 12.8px */
+		color: var(--text-tertiary);
+		display: flex;
+		justify-content: space-between;
+		align-items: center; /* Vertically align nickname and date */
+		border-top: 1px solid rgba(255,255,255,0.05);
+		padding-top: var(--space-sm);
+		margin-top: auto; /* Push to bottom */
+	}
+
+	.review-nickname {
+		font-weight: 500;
+		font-style: normal;
+	}
+
+	.reviews-nav-buttons-container {
+		/* Uses .content-container for max-width and padding */
+		display: flex;
+		justify-content: flex-end; /* Aligns the .reviews-nav-buttons div to the right */
+		padding-top: var(--space-md); 
+	}
+
+	.reviews-nav-buttons {
+		display: inline-flex; /* Changed from flex to inline-flex, often better for grouped items */
+		/* justify-content: flex-end; No longer needed here, parent handles alignment */
+		gap: var(--space-sm);
+		/* margin-top: var(--space-md); No longer needed here, parent handles spacing */
+	}
+
+	.reviews-nav-buttons button {
+		background-color: rgba(50, 50, 50, 0.5); 
+		border: 1px solid rgba(255,255,255,0.1);
+		color: rgba(255,255,255,0.7);
+		border-radius: 50%; 
+		width: 44px; 
+		height: 44px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex; /* Keep for icon centering */
+		align-items: center;
+		justify-content: center;
+	}
+	.reviews-nav-buttons button:hover {
+		background-color: rgba(65, 65, 65, 0.7);
+		color: rgba(255,255,255,0.9);
+		border-color: rgba(255,255,255,0.2);
+	}
+	.reviews-nav-buttons button svg {
+		width: 10px; /* Control SVG size */
+		height: auto;
+	}
+
+	footer {
+		background: transparent; /* Default, overridden by .glass */
+		padding: var(--space-md) 0;
+		text-align: center;
+		font-size: 0.9rem;
+		color: var(--text-tertiary);
+		margin-top: var(--space-xl);
+	}
+
+	footer.glass { 
+		background: var(--glass-bg);
+		backdrop-filter: blur(15px);
+	}
+
+	/* Download button overlay enhancements */
+	.download-overlay {
+		position: fixed;
+		bottom: var(--space-lg);
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 100;
+		opacity: 0;
+		transform: translateX(-50%) translateY(100%) scale(0.9); /* Initial hidden state */
+		pointer-events: none;
+		transition: opacity 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	}
+
+	.download-overlay.show-download-button {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0) scale(1); /* Visible state */
+		pointer-events: auto;
+	}
+
 </style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const reviewsGrid = document.getElementById('reviewsGrid');
+		const prevButton = document.getElementById('prevReview');
+		const nextButton = document.getElementById('nextReview');
+		const reviewsCarouselWrapper = document.getElementById('reviewsCarouselWrapper');
+
+		if (reviewsGrid && prevButton && nextButton && reviewsCarouselWrapper) {
+			const scrollAmount = () => {
+				const firstCard = reviewsGrid.querySelector('.review-card');
+				if (firstCard) {
+					const cardStyle = getComputedStyle(firstCard);
+					const cardGap = parseFloat(getComputedStyle(reviewsGrid).gap) || 0;
+					return firstCard.offsetWidth + cardGap;
+				} 
+				return reviewsCarouselWrapper.clientWidth * 0.8; // Fallback
+			};
+
+			prevButton.addEventListener('click', () => {
+				reviewsGrid.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+			});
+
+			nextButton.addEventListener('click', () => {
+				reviewsGrid.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+			});
+		}
+
+		// Floating download button logic
+		const downloadButtonOverlay = document.querySelector('.download-overlay');
+		const heroSection = document.querySelector('.hero'); 
+		const siteFooter = document.querySelector('footer.site-footer');
+
+		if (downloadButtonOverlay && heroSection && siteFooter) {
+			const handleScroll = () => {
+				const heroRect = heroSection.getBoundingClientRect();
+				const footerRect = siteFooter.getBoundingClientRect();
+				const viewportHeight = window.innerHeight;
+
+				// Condition 1: Is the user at the "start" (hero section prominent)?
+				// Hero is considered prominent if its bottom edge is still within the viewport.
+				const atStart = heroRect.bottom > 0 && heroRect.top < viewportHeight;
+
+				// Condition 2: Is the user at the "end" (footer encroaching on button)?
+				const buttonHeight = downloadButtonOverlay.offsetHeight;
+				// Get the 'bottom' style value (e.g., 'var(--space-lg)') and parse it
+				const buttonBottomCssValue = parseFloat(getComputedStyle(downloadButtonOverlay).bottom);
+
+				// Add checks for valid numbers to prevent errors
+				if (isNaN(buttonHeight) || isNaN(buttonBottomCssValue)) {
+					console.warn('Floating Download Button: Could not get valid button height or bottom CSS value.');
+					return; // Exit if values are not valid
+				}
+				
+				// Calculate the Y coordinate of the button's top edge in the viewport
+				const buttonTopEdgeY = viewportHeight - buttonBottomCssValue - buttonHeight;
+
+				// Footer is encroaching if its top edge is above the button's top edge (plus a small buffer)
+				// Or, more simply, if footer's top is higher than the button's bottom edge allowing for overlap.
+				// Let's hide if footer's top is less than button's (calculated) bottom edge in viewport + 20px buffer for safety.
+				const buttonBottomEdgeY = viewportHeight - buttonBottomCssValue;
+				const atEnd = footerRect.top < (buttonBottomEdgeY + 20); // Hide if footer top is above button's bottom + 20px padding
+
+				if (!atStart && !atEnd) {
+					downloadButtonOverlay.classList.add('show-download-button');
+				} else {
+					downloadButtonOverlay.classList.remove('show-download-button');
+				}
+			};
+
+			// Optimized scroll listener
+			let ticking = false;
+			window.addEventListener('scroll', () => {
+				if (!ticking) {
+					ticking = true;
+					window.requestAnimationFrame(() => {
+						handleScroll();
+						ticking = false;
+					});
+				}
+			});
+
+			// Initial check on page load
+			setTimeout(handleScroll, 100); // Adding a slight delay for initial call to ensure layout is stable
+			
+		} else {
+			console.error('Floating Download Button: Could not find one or more required elements:', 
+				{downloadButtonOverlay, heroSection, siteFooter});
+		}
+	});
+</script>
+

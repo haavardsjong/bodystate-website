@@ -1,0 +1,255 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import * as i18nUtils from '../i18n/utils';
+
+const lang = i18nUtils.getLangFromUrl(Astro.url);
+const t = i18nUtils.useTranslations(lang);
+const cp = t.contactPage; // Helper for contactPage keys
+// Basic Contact Page
+---
+<BaseLayout title={cp.pageTitle}>
+	<div class="contact-header">
+		<h1 set:html={cp.h1}></h1>
+		<p class="subtitle">{cp.subtitle}</p>
+	</div>
+	
+	<div class="contact-container">
+		<div class="contact-info bento-box">
+			<h2>{cp.infoBox.h2}</h2>
+			<p>{cp.infoBox.p1}</p>
+			<div class="contact-methods">
+				<div class="contact-method">
+					<div class="method-icon">✉️</div>
+					<div class="method-details">
+						<h3>{cp.infoBox.emailMethod.h3}</h3>
+						<p>{cp.infoBox.emailMethod.p1}</p>
+					</div>
+				</div>
+				<div class="contact-method">
+					<div class="method-icon">🌐</div>
+					<div class="method-details">
+						<h3>{cp.infoBox.socialMethod.h3}</h3>
+						<p>{cp.infoBox.socialMethod.p1}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<form class="contact-form bento-box" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden">
+        <label>
+          Don't fill this out if you're human: <input name="bot-field" />
+        </label>
+      </p>
+			<div class="form-group">
+				<label for="name">{cp.form.nameLabel}</label>
+				<input type="text" id="name" name="name" placeholder={cp.form.namePlaceholder} class="glass-input" required />
+			</div>
+			
+			<div class="form-group">
+				<label for="email">{cp.form.emailLabel}</label>
+				<input type="email" id="email" name="email" placeholder={cp.form.emailPlaceholder} class="glass-input" required />
+			</div>
+			
+			<div class="form-group">
+				<label for="subject">{cp.form.subjectLabel}</label>
+				<select id="subject" name="subject" class="glass-input" required>
+					<option value="" selected disabled>{cp.form.subjectSelectDefault}</option>
+					<option value="question">{cp.form.subjectOptionQuestion}</option>
+					<option value="feedback">{cp.form.subjectOptionFeedback}</option>
+					<option value="support">{cp.form.subjectOptionSupport}</option>
+					<option value="partnership">{cp.form.subjectOptionPartnership}</option>
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<label for="message">{cp.form.messageLabel}</label>
+				<textarea id="message" name="message" placeholder={cp.form.messagePlaceholder} class="glass-input" rows="4" required></textarea>
+			</div>
+			
+			<div class="form-submit">
+				<button type="submit" class="btn btn-accent">{cp.form.submitButtonText}</button>
+			</div>
+		</form>
+	</div>
+</BaseLayout>
+
+<style>
+	.contact-header {
+		text-align: center;
+		margin-bottom: var(--space-xl);
+		padding-top: var(--space-xl);
+	}
+	
+	.accent {
+		color: var(--color-accent);
+		position: relative;
+	}
+	
+	.accent::after {
+		content: '';
+		position: absolute;
+		height: 10px;
+		width: 100%;
+		bottom: -5px;
+		left: 0;
+		background: var(--color-accent-glow);
+		border-radius: 5px;
+		filter: blur(8px);
+		opacity: 0.6;
+		z-index: -1;
+	}
+	
+	.subtitle {
+		font-size: 1.2rem;
+		color: var(--text-secondary);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+	
+	.contact-container {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: var(--space-md);
+		margin-bottom: var(--space-xl);
+	}
+	
+	.contact-info {
+		display: flex;
+		flex-direction: column;
+		padding: var(--space-lg);
+	}
+	
+	.contact-info h2 {
+		margin-top: 0;
+		margin-bottom: var(--space-md);
+		color: var(--text-primary);
+	}
+	
+	.contact-methods {
+		margin-top: var(--space-md);
+	}
+	
+	.contact-method {
+		display: flex;
+		align-items: center;
+		margin-bottom: var(--space-md);
+	}
+	
+	.method-icon {
+		font-size: 1.5rem;
+		margin-right: var(--space-sm);
+		width: 40px;
+		height: 40px;
+		background: rgba(96, 221, 220, 0.1);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--glass-border);
+	}
+	
+	.method-details h3 {
+		margin: 0;
+		font-size: 1.1rem;
+		color: var(--color-accent);
+	}
+	
+	.method-details p {
+		margin: 0;
+		font-size: 1rem;
+		color: var(--text-secondary);
+	}
+	
+	/* Form styling */
+	.contact-form {
+		padding: var(--space-lg);
+	}
+	
+	.form-group {
+		margin-bottom: var(--space-md);
+	}
+	
+	.form-group label {
+		display: block;
+		margin-bottom: var(--space-xs);
+		color: var(--text-secondary);
+		font-size: 0.9rem;
+		font-weight: 500;
+	}
+	
+	.glass-input {
+		width: 100%;
+		padding: var(--space-sm);
+		background: rgba(30, 30, 33, 0.3);
+		border: 1px solid var(--glass-border);
+		border-radius: var(--radius-sm);
+		color: var(--text-primary);
+		font-family: var(--font-main);
+		box-sizing: border-box;
+		transition: all 0.3s ease;
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
+	}
+	
+	.glass-input:focus {
+		outline: none;
+		border-color: var(--color-accent);
+		box-shadow: 0 0 0 2px var(--color-accent-glow);
+	}
+	
+	.glass-input::placeholder {
+		color: var(--text-tertiary);
+	}
+	
+	textarea.glass-input {
+		resize: vertical;
+		min-height: 100px;
+	}
+	
+	.form-submit {
+		text-align: right;
+		margin-top: var(--space-lg);
+	}
+	
+	.btn.btn-accent {
+		background-color: var(--color-accent);
+		color: #000;
+		padding: var(--space-sm) var(--space-md);
+		border-radius: var(--radius-sm);
+		text-decoration: none;
+		font-weight: 500;
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+	
+	.btn.btn-accent:hover {
+		background-color: rgba(96, 221, 220, 0.8);
+	}
+	
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.contact-container {
+			grid-template-columns: 1fr;
+		}
+		
+		.contact-info {
+			order: 2;
+			margin-top: var(--space-lg);
+		}
+		
+		.contact-form {
+			order: 1;
+		}
+		
+		.form-submit {
+			text-align: center;
+		}
+	}
+	
+	.hidden {
+		display: none !important;
+	}
+</style> 

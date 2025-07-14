@@ -1,0 +1,113 @@
+{
+  "footer": {
+    "brandName": "BodyState",
+    "quickLinks": "Quick Links",
+    "homeLink": "Home",
+    "faqLink": "FAQ",
+    "contactLink": "Contact Us",
+    "appStoreLink": "App Store",
+    "legal": "Legal",
+    "privacyPolicyLink": "Privacy Policy",
+    "termsOfServiceLink": "Terms of Service",
+    "connect": "Connect",
+    "twitterLink": "Twitter",
+    "instagramLink": "Instagram",
+    "tiktokLink": "TikTok",
+    "resources": "Resources",
+    "blogLink": "Blog",
+    "supportLink": "Support",
+    "careersLink": "Careers",
+    "copyright": "© {year} BodyState by 2001 Ventures AS. All rights reserved."
+  },
+  "header": {
+    "brandName": "BodyState",
+    "homeLink": "Home",
+    "faqLink": "FAQ",
+    "contactLink": "Contact",
+    "downloadButton": "Download"
+  },
+  "privacyPolicy": {
+    "pageTitle": "Privacy Policy",
+    "h1_1": "Privacy",
+    "p1_1": "At BodyState, we value your privacy and are committed to protecting your personal data. This Privacy Policy explains how BodyState collects, processes, and protects your data in compliance with applicable privacy laws, including the General Data Protection Regulation (GDPR).",
+    "h2_1": "Key Principles",
+    "li1_1": "No Personal Identifiable Information (PII): BodyState does not collect or store any data that can directly identify you, such as names, email addresses, or physical addresses.",
+    "li1_2": "Anonymous Data Processing: All data collected is anonymized and cannot be linked to specific individuals.",
+    "li1_3": "Data Minimization: We collect only the data strictly necessary to improve app performance and functionality.",
+    "li1_4": "No Data Sharing: We do not share any user data with third parties for advertising or other non-functional purposes.",
+    "h2_2": "1. Data We Collect",
+    "p2_1": "We collect anonymized data for the purposes of app functionality, diagnostics, and performance analytics. This includes:",
+    "h3_2_1": "a. Crash Reporting and Diagnostics",
+    "p2_2": "Tool: Sentry. Purpose: To monitor app performance, identify crashes, and ensure the app operates reliably. Data Collected: Diagnostic data such as crash logs and performance metrics. Anonymization: Data collected by Sentry is anonymous and cannot be linked to specific users. No personal data is collected or stored. Data Storage: EU region",
+    "h3_2_2": "b. Analytics",
+    "p2_3": "Tool: PostHog. Purpose: To analyze user interactions and improve app performance. Data Collected: Interaction events (e.g., feature usage) and performance metrics. Anonymization: All data is anonymized; no PII is captured, stored, or processed. Data Storage: EU region",
+    "h3_2_3": "c. In-App Purchases",
+    "p2_4": "Tool: RevenueCat. Purpose: To manage subscriptions and in-app purchases. Data Collected: Device identifiers and purchase details (e.g., subscription type). Anonymization: No personal identifiers (e.g., names or emails) are associated with transaction data.",
+    "h2_3": "2. Data Retention and Deletion",
+    "h3_3_1": "Data Retention",
+    "p3_1": "All data collected by BodyState is anonymized, aggregated, and used only for improving app functionality and ensuring performance stability. As such, individual data points are retained only as necessary for these purposes and in accordance with the retention policies of our third-party services.",
+    "h3_3_2": "Data Deletion",
+    "p3_2": "If you no longer wish for BodyState to collect or process your data:",
+    "p3_3": "You can delete the app from your device. Deleting the app will stop all future data collection, as no data is stored outside of the third-party tools integrated into BodyState.",
+    "h2_4": "3. Changes to This Privacy Policy",
+    "p4_1": "We may update this Privacy Policy from time to time to reflect changes in our practices, legal requirements, or app functionality. All updates will be posted on this page, and the \"Last Updated\" date will be revised accordingly.",
+    "h2_5": "4. Contact Us",
+    "p5_1": "If you have any questions or concerns about this Privacy Policy or how your data is handled, please contact us {contactLink}.",
+    "contactLinkText": "here"
+  },
+  "termsOfService": {
+    "pageTitle": "Terms of Service",
+    "h1_1": "Terms of Service",
+    "h2_1": "1. Introduction",
+    "p1_1": "These Terms of Service (\"Terms\") govern your use of in-app purchases available within the BodyState app (\"App\"). By making an in-app purchase, you agree to be bound by these Terms.",
+    "h2_2": "2. In-App Purchases",
+    "p2_1": "The App offers various in-app purchases, such as themes, that can enhance your experience. All in-app purchases are one-time transactions. Once a purchase is completed, it is non-refundable except where required by law.",
+    "h2_3": "3. Functionality",
+    "p3_1": "If the functionality of an in-app purchase, such as a theme, is lost or disrupted, you can restore your purchase. To do this, simply go through the purchase process again, and use the \"Restore Purchases\" button on the paywall to regain access without any additional charge.",
+    "h2_4": "4. License",
+    "p4_1": "When you make an in-app purchase, you are granted a non-exclusive, non-transferable, revocable license to use the purchased content within the App. This license is for personal use only and does not grant any ownership rights in the purchased content.",
+    "h2_5": "5. Updates and Modifications",
+    "p5_1": "BodyState reserves the right to update or modify in-app purchases, including but not limited to themes, at any time. While we strive to maintain the functionality of all purchased content, we do not guarantee that it will remain unchanged or available indefinitely. Updates will be provided at no additional cost.",
+    "h2_6": "6. Termination",
+    "p6_1": "BodyState reserves the right to terminate or suspend your access to any in-app purchases if you violate these Terms or engage in unauthorized use of the content.",
+    "h2_7": "7. Limitation of Liability",
+    "p7_1": "To the fullest extent permitted by law, BodyState is not liable for any direct, indirect, incidental, or consequential damages arising from your use of in-app purchases, including any loss of functionality.",
+    "h2_8": "8. Governing Law",
+    "p8_1": "These Terms are governed by and construed in accordance with the laws of Norway. Any disputes arising from these Terms will be resolved in the courts of Norway.",
+    "h2_9": "9. Contact Information",
+    "p9_1": "If you have any questions or concerns regarding these Terms, please contact us {contactLink}.",
+    "contactLinkText": "here"
+  },
+  "contactPage": {
+    "pageTitle": "BodyState - Contact",
+    "h1": "Contact <span class=\\\"accent\\\">Us</span>",
+    "subtitle": "Have questions about BodyState? We're here to help.",
+    "infoBox": {
+      "h2": "Get in Touch",
+      "p1": "Our team is ready to answer your questions about BodyState and how it can help you better understand your body.",
+      "emailMethod": {
+        "h3": "Email",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "Social",
+        "p1": "@BodyStateApp"
+      }
+    },
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Your email address",
+      "subjectLabel": "Subject",
+      "subjectSelectDefault": "Select a subject",
+      "subjectOptionQuestion": "General Question",
+      "subjectOptionFeedback": "Feedback",
+      "subjectOptionSupport": "Technical Support",
+      "subjectOptionPartnership": "Partnership",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Your message",
+      "submitButtonText": "Send Message"
+    }
+  }
+} 

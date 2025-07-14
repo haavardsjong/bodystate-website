@@ -1,0 +1,16 @@
+[build]
+  command = "export APP_STORE_CONNECT_API_TOKEN_DYNAMIC=$(node scripts/generate-appstore-jwt.cjs) && astro build"
+  functions = "netlify/functions"
+  publish = "dist"
+
+[dev]
+  command = "npm run dev" # Command to start your Astro dev server
+  port = 8888             # Port for Netlify Dev to run on (Astro will be on targetPort)
+  targetPort = 4321       # Port your Astro dev server runs on, Netlify will proxy to this
+  publish = "dist"        # Directory Astro builds to
+  autoLaunch = false      # We are launching Astro dev separately
+
+[[redirects]]
+  from = "/api/reviews"
+  to = "/.netlify/functions/getAppReviews"
+  status = 200 
