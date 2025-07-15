@@ -10,7 +10,7 @@ const cp = t.contactPage;
 	<div class="contact-container">
 		<h1 set:html={cp.h1}></h1>
 		
-		<form class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+		<form class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action={lang === 'es' ? '/es/contact-success' : '/contact-success'}>
 			<input type="hidden" name="form-name" value="contact" />
 			<p class="hidden">
 				<label>
