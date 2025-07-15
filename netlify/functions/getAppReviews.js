@@ -23,9 +23,12 @@ async function generateJWT() {
   }
   // Ensure the private key has proper PEM format
   let privateKey = privateKeyP8Content.replace(/\\n/g, '\n');
-  if (!privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
-    privateKey = `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----`;
-  }
+  
+  // Remove any existing headers/footers first
+  privateKey = privateKey.replace(/-----BEGIN PRIVATE KEY-----/g, '').replace(/-----END PRIVATE KEY-----/g, '').trim();
+  
+  // Add proper PEM headers
+  privateKey = `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----`;
   const now = Math.floor(Date.now() / 1000);
   const expirationTime = now + (15 * 60);
   const payload = { iss: issuerId, iat: now, exp: expirationTime, aud: 'appstoreconnect-v1' };
