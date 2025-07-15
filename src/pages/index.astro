@@ -31,15 +31,8 @@ const territory = languageToTerritory[lang] || 'USA';
 // const APP_ID = '6479940325';
 // const APP_STORE_CONNECT_API_TOKEN = import.meta.env.APP_STORE_CONNECT_API_TOKEN; // Store your JWT as an environment variable
 
-// Define placeholder reviews first, to be used as a fallback
-const placeholderReviews = [
-    { id: '1', attributes: { rating: 5, title: 'Passionate developer', body: 'Don\'t like writing reviews, but this deserves one since the developer chose not to have ads, but you can support with a small contribution to have some cool themes.', reviewerNickname: 'SimSalabimse', createdDate: '2024-08-12T10:00:00Z', territory: 'NOR' } },
-    { id: '2', attributes: { rating: 5, title: 'Great body battery alternative', body: 'Does everything you expect it to do, no predatoty monetization either! This is a slightly longer review to test the filtering, it should ideally be kept as it is under 200 characters but we will see how it goes.', reviewerNickname: 'Sesamusus', createdDate: '2025-04-13T14:30:00Z', territory: 'NOR' } },
-    { id: '3', attributes: { rating: 5, title: 'Endelig Body Battery på Apple Watch', body: 'Har savnet dette fra Garmin. Appen fungerer veldig bra, godt jobbet!', reviewerNickname: 'Eilhag', createdDate: '2025-04-13T09:15:00Z', territory: 'NOR' } },
-    { id: '4', attributes: { rating: 5, title: 'Super Long Review Test', body: 'This is a very long review designed specifically to test the character filtering. It needs to be well over two hundred characters to ensure that the client-side filtering logic correctly identifies it as a long review and potentially excludes it or truncates it depending on the final implementation. We are adding more and more text to make sure it surpasses the threshold significantly. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. This should definitely be filtered out.', reviewerNickname: 'LongReviewer', createdDate: '2025-05-01T10:00:00Z', territory: 'USA' } },
-];
-
-let fetchedReviewsRaw = placeholderReviews; // Default to placeholders
+// Initialize empty reviews array
+let fetchedReviewsRaw = []; // No placeholders
 
 // Fetch reviews if in Netlify production OR Netlify dev environment
 // import.meta.env.NETLIFY_DEV might not be directly available in Astro like this.
@@ -66,7 +59,7 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
                 fetchedReviewsRaw = data;
                 console.log('Successfully fetched and parsed reviews locally/on server.');
             } else {
-                console.warn('Fetched reviews, but the list is empty or invalid. Using placeholders.');
+                console.warn('Fetched reviews, but the list is empty or invalid.');
             }
         } else {
             const errorText = await response.text();
@@ -76,7 +69,7 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
         console.error('Error during server-side fetch for reviews:', error);
     }
 } else {
-    console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch). Using placeholder reviews for client.');
+    console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch).');
 }
 
 // Use all fetched reviews without filtering by length
