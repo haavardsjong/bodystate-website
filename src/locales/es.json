@@ -77,5 +77,16 @@
     "h2_9": "9. Información de Contacto",
     "p9_1": "Si tiene alguna pregunta o inquietud con respecto a estos Términos, contáctenos {contactLink}.",
     "contactLinkText": "aquí"
+  },
+  "contactPage": {
+    "pageTitle": "BodyState - Contacto",
+    "h1": "Contácta<span class=\"accent\">nos</span>",
+    "form": {
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "Tu correo electrónico",
+      "messageLabel": "Mensaje",
+      "messagePlaceholder": "Tu mensaje",
+      "submitButtonText": "Enviar"
+    }
   }
 }
