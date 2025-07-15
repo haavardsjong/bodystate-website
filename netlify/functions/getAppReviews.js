@@ -58,7 +58,7 @@ export async function handler(event, context) {
     }
 
     // Add filters for 5-star US reviews and increase limit
-    const APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=10&sort=-createdDate&filter[rating]=5&filter[territory]=USA&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
+    const APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=50&sort=-createdDate&filter[rating]=5&filter[territory]=USA&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
     console.log(`[getAppReviews] Fetching reviews for App ID ${appId} from ${APPLE_API_URL}`);
 
     try {
