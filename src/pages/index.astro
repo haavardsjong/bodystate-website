@@ -1,5 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import * as i18nUtils from '../i18n/utils';
+
+// Get current language
+const lang = i18nUtils.getLangFromUrl(Astro.url);
+
+// Map languages to App Store territories
+const languageToTerritory = {
+  'en': 'USA',
+  'es': 'ESP',  // Spain
+  'fr': 'FRA',  // France
+  'de': 'DEU',  // Germany
+  'it': 'ITA',  // Italy
+  'pt': 'BRA',  // Brazil (Portuguese)
+  'ja': 'JPN',  // Japan
+  'ko': 'KOR',  // Korea
+  'zh': 'CHN',  // China
+  'ru': 'RUS',  // Russia
+  'nl': 'NLD',  // Netherlands
+  'sv': 'SWE',  // Sweden
+  'no': 'NOR',  // Norway
+  'da': 'DNK',  // Denmark
+};
+
+const territory = languageToTerritory[lang] || 'USA';
 
 // Example: Fetching App Store Reviews (SERVER-SIDE in Astro frontmatter)
 // IMPORTANT: This is a conceptual example. You MUST handle authentication (JWT) securely.
@@ -30,7 +54,7 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
         // The port might differ, but `fetch` from server-side context in Astro can use relative paths.
         // If running `astro dev` (not `netlify dev`), this fetch will likely fail if the Netlify function isn't served.
         const siteUrl = import.meta.env.SITE || 'http://localhost:8888'; // Fallback for local, SITE is set by Netlify
-        const reviewApiUrl = new URL('/.netlify/functions/getAppReviews', siteUrl).toString();
+        const reviewApiUrl = new URL(`/.netlify/functions/getAppReviews?territory=${territory}`, siteUrl).toString();
 
         console.log(`Attempting to fetch reviews from: ${reviewApiUrl}`);
         const response = await fetch(reviewApiUrl);
@@ -55,8 +79,8 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
     console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch). Using placeholder reviews for client.');
 }
 
-// Client-side filtering for review length (max 300 chars for body)
-const reviews = fetchedReviewsRaw.filter(review => review.attributes.body.length <= 300);
+// Use all fetched reviews without filtering by length
+const reviews = fetchedReviewsRaw;
 
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };

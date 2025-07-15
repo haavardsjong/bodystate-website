@@ -38,6 +38,11 @@ async function generateJWT() {
 }
 
 export async function handler(event, context) {
+    // Get territory from query parameters, default to USA
+    const params = event.queryStringParameters || {};
+    const territory = params.territory || 'USA';
+    console.log("[getAppReviews] Territory:", territory);
+    
     let apiToken = process.env.APP_STORE_CONNECT_API_TOKEN_DYNAMIC;
     const appId = process.env.APP_STORE_APP_ID || '6479940325';
 
@@ -57,8 +62,8 @@ export async function handler(event, context) {
         return { statusCode: 500, body: JSON.stringify({ error: "App ID not configured." }) };
     }
 
-    // Add filters for 5-star US reviews and increase limit
-    const APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=50&sort=-createdDate&filter[rating]=5&filter[territory]=USA&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
+    // Add filters for 5-star reviews and increase limit, use dynamic territory
+    const APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=50&sort=-createdDate&filter[rating]=5&filter[territory]=${territory}&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
     console.log(`[getAppReviews] Fetching reviews for App ID ${appId} from ${APPLE_API_URL}`);
 
     try {
