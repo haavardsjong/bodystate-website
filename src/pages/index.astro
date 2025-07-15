@@ -31,8 +31,14 @@ const territory = languageToTerritory[lang] || 'USA';
 // const APP_ID = '6479940325';
 // const APP_STORE_CONNECT_API_TOKEN = import.meta.env.APP_STORE_CONNECT_API_TOKEN; // Store your JWT as an environment variable
 
-// Initialize empty reviews array
-let fetchedReviewsRaw = []; // No placeholders
+// Initialize with a few real reviews as fallback
+const fallbackReviews = [
+    { id: 'fb1', attributes: { rating: 5, title: 'Passionate developer', body: 'Don\'t like writing reviews, but this deserves one since the developer chose not to have ads, but you can support with a small contribution to have some cool themes.', reviewerNickname: 'SimSalabimse', createdDate: '2024-08-12T10:00:00Z', territory: 'NOR' } },
+    { id: 'fb2', attributes: { rating: 5, title: 'Great body battery alternative', body: 'Does everything you expect it to do, no predatory monetization either!', reviewerNickname: 'Sesamusus', createdDate: '2024-04-13T14:30:00Z', territory: 'USA' } },
+    { id: 'fb3', attributes: { rating: 5, title: 'Finally Body Battery on Apple Watch', body: 'Have been missing this from Garmin. The app works very well, great job!', reviewerNickname: 'TechUser', createdDate: '2024-03-15T09:15:00Z', territory: 'USA' } },
+];
+
+let fetchedReviewsRaw = [];
 
 // Fetch reviews if in Netlify production OR Netlify dev environment
 // import.meta.env.NETLIFY_DEV might not be directly available in Astro like this.
@@ -72,8 +78,8 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
     console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch).');
 }
 
-// Use all fetched reviews without filtering by length
-const reviews = fetchedReviewsRaw;
+// Use fetched reviews, or fallback if too few
+const reviews = fetchedReviewsRaw.length >= 3 ? fetchedReviewsRaw : [...fetchedReviewsRaw, ...fallbackReviews].slice(0, 6);
 
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };

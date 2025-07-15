@@ -62,8 +62,8 @@ export async function handler(event, context) {
         return { statusCode: 500, body: JSON.stringify({ error: "App ID not configured." }) };
     }
 
-    // Add filters for 5-star reviews and increase limit, use dynamic territory
-    const APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=50&sort=-createdDate&filter[rating]=5&filter[territory]=${territory}&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
+    // Fetch reviews with dynamic territory, sorted by date
+    const APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=50&sort=-createdDate&filter[territory]=${territory}&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
     console.log(`[getAppReviews] Fetching reviews for App ID ${appId} from ${APPLE_API_URL}`);
 
     try {
