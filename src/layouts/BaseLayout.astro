@@ -132,18 +132,23 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 				<div class="footer-social">
 					<h4>{t?.footer?.connect}</h4>
 					<ul class="social-icons">
-						<li><a href="#" aria-label="Twitter">{t?.footer?.twitterLink}</a></li>
-						<li><a href="#" aria-label="Instagram">{t?.footer?.instagramLink}</a></li>
-						<li><a href="#" aria-label="TikTok">{t?.footer?.tiktokLink}</a></li>
+						<li><a href="https://x.com/bodystate" target="_blank" rel="noopener noreferrer" aria-label="Twitter">{t?.footer?.twitterLink}</a></li>
+						<li><a href="https://www.instagram.com/bodystateapp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">{t?.footer?.instagramLink}</a></li>
+						<li><a href="https://www.tiktok.com/@bodystate.app?_t=ZN-8tkSXvc0zAs&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok">{t?.footer?.tiktokLink}</a></li>
+						<li><a href="https://www.threads.net/@bodystateapp?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener noreferrer" aria-label="Threads">Threads</a></li>
+						<li><a href="https://substack.com/@bodystate" target="_blank" rel="noopener noreferrer" aria-label="Substack">Substack</a></li>
 					</ul>
 				</div>
 				<div class="footer-extra-links">
 					<h4>{t?.footer?.resources}</h4>
-					<ul>
-						<li><a href="#">{t?.footer?.blogLink}</a></li>
-						<li><a href="#">{t?.footer?.supportLink}</a></li>
-						<li><a href="#">{t?.footer?.careersLink}</a></li>
-					</ul>
+					<div class="footer-buttons">
+						<div class="footer-button-item">
+							<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bodystate" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+						</div>
+						<div class="footer-button-item">
+							<a href="https://www.producthunt.com/products/bodystate?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-bodystate" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=739527&theme=dark&period=daily&t=1752517132959" alt="BodyState - Energy&#0032;Tracking&#0032;for&#0032;Your&#0032;Apple&#0032;Watch | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="content-container footer-copyright">
@@ -445,7 +450,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	}
 	
 	nav ul.nav-links > li > a.active { /* Made selector more specific */
-		color: var(--color-accent);
+		color: var(--text-primary);
 		font-weight: 400;
 	}
 	
@@ -562,7 +567,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 
 	.footer-copyright {
 		text-align: center;
-		padding-top: var(--space-lg);
+		padding-top: var(--space-sm);
 		border-top: 1px solid var(--glass-border);
 		font-size: 0.85rem;
 		color: var(--text-tertiary);
@@ -689,5 +694,25 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		font-size: 18px; /* Adjust emoji flag size */
 		display: inline-block;
 		line-height: 1;
+	}
+	
+	/* Footer buttons styling */
+	.footer-buttons {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		align-items: flex-start;
+	}
+	
+	.footer-button-item {
+		display: flex;
+		align-items: center;
+	}
+	
+	@media (max-width: 768px) {
+		.footer-buttons {
+			align-items: center;
+			text-align: center;
+		}
 	}
 </style> 

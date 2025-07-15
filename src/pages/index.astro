@@ -55,8 +55,8 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
     console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch). Using placeholder reviews for client.');
 }
 
-// Client-side filtering for review length (max 200 chars for body)
-const reviews = fetchedReviewsRaw.filter(review => review.attributes.body.length <= 200);
+// Client-side filtering for review length (max 300 chars for body)
+const reviews = fetchedReviewsRaw.filter(review => review.attributes.body.length <= 300);
 
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -73,27 +73,73 @@ function formatDate(dateString) {
 		</div>
 	</div>
 	
-	<!-- Bento grid section with full-width background -->
-	<div class="bento-area-wrapper">
-		<div class="bento-container">
-			<div class="bento-grid">
-				<div class="bento-item bento-item-tall"></div>
+	<!-- Features carousel section with full-width background -->
+	<div class="features-area-wrapper">
+		<div class="features-carousel-wrapper" id="featuresCarouselWrapper">
+			<div class="features-grid" id="featuresGrid">
+				<!-- Feature 1 -->
+				<div class="feature-card">
+					<div class="feature-content top-aligned">
+						<h2 class="feature-headline">Give your body a voice.</h2>
+					</div>
+					<div class="feature-image bottom-aligned">
+						<img src="/features/one_bottom.jpg" alt="BodyState main screen showing vitals" />
+					</div>
+				</div>
 				
-				<div class="bento-item bento-item-small-1"></div>
-				<div class="bento-item bento-item-small-2"></div>
+				<!-- Feature 2 -->
+				<div class="feature-card">
+					<div class="feature-content bottom-aligned">
+						<h2 class="feature-headline">Track metrics that matter.</h2>
+					</div>
+					<div class="feature-image top-aligned">
+						<img src="/features/two_top.jpg" alt="BodyState detailed metrics screen" />
+					</div>
+				</div>
+				
+				<!-- Feature 3 -->
+				<div class="feature-card">
+					<div class="feature-content top-aligned">
+						<h2 class="feature-headline">Understand your patterns.</h2>
+					</div>
+					<div class="feature-image bottom-aligned">
+						<img src="/features/three_bottom.jpg" alt="BodyState trends and insights" />
+					</div>
+				</div>
+				
+				<!-- Feature 4 -->
+				<div class="feature-card">
+					<div class="feature-content bottom-aligned">
+						<h2 class="feature-headline">Optimize your energy.</h2>
+					</div>
+					<div class="feature-image top-aligned">
+						<img src="/features/four_top.jpg" alt="BodyState energy optimization" />
+					</div>
+				</div>
+				
+				<!-- Feature 5 -->
+				<div class="feature-card">
+					<div class="feature-content top-aligned">
+						<h2 class="feature-headline">Live life fully charged.</h2>
+					</div>
+					<div class="feature-image bottom-aligned">
+						<img src="/features/five_bottom.jpg" alt="BodyState lifestyle integration" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="features-nav-buttons-container content-container">
+			<div class="features-nav-buttons">
+				<button id="prevFeature" aria-label="Previous feature">
+					<svg width="12" height="20" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1L1 7L8 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				</button>
+				<button id="nextFeature" aria-label="Next feature">
+					<svg width="12" height="20" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L8 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				</button>
 			</div>
 		</div>
 	</div>
 
-	<!-- Section 1: Text over gray background -->
-	<div class="full-width-gray-area">
-		<div class="content-container">
-			<div class="content-section">
-				<h2>Understanding Your Body's Signals</h2>
-				<p>BodyState translates complex physiological data into intuitive insights. Discover how your daily activities, sleep patterns, and stress levels coalesce to define your unique bodily rhythm and energy reserves. It's more than data; it's your body's narrative.</p>
-			</div>
-		</div>
-	</div>
 
 	<!-- Section 2: Full-width black background with contained text -->
 	<div class="full-width-black-area">
@@ -256,83 +302,171 @@ function formatDate(dateString) {
 		}
 	}
 	
-	/* Bento grid styles */
-	.bento-area-wrapper {
-		background: linear-gradient(to bottom, #000000 0%, #121212 50%, #242424 100%); /* Darker grays */
-		padding-bottom: var(--space-xl); /* Add some padding if gradient ends abruptly */
+	/* Features carousel styles */
+	.features-area-wrapper {
+		background: linear-gradient(to bottom, #000000 0%, #121212 50%, #242424 100%);
+		padding-bottom: var(--space-xl);
 		width: 100vw;
 		position: relative;
 		left: 50%;
 		transform: translateX(-50%);
 	}
 
-	.bento-container {
-		margin: 6rem auto 0 auto; /* Centered, top margin, no bottom margin as wrapper has padding */
-		max-width: 1200px;
-		box-sizing: border-box; 
-		/* Background moved to bento-area-wrapper */
-		/* padding-bottom moved to bento-area-wrapper */
+	.features-carousel-wrapper {
+		overflow-x: auto;
+		overflow-y: hidden;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		margin: 6rem 0 0 0;
+		padding: 2rem calc((100vw - 1200px) / 2);
 	}
 	
-	.bento-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		grid-auto-rows: 400px; /* User confirmed this value */
-		gap: 1.5rem;
+	.features-carousel-wrapper::-webkit-scrollbar {
+		display: none;
 	}
 	
-	.bento-item {
+	.features-grid {
+		display: flex;
+		gap: 2rem;
+		padding: 2rem;
+	}
+	
+	.feature-card {
+		flex: 0 0 auto;
+		width: 450px;
+		height: 675px;
 		background: var(--glass-bg);
 		border-radius: var(--radius-lg);
 		border: 1px solid var(--glass-border);
 		backdrop-filter: blur(15px);
 		-webkit-backdrop-filter: blur(15px);
 		box-shadow: 0 8px 32px var(--glass-shadow);
-		transition: all 0.3s ease;
+		position: relative;
 		overflow: hidden;
 	}
 	
-	.bento-item:hover {
-		border-color: rgba(255, 255, 255, 0.15);
-		box-shadow: 0 8px 40px var(--glass-shadow), 0 0 15px var(--glass-glow);
+	.feature-content {
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: 2;
+		padding: 3rem;
+		text-align: center;
 	}
 	
-	/* Playful sizing variants */
-	.bento-item-tall {
-		grid-column: 1;
-		grid-row: span 2;
+	.feature-content.top-aligned {
+		top: 0;
 	}
 	
-	.bento-item-small-1 {
-		grid-column: 2;
-		grid-row: 1;
+	.feature-content.bottom-aligned {
+		bottom: 2.5rem;
 	}
 	
-	.bento-item-small-2 {
-		grid-column: 2;
-		grid-row: 2;
+	.feature-headline {
+		font-size: 2.5rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		line-height: 1.2;
+		margin: 0;
 	}
 	
-	/* Responsive bento grid */
+	.feature-image {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 1;
+	}
+	
+	.feature-image.top-aligned {
+		top: 0;
+	}
+	
+	.feature-image.bottom-aligned {
+		bottom: 0;
+	}
+	
+	.feature-image img {
+		width: auto;
+		display: block;
+	}
+	
+	.feature-image.top-aligned img {
+		height: 450px;
+	}
+	
+	.feature-image.bottom-aligned img {
+		height: 495px;
+	}
+	
+	/* Navigation buttons */
+	.features-nav-buttons-container {
+		display: flex;
+		justify-content: center;
+		padding-top: var(--space-md);
+		margin-top: var(--space-md);
+	}
+	
+	.features-nav-buttons {
+		display: inline-flex;
+		gap: var(--space-md);
+	}
+	
+	.features-nav-buttons button {
+		background-color: rgba(50, 50, 50, 0.5);
+		border: 1px solid rgba(255,255,255,0.1);
+		color: rgba(255,255,255,0.7);
+		border-radius: 50%;
+		width: 54px;
+		height: 54px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.features-nav-buttons button:hover {
+		background-color: rgba(65, 65, 65, 0.7);
+		color: rgba(255,255,255,0.9);
+		border-color: rgba(255,255,255,0.2);
+	}
+	
+	.features-nav-buttons button svg {
+		width: 14px;
+		height: auto;
+	}
+	
+	/* Responsive features carousel */
 	@media (max-width: 768px) {
-		.bento-grid {
-			grid-auto-rows: 247px; /* Adjusted to maintain aspect ratio with 400px desktop rows */
+		.features-carousel-wrapper {
+			padding: 0 1rem;
+			margin: 4rem 0 0 0;
 		}
-	}
-	
-	@media (max-width: 640px) {
-		.bento-grid {
-			grid-template-columns: 1fr;
+		
+		.features-grid {
+			padding: 1rem;
 			gap: 1rem;
 		}
 		
-		.bento-item {
-			grid-column: 1 !important;
-			grid-row: auto !important;
+		.feature-card {
+			width: 340px;
+			height: 510px;
 		}
 		
-		.bento-item-tall {
-			grid-row: span 1 !important; 
+		.feature-content {
+			padding: 2rem;
+		}
+		
+		.feature-headline {
+			font-size: 2rem;
+		}
+		
+		.feature-image.top-aligned img {
+			height: 340px;
+		}
+		
+		.feature-image.bottom-aligned img {
+			height: 375px;
 		}
 	}
 
@@ -385,7 +519,7 @@ function formatDate(dateString) {
 		width: 100vw;
 		left: 50%;
 		transform: translateX(-50%);
-		padding-bottom: calc(var(--space-xl) + 60px); /* Ensure space for buttons if they are outside */
+		padding-bottom: calc(var(--space-xl) + 60px);
 	}
 	/* Text color for p in black section will use .content-section p default (var(--text-secondary)) */
 	/* Text color for h2 in black section will use .content-section h2 default (var(--text-primary)) */
@@ -393,7 +527,7 @@ function formatDate(dateString) {
 	.reviews-outer-container {
 		/* This container is full-width black */
 		/* It allows the .reviews-carousel-wrapper to be offset for the peek effect */
-		padding-bottom: var(--space-lg); /* Space below buttons */
+		padding-bottom: var(--space-lg);
 	}
 
 	.reviews-header-container {
@@ -409,62 +543,37 @@ function formatDate(dateString) {
 	}
 
 	.reviews-carousel-wrapper {
-		position: relative;
-		max-width: 1200px;
-		margin-left: auto;
-		margin-right: auto;
-		padding-left: var(--space-md); 
-		padding-right: var(--space-md); 
-		overflow-x: hidden; 
+		overflow-x: auto;
+		overflow-y: hidden;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		margin: 0;
+		padding: 0 calc((100vw - 1200px) / 2);
+	}
+	
+	.reviews-carousel-wrapper::-webkit-scrollbar {
+		display: none;
 	}
 
 	.reviews-grid {
 		display: flex;
-		overflow-x: auto; 
-		gap: var(--space-md); 
-		padding-left: 0; /* Start at the edge of the padded parent */
-		padding-right: 0; /* Remove right padding here; add to last card or use margin */
-		/* Add a pseudo-element for spacing after the last card to ensure it's fully visible before wrapper padding cuts it off */
-		/* OR ensure wrapper's right padding is enough */
-		padding-bottom: var(--space-md); 
-		scroll-snap-type: x mandatory;
-		-webkit-overflow-scrolling: touch;
-		scrollbar-width: none; 
-	}
-	.reviews-grid::-webkit-scrollbar {
-    	display: none; 
+		gap: 2rem;
+		padding: 2rem;
 	}
 
 	.review-card {
-		background-color: rgba(30,30,30,0.7); 
-		border: 1px solid rgba(255,255,255,0.07);
-		border-radius: var(--radius-lg); 
+		flex: 0 0 auto;
+		width: 450px;
+		background: var(--glass-bg);
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--glass-border);
+		backdrop-filter: blur(15px);
+		-webkit-backdrop-filter: blur(15px);
+		box-shadow: 0 8px 32px var(--glass-shadow);
 		padding: var(--space-lg);
 		display: flex;
 		flex-direction: column;
-		scroll-snap-align: start;
-		box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-		flex-shrink: 0; 
-		width: clamp(280px, 85vw, 340px);
-		box-sizing: border-box; /* Add box-sizing */
-	}
-
-	/* Show 1 full card on small screens, with peeking next card */
-	/* Handled by clamp() and overflow of the parent */
-
-	/* Aim for 2 full cards */
-	@media (min-width: 768px) { 
-		.review-card {
-			/* Aim for 2 cards. Wrapper inner width (e.g. 768 - 48 = 720). (720 - 24_gap) / 2 = 348px */
-			width: clamp(300px, calc((100% - var(--space-md)) / 2), 348px); 
-		}
-	}
-
-	/* Aim for 3 full cards */
-	@media (min-width: 1200px) { 
-		.review-card {
-			width: 367px; /* Fine-tuning: (1152 - 48) / 3 = 368. Try 367px for a tiny bit of slack. */
-		}
+		box-sizing: border-box;
 	}
 
 	.no-reviews-message {
@@ -514,17 +623,14 @@ function formatDate(dateString) {
 	}
 
 	.reviews-nav-buttons-container {
-		/* Uses .content-container for max-width and padding */
 		display: flex;
-		justify-content: flex-end; /* Aligns the .reviews-nav-buttons div to the right */
-		padding-top: var(--space-md); 
+		justify-content: center;
+		padding-top: var(--space-md);
 	}
 
 	.reviews-nav-buttons {
-		display: inline-flex; /* Changed from flex to inline-flex, often better for grouped items */
-		/* justify-content: flex-end; No longer needed here, parent handles alignment */
-		gap: var(--space-sm);
-		/* margin-top: var(--space-md); No longer needed here, parent handles spacing */
+		display: inline-flex;
+		gap: var(--space-md);
 	}
 
 	.reviews-nav-buttons button {
@@ -532,22 +638,40 @@ function formatDate(dateString) {
 		border: 1px solid rgba(255,255,255,0.1);
 		color: rgba(255,255,255,0.7);
 		border-radius: 50%; 
-		width: 44px; 
-		height: 44px;
+		width: 54px; 
+		height: 54px;
 		cursor: pointer;
 		transition: all 0.2s ease;
-		display: flex; /* Keep for icon centering */
+		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
+	
 	.reviews-nav-buttons button:hover {
 		background-color: rgba(65, 65, 65, 0.7);
 		color: rgba(255,255,255,0.9);
 		border-color: rgba(255,255,255,0.2);
 	}
+	
 	.reviews-nav-buttons button svg {
-		width: 10px; /* Control SVG size */
+		width: 14px;
 		height: auto;
+	}
+	
+	/* Responsive reviews carousel */
+	@media (max-width: 768px) {
+		.reviews-carousel-wrapper {
+			padding: 0 1rem;
+		}
+		
+		.reviews-grid {
+			padding: 1rem;
+			gap: 1rem;
+		}
+		
+		.review-card {
+			width: 340px;
+		}
 	}
 
 	footer {
@@ -587,6 +711,33 @@ function formatDate(dateString) {
 
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
+		// Features carousel logic
+		const featuresGrid = document.getElementById('featuresGrid');
+		const prevFeatureButton = document.getElementById('prevFeature');
+		const nextFeatureButton = document.getElementById('nextFeature');
+		const featuresCarouselWrapper = document.getElementById('featuresCarouselWrapper');
+
+		if (featuresGrid && prevFeatureButton && nextFeatureButton && featuresCarouselWrapper) {
+			const scrollFeatureAmount = () => {
+				const firstCard = featuresGrid.querySelector('.feature-card');
+				if (firstCard) {
+					const cardStyle = getComputedStyle(firstCard);
+					const cardGap = parseFloat(getComputedStyle(featuresGrid).gap) || 0;
+					return firstCard.offsetWidth + cardGap;
+				}
+				return featuresCarouselWrapper.clientWidth * 0.8;
+			};
+
+			prevFeatureButton.addEventListener('click', () => {
+				featuresCarouselWrapper.scrollBy({ left: -scrollFeatureAmount(), behavior: 'smooth' });
+			});
+
+			nextFeatureButton.addEventListener('click', () => {
+				featuresCarouselWrapper.scrollBy({ left: scrollFeatureAmount(), behavior: 'smooth' });
+			});
+		}
+
+		// Reviews carousel logic
 		const reviewsGrid = document.getElementById('reviewsGrid');
 		const prevButton = document.getElementById('prevReview');
 		const nextButton = document.getElementById('nextReview');
