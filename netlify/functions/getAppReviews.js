@@ -21,7 +21,11 @@ async function generateJWT() {
     console.error("[getAppReviews] JWT Generation Error: Missing Key ID, Issuer ID, or P8 Key Content in environment.");
     throw new Error("JWT generation credentials missing.");
   }
-  const privateKey = privateKeyP8Content.replace(/\\n/g, '\n');
+  // Ensure the private key has proper PEM format
+  let privateKey = privateKeyP8Content.replace(/\\n/g, '\n');
+  if (!privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
+    privateKey = `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----`;
+  }
   const now = Math.floor(Date.now() / 1000);
   const expirationTime = now + (15 * 60);
   const payload = { iss: issuerId, iat: now, exp: expirationTime, aud: 'appstoreconnect-v1' };
@@ -38,9 +42,9 @@ async function generateJWT() {
 }
 
 export async function handler(event, context) {
-    // Get territory from query parameters, default to USA
+    // Get territory from query parameters, default to US
     const params = event.queryStringParameters || {};
-    const territory = params.territory || 'USA';
+    const territory = params.territory || 'US';
     console.log("[getAppReviews] Territory:", territory);
     
     let apiToken = process.env.APP_STORE_CONNECT_API_TOKEN_DYNAMIC;

@@ -5,25 +5,25 @@ import * as i18nUtils from '../i18n/utils';
 // Get current language
 const lang = i18nUtils.getLangFromUrl(Astro.url);
 
-// Map languages to App Store territories
+// Map languages to App Store territories (using 2-letter ISO codes)
 const languageToTerritory = {
-  'en': 'USA',
-  'es': 'ESP',  // Spain
-  'fr': 'FRA',  // France
-  'de': 'DEU',  // Germany
-  'it': 'ITA',  // Italy
-  'pt': 'BRA',  // Brazil (Portuguese)
-  'ja': 'JPN',  // Japan
-  'ko': 'KOR',  // Korea
-  'zh': 'CHN',  // China
-  'ru': 'RUS',  // Russia
-  'nl': 'NLD',  // Netherlands
-  'sv': 'SWE',  // Sweden
-  'no': 'NOR',  // Norway
-  'da': 'DNK',  // Denmark
+  'en': 'US',   // United States
+  'es': 'ES',   // Spain
+  'fr': 'FR',   // France
+  'de': 'DE',   // Germany
+  'it': 'IT',   // Italy
+  'pt': 'BR',   // Brazil (Portuguese)
+  'ja': 'JP',   // Japan
+  'ko': 'KR',   // Korea
+  'zh': 'CN',   // China
+  'ru': 'RU',   // Russia
+  'nl': 'NL',   // Netherlands
+  'sv': 'SE',   // Sweden
+  'no': 'NO',   // Norway
+  'da': 'DK',   // Denmark
 };
 
-const territory = languageToTerritory[lang] || 'USA';
+const territory = languageToTerritory[lang] || 'US';
 
 // Example: Fetching App Store Reviews (SERVER-SIDE in Astro frontmatter)
 // IMPORTANT: This is a conceptual example. You MUST handle authentication (JWT) securely.
@@ -31,14 +31,8 @@ const territory = languageToTerritory[lang] || 'USA';
 // const APP_ID = '6479940325';
 // const APP_STORE_CONNECT_API_TOKEN = import.meta.env.APP_STORE_CONNECT_API_TOKEN; // Store your JWT as an environment variable
 
-// Initialize with a few real reviews as fallback
-const fallbackReviews = [
-    { id: 'fb1', attributes: { rating: 5, title: 'Passionate developer', body: 'Don\'t like writing reviews, but this deserves one since the developer chose not to have ads, but you can support with a small contribution to have some cool themes.', reviewerNickname: 'SimSalabimse', createdDate: '2024-08-12T10:00:00Z', territory: 'NOR' } },
-    { id: 'fb2', attributes: { rating: 5, title: 'Great body battery alternative', body: 'Does everything you expect it to do, no predatory monetization either!', reviewerNickname: 'Sesamusus', createdDate: '2024-04-13T14:30:00Z', territory: 'USA' } },
-    { id: 'fb3', attributes: { rating: 5, title: 'Finally Body Battery on Apple Watch', body: 'Have been missing this from Garmin. The app works very well, great job!', reviewerNickname: 'TechUser', createdDate: '2024-03-15T09:15:00Z', territory: 'USA' } },
-];
-
 let fetchedReviewsRaw = [];
+let usedTerritory = territory; // Track which territory we actually used
 
 // Fetch reviews if in Netlify production OR Netlify dev environment
 // import.meta.env.NETLIFY_DEV might not be directly available in Astro like this.
@@ -53,19 +47,36 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
         // The port might differ, but `fetch` from server-side context in Astro can use relative paths.
         // If running `astro dev` (not `netlify dev`), this fetch will likely fail if the Netlify function isn't served.
         const siteUrl = import.meta.env.SITE || 'http://localhost:8888'; // Fallback for local, SITE is set by Netlify
-        const reviewApiUrl = new URL(`/.netlify/functions/getAppReviews?territory=${territory}`, siteUrl).toString();
-
+        // Try fetching reviews for the selected territory
+        let reviewApiUrl = new URL(`/.netlify/functions/getAppReviews?territory=${territory}`, siteUrl).toString();
         console.log(`Attempting to fetch reviews from: ${reviewApiUrl}`);
-        const response = await fetch(reviewApiUrl);
+        
+        let response = await fetch(reviewApiUrl);
         console.log(`Response status from ${reviewApiUrl}: ${response.status}`);
 
         if (response.ok) {
             const data = await response.json();
-            if (data && data.length > 0) {
+            if (data && data.length >= 3) {
                 fetchedReviewsRaw = data;
-                console.log('Successfully fetched and parsed reviews locally/on server.');
+                console.log(`Successfully fetched ${data.length} reviews for territory ${territory}`);
             } else {
-                console.warn('Fetched reviews, but the list is empty or invalid.');
+                // If less than 3 reviews and not already US, fallback to US
+                if (territory !== 'US') {
+                    console.log(`Only ${data ? data.length : 0} reviews for ${territory}, falling back to US`);
+                    reviewApiUrl = new URL(`/.netlify/functions/getAppReviews?territory=US`, siteUrl).toString();
+                    response = await fetch(reviewApiUrl);
+                    
+                    if (response.ok) {
+                        const usaData = await response.json();
+                        fetchedReviewsRaw = usaData;
+                        usedTerritory = 'US';
+                        console.log(`Fetched ${usaData.length} reviews from US fallback`);
+                    }
+                } else {
+                    // It's already US, use whatever we got
+                    fetchedReviewsRaw = data || [];
+                    console.log(`Using ${fetchedReviewsRaw.length} reviews from US`);
+                }
             }
         } else {
             const errorText = await response.text();
@@ -78,8 +89,8 @@ if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered compone
     console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch).');
 }
 
-// Use fetched reviews, or fallback if too few
-const reviews = fetchedReviewsRaw.length >= 3 ? fetchedReviewsRaw : [...fetchedReviewsRaw, ...fallbackReviews].slice(0, 6);
+// Use fetched reviews as is
+const reviews = fetchedReviewsRaw;
 
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
