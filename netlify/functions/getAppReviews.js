@@ -42,9 +42,9 @@ async function generateJWT() {
 }
 
 export async function handler(event, context) {
-    // Get territory from query parameters, default to US
+    // Get territory from query parameters, default to USA
     const params = event.queryStringParameters || {};
-    const territory = params.territory || 'US';
+    const territory = params.territory || 'USA';
     console.log("[getAppReviews] Territory:", territory);
     
     let apiToken = process.env.APP_STORE_CONNECT_API_TOKEN_DYNAMIC;
