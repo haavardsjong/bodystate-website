@@ -1,7 +1,13 @@
 // netlify/functions/getAppReviews.js
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import path from 'path';
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Load .env file variables if running locally (netlify dev might do this, but good for direct testing)
 // In deployed Netlify, process.env will be populated by Netlify UI + build command export
@@ -24,20 +30,22 @@ async function generateJWT() {
   // Ensure the private key has proper PEM format
   let privateKey = privateKeyP8Content;
   
-  // Handle case where the key is all on one line
-  if (!privateKey.includes('\n') && privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
+  // First, handle escaped newlines (common in environment variables)
+  privateKey = privateKey.replace(/\\n/g, '\n');
+  
+  // Check if it's still all on one line after replacing escaped newlines
+  const lines = privateKey.split('\n').filter(line => line.trim());
+  
+  if (lines.length <= 3) { // Only header, content, and footer
     // Extract just the key content
-    privateKey = privateKey
+    let keyContent = privateKey
       .replace(/-----BEGIN PRIVATE KEY-----/g, '')
       .replace(/-----END PRIVATE KEY-----/g, '')
-      .trim();
+      .replace(/\s+/g, ''); // Remove all whitespace
     
     // Add line breaks every 64 characters (PEM standard)
-    const keyLines = privateKey.match(/.{1,64}/g) || [];
+    const keyLines = keyContent.match(/.{1,64}/g) || [];
     privateKey = `-----BEGIN PRIVATE KEY-----\n${keyLines.join('\n')}\n-----END PRIVATE KEY-----`;
-  } else {
-    // Handle escaped newlines
-    privateKey = privateKey.replace(/\\n/g, '\n');
   }
   const now = Math.floor(Date.now() / 1000);
   const expirationTime = now + (15 * 60);
