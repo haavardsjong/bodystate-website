@@ -455,16 +455,28 @@ function formatDate(dateString) {
 		left: 0;
 		right: 0;
 		z-index: 2;
-		padding: 3rem;
+		padding: 2rem 3rem;
 		text-align: center;
 	}
 	
 	.feature-content.top-aligned {
 		top: 0;
+		bottom: auto;
+		height: calc(675px - 495px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 	}
 	
 	.feature-content.bottom-aligned {
-		bottom: 2.5rem;
+		top: auto;
+		bottom: 0;
+		height: calc(675px - 450px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 	}
 	
 	.feature-headline {
@@ -560,7 +572,15 @@ function formatDate(dateString) {
 		}
 		
 		.feature-content {
-			padding: var(--space-lg);
+			padding: 1rem 2rem;
+		}
+		
+		.feature-content.top-aligned {
+			height: calc(510px - 360px);
+		}
+		
+		.feature-content.bottom-aligned {
+			height: calc(510px - 340px);
 		}
 		
 		.feature-headline {
@@ -568,12 +588,12 @@ function formatDate(dateString) {
 		}
 		
 		.feature-image.top-aligned img {
-			height: 300px;
+			height: 340px;
 			object-fit: cover;
 		}
 		
 		.feature-image.bottom-aligned img {
-			height: 320px;
+			height: 360px;
 			object-fit: cover;
 		}
 	}
