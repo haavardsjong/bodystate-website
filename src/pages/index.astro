@@ -34,59 +34,68 @@ const territory = languageToTerritory[lang] || 'USA';
 let fetchedReviewsRaw = [];
 let usedTerritory = territory; // Track which territory we actually used
 
-// Fetch reviews if in Netlify production OR Netlify dev environment
-// import.meta.env.NETLIFY_DEV might not be directly available in Astro like this.
-// A common way Netlify dev indicates itself is by providing a different port or specific env vars set by its own process.
-// For now, let's assume we will run `netlify dev` which makes the function available.
-// The `fetch` will only succeed if the function endpoint is actually live (via `netlify dev` or deployed).
-
-// We will try to fetch. If it fails (e.g. not running via netlify dev, or other error), we stick to placeholders.
-if (import.meta.env.SSR) { // Astro sets SSR to true for server-rendered components / on-demand builds
+// Fetch reviews during build or runtime
+if (import.meta.env.SSR) { // Server-side rendering
     try {
-        // When running `netlify dev`, the functions are at /.netlify/functions/
-        // The port might differ, but `fetch` from server-side context in Astro can use relative paths.
-        // If running `astro dev` (not `netlify dev`), this fetch will likely fail if the Netlify function isn't served.
-        const siteUrl = import.meta.env.SITE || 'http://localhost:8888'; // Fallback for local, SITE is set by Netlify
-        // Try fetching reviews for the selected territory
-        let reviewApiUrl = new URL(`/.netlify/functions/getAppReviews?territory=${territory}`, siteUrl).toString();
-        console.log(`Attempting to fetch reviews from: ${reviewApiUrl}`);
+        // During Netlify build, we can't call the function endpoint
+        // Instead, we'll directly fetch from App Store API using the build-time JWT
+        const apiToken = import.meta.env.APP_STORE_CONNECT_API_TOKEN_DYNAMIC || process.env.APP_STORE_CONNECT_API_TOKEN_DYNAMIC;
+        const appId = import.meta.env.APP_STORE_APP_ID || process.env.APP_STORE_APP_ID || '6479940325';
         
-        let response = await fetch(reviewApiUrl);
-        console.log(`Response status from ${reviewApiUrl}: ${response.status}`);
+        console.log(`[Build] API Token available: ${apiToken ? 'Yes' : 'No'}`);
+        console.log(`[Build] App ID: ${appId}`);
+        
+        if (apiToken) {
+            // Direct API call during build
+            let APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=50&sort=-createdDate&filter[territory]=${territory}&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
+            console.log(`[Build] Fetching reviews directly from Apple API for territory: ${territory}`);
+            
+            let response = await fetch(APPLE_API_URL, {
+                headers: { 'Authorization': `Bearer ${apiToken}` }
+            });
+            console.log(`[Build] Apple API response status: ${response.status}`);
 
-        if (response.ok) {
-            const data = await response.json();
-            if (data && data.length >= 3) {
-                fetchedReviewsRaw = data;
-                console.log(`Successfully fetched ${data.length} reviews for territory ${territory}`);
-            } else {
-                // If less than 3 reviews and not already USA, fallback to USA
-                if (territory !== 'USA') {
-                    console.log(`Only ${data ? data.length : 0} reviews for ${territory}, falling back to USA`);
-                    reviewApiUrl = new URL(`/.netlify/functions/getAppReviews?territory=USA`, siteUrl).toString();
-                    response = await fetch(reviewApiUrl);
-                    
-                    if (response.ok) {
-                        const usaData = await response.json();
-                        fetchedReviewsRaw = usaData;
-                        usedTerritory = 'USA';
-                        console.log(`Fetched ${usaData.length} reviews from USA fallback`);
-                    }
+            if (response.ok) {
+                const responseData = await response.json();
+                const data = responseData.data || responseData; // Handle both wrapped and unwrapped responses
+                
+                if (data && data.length >= 3) {
+                    fetchedReviewsRaw = data;
+                    console.log(`[Build] Successfully fetched ${data.length} reviews for territory ${territory}`);
                 } else {
-                    // It's already USA, use whatever we got
-                    fetchedReviewsRaw = data || [];
-                    console.log(`Using ${fetchedReviewsRaw.length} reviews from USA`);
+                    // If less than 3 reviews and not already USA, fallback to USA
+                    if (territory !== 'USA') {
+                        console.log(`[Build] Only ${data ? data.length : 0} reviews for ${territory}, falling back to USA`);
+                        APPLE_API_URL = `https://api.appstoreconnect.apple.com/v1/apps/${appId}/customerReviews?limit=50&sort=-createdDate&filter[territory]=USA&fields[customerReviews]=rating,title,body,reviewerNickname,createdDate,territory`;
+                        response = await fetch(APPLE_API_URL, {
+                            headers: { 'Authorization': `Bearer ${apiToken}` }
+                        });
+                        
+                        if (response.ok) {
+                            const usaResponseData = await response.json();
+                            const usaData = usaResponseData.data || usaResponseData;
+                            fetchedReviewsRaw = usaData;
+                            usedTerritory = 'USA';
+                            console.log(`[Build] Fetched ${usaData.length} reviews from USA fallback`);
+                        }
+                    } else {
+                        // It's already USA, use whatever we got
+                        fetchedReviewsRaw = data || [];
+                        console.log(`[Build] Using ${fetchedReviewsRaw.length} reviews from USA`);
+                    }
                 }
+            } else {
+                const errorText = await response.text();
+                console.error(`[Build] Failed to fetch reviews. Status: ${response.status}, Body: ${errorText}`);
             }
         } else {
-            const errorText = await response.text();
-            console.error(`Failed to fetch reviews. Status: ${response.status}, Body: ${errorText}`);
+            console.error('[Build] No API token available - cannot fetch reviews');
         }
     } catch (error) {
-        console.error('Error during server-side fetch for reviews:', error);
+        console.error('[Build] Error during server-side fetch for reviews:', error);
     }
 } else {
-    console.log('Not in SSR context (e.g., static build for client-side JS, or dev without SSR capabilities for this fetch).');
+    console.log('[Build] Not in SSR context');
 }
 
 // Use fetched reviews as is
