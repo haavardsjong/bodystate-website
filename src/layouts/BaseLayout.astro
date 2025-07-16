@@ -14,7 +14,8 @@ const t = useTranslations(lang);
 const currentPath = Astro.url.pathname;
 const currentYear = new Date().getFullYear();
 // Ensure t.footer and t.footer.copyright exist before trying to replace
-const copyrightText = t?.footer?.copyright?.replace('{year}', currentYear.toString()) || `© ${currentYear} BodyState by 2001 Ventures AS. All rights reserved.`;
+const copyrightTextTemplate = t?.footer?.copyright || '© {year} BodyState by 2001 Ventures AS. All rights reserved.';
+const copyrightText = copyrightTextTemplate.replace('{year}', currentYear.toString());
 
 // Helper function to create localized paths
 function localizedPath(path, targetLang) {
@@ -152,7 +153,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 				</div>
 			</div>
 			<div class="content-container footer-copyright">
-				<p>{copyrightText}</p>
+				<p>© {currentYear} BodyState by <a href="https://2001.ventures" target="_blank" rel="noopener noreferrer">2001 Ventures AS</a>. All rights reserved.</p>
 			</div>
 		</footer>
 		<script>
@@ -246,7 +247,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		--space-lg: 2rem;
 		--space-xl: 3rem;
 		
-		--nav-height: 64px;
+		--nav-height: 79px;
 	}
 	
 	html {
@@ -570,6 +571,16 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		padding-top: var(--space-sm);
 		border-top: 1px solid var(--glass-border);
 		font-size: 0.85rem;
+		color: var(--text-tertiary);
+	}
+	
+	.footer-copyright a {
+		color: var(--text-tertiary);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+	
+	.footer-copyright a:hover {
 		color: var(--text-tertiary);
 	}
 
