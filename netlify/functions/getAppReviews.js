@@ -22,13 +22,23 @@ async function generateJWT() {
     throw new Error("JWT generation credentials missing.");
   }
   // Ensure the private key has proper PEM format
-  let privateKey = privateKeyP8Content.replace(/\\n/g, '\n');
+  let privateKey = privateKeyP8Content;
   
-  // Remove any existing headers/footers first
-  privateKey = privateKey.replace(/-----BEGIN PRIVATE KEY-----/g, '').replace(/-----END PRIVATE KEY-----/g, '').trim();
-  
-  // Add proper PEM headers
-  privateKey = `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----`;
+  // Handle case where the key is all on one line
+  if (!privateKey.includes('\n') && privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
+    // Extract just the key content
+    privateKey = privateKey
+      .replace(/-----BEGIN PRIVATE KEY-----/g, '')
+      .replace(/-----END PRIVATE KEY-----/g, '')
+      .trim();
+    
+    // Add line breaks every 64 characters (PEM standard)
+    const keyLines = privateKey.match(/.{1,64}/g) || [];
+    privateKey = `-----BEGIN PRIVATE KEY-----\n${keyLines.join('\n')}\n-----END PRIVATE KEY-----`;
+  } else {
+    // Handle escaped newlines
+    privateKey = privateKey.replace(/\\n/g, '\n');
+  }
   const now = Math.floor(Date.now() / 1000);
   const expirationTime = now + (15 * 60);
   const payload = { iss: issuerId, iat: now, exp: expirationTime, aud: 'appstoreconnect-v1' };
