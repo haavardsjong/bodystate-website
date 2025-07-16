@@ -58,9 +58,12 @@ try {
                 const responseData = await response.json();
                 const data = responseData.data || responseData; // Handle both wrapped and unwrapped responses
                 
-                if (data && data.length >= 3) {
-                    fetchedReviewsRaw = data;
-                    console.log(`[Build] Successfully fetched ${data.length} reviews for territory ${territory}`);
+                // Filter to only 5-star reviews first to check if we have enough
+                const fiveStarData = (data || []).filter(review => review.attributes?.rating === 5);
+                
+                if (fiveStarData.length >= 3) {
+                    fetchedReviewsRaw = data; // Keep all for now, will filter later
+                    console.log(`[Build] Successfully fetched ${data.length} reviews (${fiveStarData.length} five-star) for territory ${territory}`);
                 } else {
                     // If less than 3 reviews and not already USA, fallback to USA
                     if (territory !== 'USA') {
@@ -73,9 +76,10 @@ try {
                         if (response.ok) {
                             const usaResponseData = await response.json();
                             const usaData = usaResponseData.data || usaResponseData;
+                            const usaFiveStarData = (usaData || []).filter(review => review.attributes?.rating === 5);
                             fetchedReviewsRaw = usaData;
                             usedTerritory = 'USA';
-                            console.log(`[Build] Fetched ${usaData.length} reviews from USA fallback`);
+                            console.log(`[Build] Fetched ${usaData.length} reviews (${usaFiveStarData.length} five-star) from USA fallback`);
                         }
                     } else {
                         // It's already USA, use whatever we got
@@ -94,8 +98,8 @@ try {
     console.error('[Build] Error during server-side fetch for reviews:', error);
 }
 
-// Use fetched reviews as is
-const reviews = fetchedReviewsRaw;
+// Filter to only 5-star reviews
+const reviews = fetchedReviewsRaw.filter(review => review.attributes?.rating === 5);
 
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };

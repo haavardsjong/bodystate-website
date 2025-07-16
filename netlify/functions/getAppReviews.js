@@ -103,9 +103,11 @@ export async function handler(event, context) {
             return { statusCode: response.status, body: JSON.stringify({ error: "Failed to fetch from Apple.", details: responseBodyText }) };
         }
         const data = JSON.parse(responseBodyText);
-        const reviewsToReturn = data.data || [];
-        console.log(`[getAppReviews] Successfully fetched ${reviewsToReturn.length} reviews.`);
-        return { statusCode: 200, body: JSON.stringify(reviewsToReturn) };
+        const allReviews = data.data || [];
+        // Filter to only 5-star reviews
+        const fiveStarReviews = allReviews.filter(review => review.attributes?.rating === 5);
+        console.log(`[getAppReviews] Fetched ${allReviews.length} total reviews, filtered to ${fiveStarReviews.length} five-star reviews.`);
+        return { statusCode: 200, body: JSON.stringify(fiveStarReviews) };
     } catch (error) {
         console.error('[getAppReviews] Error calling Apple API:', error);
         return { statusCode: 500, body: JSON.stringify({ error: "Internal error fetching reviews.", details: error.message }) };
