@@ -14,8 +14,24 @@ function generateJWT() {
     throw new Error("Missing critical API key generation credentials");
   }
 
-  // Ensure the private key content has correctly formatted newlines
-  const privateKey = privateKeyP8Content.replace(/\\n/g, '\n');
+  // Ensure the private key has proper PEM format
+  let privateKey = privateKeyP8Content;
+  
+  // First, handle escaped newlines (common in environment variables)
+  privateKey = privateKey.replace(/\\n/g, '\n');
+  
+  // Check if the key needs formatting (Netlify strips newlines)
+  if (!privateKey.includes('\n') || privateKey.split('\n').filter(line => line.trim()).length <= 3) {
+    // Extract just the key content, removing headers/footers and all whitespace
+    let keyContent = privateKey
+      .replace(/-----BEGIN PRIVATE KEY-----/g, '')
+      .replace(/-----END PRIVATE KEY-----/g, '')
+      .replace(/\s+/g, ''); // Remove all whitespace
+    
+    // Add line breaks every 64 characters (PEM standard)
+    const keyLines = keyContent.match(/.{1,64}/g) || [];
+    privateKey = `-----BEGIN PRIVATE KEY-----\n${keyLines.join('\n')}\n-----END PRIVATE KEY-----`;
+  }
 
   const now = Math.floor(Date.now() / 1000);
   const expirationTime = now + (15 * 60); // Token valid for 15 minutes
