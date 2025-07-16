@@ -58,8 +58,11 @@ try {
                 const responseData = await response.json();
                 const data = responseData.data || responseData; // Handle both wrapped and unwrapped responses
                 
-                // Filter to only 5-star reviews first to check if we have enough
-                const fiveStarData = (data || []).filter(review => review.attributes?.rating === 5);
+                // Filter to only 5-star reviews with valid length first to check if we have enough
+                const fiveStarData = (data || []).filter(review => {
+                    const body = review.attributes?.body || '';
+                    return review.attributes?.rating === 5 && body.length >= 25 && body.length <= 500;
+                });
                 
                 if (fiveStarData.length >= 3) {
                     fetchedReviewsRaw = data; // Keep all for now, will filter later
@@ -76,7 +79,10 @@ try {
                         if (response.ok) {
                             const usaResponseData = await response.json();
                             const usaData = usaResponseData.data || usaResponseData;
-                            const usaFiveStarData = (usaData || []).filter(review => review.attributes?.rating === 5);
+                            const usaFiveStarData = (usaData || []).filter(review => {
+                                const body = review.attributes?.body || '';
+                                return review.attributes?.rating === 5 && body.length >= 25 && body.length <= 500;
+                            });
                             fetchedReviewsRaw = usaData;
                             usedTerritory = 'USA';
                             console.log(`[Build] Fetched ${usaData.length} reviews (${usaFiveStarData.length} five-star) from USA fallback`);
@@ -98,8 +104,11 @@ try {
     console.error('[Build] Error during server-side fetch for reviews:', error);
 }
 
-// Filter to only 5-star reviews
-const reviews = fetchedReviewsRaw.filter(review => review.attributes?.rating === 5);
+// Filter to only 5-star reviews with body length between 25 and 500 characters
+const reviews = fetchedReviewsRaw.filter(review => {
+    const body = review.attributes?.body || '';
+    return review.attributes?.rating === 5 && body.length >= 25 && body.length <= 500;
+});
 
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };

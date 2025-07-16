@@ -17,7 +17,9 @@
     "blogLink": "博客",
     "supportLink": "支持",
     "careersLink": "职业",
-    "copyright": "© {year} BodyState by 2001 Ventures AS. All rights reserved."
+    "copyright": "© {year} BodyState by 2001 Ventures AS. 版权所有。",
+    "madeWithLove": "在{location}用❤️制作：",
+    "copyrightShort": "© {year}"
   },
   "header": {
     "brandName": "BodyState",

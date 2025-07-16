@@ -17,7 +17,9 @@
     "blogLink": "Blog",
     "supportLink": "Støtte",
     "careersLink": "Karriere",
-    "copyright": "© {year} BodyState by 2001 Ventures AS. All rights reserved."
+    "copyright": "© {year} BodyState af 2001 Ventures AS. Alle rettigheder forbeholdes.",
+    "madeWithLove": "Lavet med ❤️ i {location} af",
+    "copyrightShort": "© {year}"
   },
   "header": {
     "brandName": "BodyState",

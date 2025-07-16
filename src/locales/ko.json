@@ -17,7 +17,9 @@
     "blogLink": "블로그",
     "supportLink": "지원",
     "careersLink": "경력",
-    "copyright": "© {year} BodyState by 2001 Ventures AS. All rights reserved."
+    "copyright": "© {year} BodyState by 2001 Ventures AS. 모든 권리 보유.",
+    "madeWithLove": "{location}에서 ❤️로 만들어짐:",
+    "copyrightShort": "© {year}"
   },
   "header": {
     "brandName": "BodyState",

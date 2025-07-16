@@ -104,9 +104,12 @@ export async function handler(event, context) {
         }
         const data = JSON.parse(responseBodyText);
         const allReviews = data.data || [];
-        // Filter to only 5-star reviews
-        const fiveStarReviews = allReviews.filter(review => review.attributes?.rating === 5);
-        console.log(`[getAppReviews] Fetched ${allReviews.length} total reviews, filtered to ${fiveStarReviews.length} five-star reviews.`);
+        // Filter to only 5-star reviews with body length between 25 and 500 characters
+        const fiveStarReviews = allReviews.filter(review => {
+            const body = review.attributes?.body || '';
+            return review.attributes?.rating === 5 && body.length >= 25 && body.length <= 500;
+        });
+        console.log(`[getAppReviews] Fetched ${allReviews.length} total reviews, filtered to ${fiveStarReviews.length} five-star reviews with valid length.`);
         return { statusCode: 200, body: JSON.stringify(fiveStarReviews) };
     } catch (error) {
         console.error('[getAppReviews] Error calling Apple API:', error);
