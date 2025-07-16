@@ -1,5 +1,5 @@
 [build]
-  command = "export APP_STORE_CONNECT_API_TOKEN_DYNAMIC=$(node scripts/generate-appstore-jwt.cjs) && astro build"
+  command = "node scripts/debug-jwt-netlify.cjs && export APP_STORE_CONNECT_API_TOKEN_DYNAMIC=$(node scripts/generate-appstore-jwt.cjs) && astro build"
   functions = "netlify/functions"
   publish = "dist"
 
