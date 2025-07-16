@@ -188,24 +188,26 @@ function formatDate(dateString) {
 	<div class="full-width-black-area">
 		<div class="reviews-outer-container">
 			<div class="reviews-header-container content-container">
-				<div class="apple-stats">
-					<div class="rating-display">
-						<span class="rating-number">4.7</span>
-						<div class="stars-row">
-							<span class="star-filled">★</span>
-							<span class="star-filled">★</span>
-							<span class="star-filled">★</span>
-							<span class="star-filled">★</span>
-							<span class="star-half">★</span>
+				<div class="stats-container">
+					<div class="stat-item">
+						<div class="app-store-rating">
+							<img src="/icons/laurel.leading.svg" alt="" class="laurel-left" />
+							<img src="/icons/apple.logo.svg" alt="Apple" class="apple-logo" />
+							<span class="rating-number">4.7+</span>
+							<img src="/icons/laurel.trailing.svg" alt="" class="laurel-right" />
 						</div>
+						<p class="rating-label">App Store Rating</p>
 					</div>
-					<div class="stats-divider"></div>
-					<div class="users-count">
-						<span class="count-number">200K+</span>
-						<span class="count-label">Users Worldwide</span>
+					
+					<div class="stat-item">
+						<div class="users-rating">
+							<img src="/icons/laurel.leading.svg" alt="" class="laurel-left" />
+							<span class="users-number">200K+</span>
+							<img src="/icons/laurel.trailing.svg" alt="" class="laurel-right" />
+						</div>
+						<p class="users-label">Users Worldwide</p>
 					</div>
 				</div>
-				<h2>What Our Users Say</h2>
 			</div>
 			<div class="reviews-carousel-wrapper" id="reviewsCarouselWrapper">
 				<div class="reviews-grid" id="reviewsGrid">
@@ -593,107 +595,156 @@ function formatDate(dateString) {
 	.reviews-header-container {
 		/* Uses .content-container for max-width and padding */
 		text-align: center;
-		padding-top: var(--space-xl);
+		padding-top: calc(var(--space-xl) * 2);
 		margin-bottom: var(--space-lg);
 	}
 	.reviews-header-container h2 {
 		font-size: 2.5rem;
 		font-weight: 600;
 		color: var(--text-primary);
-		margin-top: var(--space-lg);
+		margin-top: 0;
 	}
 
-	/* Apple-style stats section */
-	.apple-stats {
+	/* Stats container for side-by-side layout */
+	.stats-container {
+		display: flex;
+		justify-content: center;
+		gap: 4rem;
+		margin-bottom: calc(var(--space-xl) * 2);
+	}
+
+	.stat-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	/* App Store rating section */
+	.app-store-rating {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 3rem;
-		margin-bottom: var(--space-md);
+		gap: 0.75rem;
+		margin-bottom: -1rem;
+		position: relative;
 	}
 
-	.rating-display {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
+	.laurel-left, .laurel-right {
+		width: 84px;
+		height: 84px;
+		opacity: 0.4;
+		position: relative;
+		top: 9px;
+	}
+
+	.apple-logo {
+		width: 42px;
+		height: 42px;
 	}
 
 	.rating-number {
-		font-size: 3.5rem;
+		font-size: 3.75rem;
 		font-weight: 700;
 		color: var(--text-primary);
 		line-height: 1;
 		letter-spacing: -0.02em;
+		margin: 0 0.2rem;
 	}
 
-	.stars-row {
-		display: flex;
-		gap: 0.125rem;
-		font-size: 1.25rem;
-	}
-
-	.star-filled {
-		color: #f5a623;
-	}
-
-	.star-half {
-		position: relative;
-		color: rgba(255, 255, 255, 0.2);
-	}
-
-	.star-half::before {
-		content: '★';
-		position: absolute;
-		left: 0;
-		width: 50%;
-		overflow: hidden;
-		color: #f5a623;
-	}
-
-	.stats-divider {
-		width: 1px;
-		height: 60px;
-		background: rgba(255, 255, 255, 0.1);
-	}
-
-	.users-count {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.25rem;
-	}
-
-	.count-number {
-		font-size: 2rem;
-		font-weight: 600;
-		color: var(--text-primary);
-		letter-spacing: -0.02em;
-	}
-
-	.count-label {
-		font-size: 0.875rem;
-		color: var(--text-secondary);
+	.rating-label {
+		font-size: 1.3rem;
+		color: rgba(255, 255, 255, 0.5);
 		font-weight: 400;
-		letter-spacing: -0.01em;
+		text-align: center;
+		margin-bottom: 0;
+		letter-spacing: 0;
+		margin-top: 0;
+	}
+
+	/* Users section - identical to rating */
+	.users-rating {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-bottom: -1rem;
+		position: relative;
+	}
+
+	.users-rating .laurel-left,
+	.users-rating .laurel-right {
+		width: 84px;
+		height: 84px;
+		opacity: 0.4;
+		position: relative;
+		top: 9px;
+	}
+
+	.users-number {
+		font-size: 3.75rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		line-height: 1;
+		letter-spacing: -0.02em;
+		margin: 0 0.2rem;
+	}
+
+	.users-label {
+		font-size: 1.3rem;
+		color: rgba(255, 255, 255, 0.5);
+		font-weight: 400;
+		text-align: center;
+		margin-bottom: 0;
+		letter-spacing: 0;
+		margin-top: 0;
 	}
 
 	@media (max-width: 768px) {
-		.apple-stats {
+		.stats-container {
 			flex-direction: column;
 			gap: 2rem;
 		}
 
-		.stats-divider {
-			width: 100px;
-			height: 1px;
+		.stat-item {
+			margin-bottom: var(--space-md);
+		}
+
+		.app-store-rating {
+			gap: 0.5rem;
+		}
+
+		.laurel-left, .laurel-right {
+			width: 72px;
+			height: 72px;
+			top: 7.5px;
+		}
+
+		.apple-logo {
+			width: 36px;
+			height: 36px;
 		}
 
 		.rating-number {
-			font-size: 3rem;
+			font-size: 3.375rem;
 		}
 
-		.users-count {
-			align-items: center;
+		.rating-label {
+			font-size: 1.125rem;
+		}
+
+		.users-rating .laurel-left,
+		.users-rating .laurel-right {
+			width: 72px;
+			height: 72px;
+			top: 7.5px;
+		}
+
+		.users-number {
+			font-size: 3.375rem;
+		}
+
+		.users-label {
+			font-size: 1.125rem;
 		}
 	}
 
@@ -748,7 +799,7 @@ function formatDate(dateString) {
 	}
 
 	.review-rating {
-		font-size: 1.125rem;
+		font-size: 1.5rem;
 		color: #f5a623; 
 		margin-bottom: 0.75rem;
 		letter-spacing: 0.05em;
