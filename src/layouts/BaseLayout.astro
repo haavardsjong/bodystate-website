@@ -209,19 +209,56 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		</footer>
 		<script>
 			const header = document.querySelector('header');
+			let lastScrollY = window.scrollY;
+			let ticking = false;
 			
 			const handleScroll = () => {
-				if (window.scrollY > 10) { // Add class after scrolling down a bit
+				const currentScrollY = window.scrollY;
+				const isMobile = window.innerWidth <= 768;
+				
+				// Always handle glass effect
+				if (currentScrollY > 10) {
 					header.classList.add('scrolled');
 				} else {
 					header.classList.remove('scrolled');
 				}
+				
+				// Handle show/hide on mobile only
+				if (isMobile) {
+					if (currentScrollY > lastScrollY && currentScrollY > 100) {
+						// Scrolling down - hide header
+						header.classList.add('header-hidden');
+					} else {
+						// Scrolling up - show header
+						header.classList.remove('header-hidden');
+					}
+				} else {
+					// On desktop, always show header
+					header.classList.remove('header-hidden');
+				}
+				
+				lastScrollY = currentScrollY;
+				ticking = false;
+			};
+			
+			const requestTick = () => {
+				if (!ticking) {
+					window.requestAnimationFrame(handleScroll);
+					ticking = true;
+				}
 			};
 			
 			// Listen for scroll events
-			window.addEventListener('scroll', handleScroll);
+			window.addEventListener('scroll', requestTick);
 			
-			// Initial check in case the page loads already scrolled
+			// Listen for resize to handle mobile/desktop switch
+			window.addEventListener('resize', () => {
+				if (window.innerWidth > 768) {
+					header.classList.remove('header-hidden');
+				}
+			});
+			
+			// Initial check
 			handleScroll();
 		</script>
 
@@ -557,7 +594,14 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		border-top: none;
 		border-bottom: none;
 		box-shadow: none;
-		transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+		transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+		transform: translateY(0);
+	}
+	
+	@media (max-width: 768px) {
+		header.header-hidden {
+			transform: translateY(-100%);
+		}
 	}
 	
 	header.scrolled {

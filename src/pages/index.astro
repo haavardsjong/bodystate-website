@@ -384,7 +384,7 @@ function formatDate(dateString) {
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
 		.hero {
-			padding-top: calc(var(--space-xl) * 1.5);
+			padding-top: calc(var(--space-xl) * 2.5);
 		}
 		
 		.subtitle {
@@ -545,17 +545,17 @@ function formatDate(dateString) {
 	/* Responsive features carousel */
 	@media (max-width: 768px) {
 		.features-carousel-wrapper {
-			padding: 0 var(--space-sm);
+			padding: 0 1rem;
 			margin: calc(var(--space-xl) * 1.5) 0 0 0;
 		}
 		
 		.features-grid {
-			padding: var(--space-sm);
-			gap: var(--space-sm);
+			padding: 0;
+			gap: 1rem;
 		}
 		
 		.feature-card {
-			width: min(340px, calc(100vw - 2rem));
+			width: calc(100vw - 2rem);
 			height: 510px;
 		}
 		
@@ -675,7 +675,7 @@ function formatDate(dateString) {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.75rem;
+		gap: 0.5rem;
 		margin-bottom: -0.5rem;
 		position: relative;
 	}
@@ -717,7 +717,7 @@ function formatDate(dateString) {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.75rem;
+		gap: 0.5rem;
 		margin-bottom: -0.5rem;
 		position: relative;
 	}
@@ -753,15 +753,21 @@ function formatDate(dateString) {
 	@media (max-width: 768px) {
 		.stats-container {
 			flex-direction: column;
-			gap: 2rem;
+			gap: 3rem;
 		}
 
 		.stat-item {
-			margin-bottom: var(--space-md);
+			margin-bottom: 0;
 		}
 
 		.app-store-rating {
-			gap: 0.5rem;
+			gap: 0.4rem;
+			margin-bottom: 0.5rem;
+		}
+		
+		.users-rating {
+			gap: 0.4rem;
+			margin-bottom: 0.5rem;
 		}
 
 		.laurel-left, .laurel-right {
@@ -932,16 +938,16 @@ function formatDate(dateString) {
 	/* Responsive reviews carousel */
 	@media (max-width: 768px) {
 		.reviews-carousel-wrapper {
-			padding: 0 var(--space-sm);
+			padding: 0 1rem;
 		}
 		
 		.reviews-grid {
-			padding: var(--space-sm);
-			gap: var(--space-sm);
+			padding: 0;
+			gap: 1rem;
 		}
 		
 		.review-card {
-			width: min(340px, calc(100vw - 2rem));
+			width: calc(100vw - 2rem);
 		}
 	}
 
@@ -1038,12 +1044,15 @@ function formatDate(dateString) {
 		const downloadButtonOverlay = document.querySelector('.download-overlay');
 		const heroSection = document.querySelector('.hero'); 
 		const siteFooter = document.querySelector('footer.site-footer');
+		let lastScrollYForButton = window.scrollY;
 
 		if (downloadButtonOverlay && heroSection && siteFooter) {
 			const handleScroll = () => {
+				const currentScrollY = window.scrollY;
 				const heroRect = heroSection.getBoundingClientRect();
 				const footerRect = siteFooter.getBoundingClientRect();
 				const viewportHeight = window.innerHeight;
+				const isMobile = window.innerWidth <= 768;
 
 				// Condition 1: Is the user at the "start" (hero section prominent)?
 				// Show the button when hero is 50% scrolled out of view
@@ -1070,11 +1079,27 @@ function formatDate(dateString) {
 				const buttonBottomEdgeY = viewportHeight - buttonBottomCssValue;
 				const atEnd = footerRect.top < (buttonBottomEdgeY + 20); // Hide if footer top is above button's bottom + 20px padding
 
-				if (!atStart && !atEnd) {
-					downloadButtonOverlay.classList.add('show-download-button');
+				// Mobile behavior: opposite of header
+				if (isMobile) {
+					if (currentScrollY > lastScrollYForButton && currentScrollY > 100) {
+						// Scrolling down - show button (if not at start or end)
+						if (!atStart && !atEnd) {
+							downloadButtonOverlay.classList.add('show-download-button');
+						}
+					} else if (currentScrollY < lastScrollYForButton) {
+						// Scrolling up - hide button
+						downloadButtonOverlay.classList.remove('show-download-button');
+					}
 				} else {
-					downloadButtonOverlay.classList.remove('show-download-button');
+					// Desktop behavior: original logic
+					if (!atStart && !atEnd) {
+						downloadButtonOverlay.classList.add('show-download-button');
+					} else {
+						downloadButtonOverlay.classList.remove('show-download-button');
+					}
 				}
+
+				lastScrollYForButton = currentScrollY;
 			};
 
 			// Optimized scroll listener
@@ -1089,6 +1114,9 @@ function formatDate(dateString) {
 				}
 			});
 
+			// Listen for resize to handle mobile/desktop switch
+			window.addEventListener('resize', handleScroll);
+			
 			// Initial check on page load
 			setTimeout(handleScroll, 100); // Adding a slight delay for initial call to ensure layout is stable
 			
