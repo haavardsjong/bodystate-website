@@ -34,9 +34,8 @@ const territory = languageToTerritory[lang] || 'USA';
 let fetchedReviewsRaw = [];
 let usedTerritory = territory; // Track which territory we actually used
 
-// Fetch reviews during build or runtime
-if (import.meta.env.SSR) { // Server-side rendering
-    try {
+// Fetch reviews during build
+try {
         // During Netlify build, we can't call the function endpoint
         // Instead, we'll directly fetch from App Store API using the build-time JWT
         const apiToken = import.meta.env.APP_STORE_CONNECT_API_TOKEN_DYNAMIC || process.env.APP_STORE_CONNECT_API_TOKEN_DYNAMIC;
@@ -91,11 +90,8 @@ if (import.meta.env.SSR) { // Server-side rendering
         } else {
             console.error('[Build] No API token available - cannot fetch reviews');
         }
-    } catch (error) {
-        console.error('[Build] Error during server-side fetch for reviews:', error);
-    }
-} else {
-    console.log('[Build] Not in SSR context');
+} catch (error) {
+    console.error('[Build] Error during server-side fetch for reviews:', error);
 }
 
 // Use fetched reviews as is
