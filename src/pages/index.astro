@@ -258,7 +258,10 @@ function formatDate(dateString) {
 	<!-- Floating Download Button Overlay -->
 	<div id="download-overlay" class="download-overlay">
 		<a href="https://apps.apple.com/no/app/bodystate/id6479940325" class="visionos-button" target="_blank" rel="noopener noreferrer">
-			<span class="button-text">Download on App Store</span>
+			<span class="button-text">
+				<span class="full-text">Download on App Store</span>
+				<span class="short-text">Download Now</span>
+			</span>
 			<div class="blue-circle-icon">
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
 					<path d="M9 18l6-6-6-6"></path>
@@ -277,7 +280,7 @@ function formatDate(dateString) {
 		max-width: 800px;
 		margin-left: auto;
 		margin-right: auto;
-		padding-top: var(--space-xl);
+		padding-top: calc(var(--space-xl) * 2.5);
 	}
 	
 	.hero h1 {
@@ -321,7 +324,7 @@ function formatDate(dateString) {
 		border-radius: 100px;
 		backdrop-filter: blur(15px);
 		-webkit-backdrop-filter: blur(15px);
-		min-width: 220px;
+		min-width: 240px;
 		width: auto;
 		text-decoration: none;
 		font-weight: 500; /* Keep user's change */
@@ -339,6 +342,25 @@ function formatDate(dateString) {
 		font-size: clamp(16px, 4vw, 18px); 
 		font-weight: 500;
 		letter-spacing: -0.022em;
+		white-space: nowrap;
+	}
+	
+	.button-text .short-text {
+		display: none;
+	}
+	
+	@media (max-width: 380px) {
+		.button-text .full-text {
+			display: none;
+		}
+		
+		.button-text .short-text {
+			display: inline;
+		}
+		
+		.visionos-button {
+			min-width: 180px;
+		}
 	}
 	
 	.blue-circle-icon {
@@ -362,7 +384,7 @@ function formatDate(dateString) {
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
 		.hero {
-			padding-top: var(--space-lg);
+			padding-top: calc(var(--space-xl) * 1.5);
 		}
 		
 		.subtitle {
@@ -377,10 +399,6 @@ function formatDate(dateString) {
 			max-height: 400px;
 		}
 		
-		.visionos-button {
-			min-width: 200px;
-		}
-		
 		.blue-circle-icon {
 			width: 44px;
 			height: 44px;
@@ -391,9 +409,12 @@ function formatDate(dateString) {
 	.features-area-wrapper {
 		background: linear-gradient(to bottom, #000000 0%, #121212 50%, #242424 100%);
 		padding-bottom: var(--space-xl);
-		width: 100%;
-		margin-left: calc(-50vw + 50%);
-		margin-right: calc(-50vw + 50%);
+		width: 100vw;
+		position: relative;
+		left: 50%;
+		right: 50%;
+		margin-left: -50vw;
+		margin-right: -50vw;
 	}
 
 	.features-carousel-wrapper {
@@ -589,9 +610,11 @@ function formatDate(dateString) {
 	.full-width-gray-area {
 		background-color: #242424; /* Match end color of bento gradient */
 		position: relative; 
-		width: 100%;
-		margin-left: calc(-50vw + 50%);
-		margin-right: calc(-50vw + 50%);
+		width: 100vw;
+		left: 50%;
+		right: 50%;
+		margin-left: -50vw;
+		margin-right: -50vw;
 		z-index: 0; /* Ensure it's above default, below higher z-index elements */
 	}
 	.full-width-gray-area h2,
@@ -604,9 +627,11 @@ function formatDate(dateString) {
 		background-color: #000;
 		position: relative; 
 		z-index: 1; /* To draw above the fixed .bg-gradient-transition */
-		width: 100%;
-		margin-left: calc(-50vw + 50%);
-		margin-right: calc(-50vw + 50%);
+		width: 100vw;
+		left: 50%;
+		right: 50%;
+		margin-left: -50vw;
+		margin-right: -50vw;
 		padding-bottom: calc(var(--space-xl) + 60px);
 	}
 	/* Text color for p in black section will use .content-section p default (var(--text-secondary)) */
@@ -651,7 +676,7 @@ function formatDate(dateString) {
 		align-items: center;
 		justify-content: center;
 		gap: 0.75rem;
-		margin-bottom: -1rem;
+		margin-bottom: -0.5rem;
 		position: relative;
 	}
 
@@ -660,7 +685,7 @@ function formatDate(dateString) {
 		height: 84px;
 		opacity: 0.4;
 		position: relative;
-		top: 9px;
+		top: 20px;
 	}
 
 	.apple-logo {
@@ -693,7 +718,7 @@ function formatDate(dateString) {
 		align-items: center;
 		justify-content: center;
 		gap: 0.75rem;
-		margin-bottom: -1rem;
+		margin-bottom: -0.5rem;
 		position: relative;
 	}
 
@@ -703,7 +728,7 @@ function formatDate(dateString) {
 		height: 84px;
 		opacity: 0.4;
 		position: relative;
-		top: 9px;
+		top: 20px;
 	}
 
 	.users-number {
@@ -742,7 +767,7 @@ function formatDate(dateString) {
 		.laurel-left, .laurel-right {
 			width: 60px;
 			height: 60px;
-			top: 6px;
+			top: 16px;
 		}
 
 		.apple-logo {
@@ -756,9 +781,9 @@ function formatDate(dateString) {
 
 		.users-rating .laurel-left,
 		.users-rating .laurel-right {
-			width: 72px;
-			height: 72px;
-			top: 7.5px;
+			width: 60px;
+			height: 60px;
+			top: 16px;
 		}
 
 		/* Font size handled by clamp() */
@@ -1021,8 +1046,9 @@ function formatDate(dateString) {
 				const viewportHeight = window.innerHeight;
 
 				// Condition 1: Is the user at the "start" (hero section prominent)?
-				// Hero is considered prominent if its bottom edge is still within the viewport.
-				const atStart = heroRect.bottom > 0 && heroRect.top < viewportHeight;
+				// Show the button when hero is 50% scrolled out of view
+				const heroMidpoint = heroRect.top + (heroRect.height / 2);
+				const atStart = heroMidpoint > viewportHeight * 0.3;
 
 				// Condition 2: Is the user at the "end" (footer encroaching on button)?
 				const buttonHeight = downloadButtonOverlay.offsetHeight;
