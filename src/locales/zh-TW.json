@@ -19,7 +19,9 @@
     "careersLink": "職業",
     "copyright": "© {year} BodyState by 2001 Ventures AS. 版權所有。",
     "madeWithLove": "在{location}用❤️製作：",
-    "copyrightShort": "© {year}"
+    "copyrightShort": "© {year}",
+    "locationNorway": "挪威",
+    "locationEurope": "歐洲"
   },
   "header": {
     "brandName": "BodyState",

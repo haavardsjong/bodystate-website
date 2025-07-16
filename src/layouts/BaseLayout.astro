@@ -17,7 +17,9 @@ const currentYear = new Date().getFullYear();
 // EU countries list
 const euCountries = ['de', 'fr', 'it', 'es', 'nl', 'sv', 'da'];
 const isEU = euCountries.includes(lang);
-const location = isEU ? 'Europe' : 'Norway';
+// For Norwegian language (nb), always show Norge regardless of location
+// For other languages, show Europe if in EU, otherwise show the translation of Norway
+const location = lang === 'nb' ? 'Norge' : (isEU ? (t?.footer?.locationEurope || 'Europe') : (t?.footer?.locationNorway || 'Norway'));
 
 // Helper function to create localized paths
 function localizedPath(path, targetLang) {

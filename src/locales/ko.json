@@ -19,7 +19,9 @@
     "careersLink": "경력",
     "copyright": "© {year} BodyState by 2001 Ventures AS. 모든 권리 보유.",
     "madeWithLove": "{location}에서 ❤️로 만들어짐:",
-    "copyrightShort": "© {year}"
+    "copyrightShort": "© {year}",
+    "locationNorway": "노르웨이",
+    "locationEurope": "유럽"
   },
   "header": {
     "brandName": "BodyState",

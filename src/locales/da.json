@@ -19,7 +19,9 @@
     "careersLink": "Karriere",
     "copyright": "© {year} BodyState af 2001 Ventures AS. Alle rettigheder forbeholdes.",
     "madeWithLove": "Lavet med ❤️ i {location} af",
-    "copyrightShort": "© {year}"
+    "copyrightShort": "© {year}",
+    "locationNorway": "Norge",
+    "locationEurope": "Europa"
   },
   "header": {
     "brandName": "BodyState",

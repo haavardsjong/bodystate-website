@@ -19,7 +19,9 @@
     "careersLink": "Carreiras",
     "copyright": "© {year} BodyState por 2001 Ventures AS. Todos os direitos reservados.",
     "madeWithLove": "Feito com ❤️ em {location} por",
-    "copyrightShort": "© {year}"
+    "copyrightShort": "© {year}",
+    "locationNorway": "Noruega",
+    "locationEurope": "Europa"
   },
   "header": {
     "brandName": "BodyState",
