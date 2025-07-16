@@ -33,19 +33,19 @@ async function generateJWT() {
   // First, handle escaped newlines (common in environment variables)
   privateKey = privateKey.replace(/\\n/g, '\n');
   
-  // Check if it's still all on one line after replacing escaped newlines
-  const lines = privateKey.split('\n').filter(line => line.trim());
-  
-  if (lines.length <= 3) { // Only header, content, and footer
-    // Extract just the key content
+  // Check if the key needs formatting
+  if (!privateKey.includes('\n') || privateKey.split('\n').filter(line => line.trim()).length <= 3) {
+    // Extract just the key content, removing headers/footers and all whitespace
     let keyContent = privateKey
       .replace(/-----BEGIN PRIVATE KEY-----/g, '')
       .replace(/-----END PRIVATE KEY-----/g, '')
-      .replace(/\s+/g, ''); // Remove all whitespace
+      .replace(/\s+/g, ''); // Remove all whitespace including spaces and newlines
     
     // Add line breaks every 64 characters (PEM standard)
     const keyLines = keyContent.match(/.{1,64}/g) || [];
     privateKey = `-----BEGIN PRIVATE KEY-----\n${keyLines.join('\n')}\n-----END PRIVATE KEY-----`;
+    
+    console.log("[getAppReviews] Reformed private key - lines:", privateKey.split('\n').length);
   }
   const now = Math.floor(Date.now() / 1000);
   const expirationTime = now + (15 * 60);
