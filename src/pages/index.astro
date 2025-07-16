@@ -281,14 +281,14 @@ function formatDate(dateString) {
 	}
 	
 	.hero h1 {
-		font-size: 3.5rem;
+		font-size: clamp(2.5rem, 10vw, 3.5rem);
 		margin-bottom: var(--space-md);
 		font-weight: 600;
 		line-height: 1.2;
 	}
 	
 	.subtitle {
-		font-size: 1.3rem;
+		font-size: clamp(1.1rem, 4vw, 1.3rem);
 		max-width: 650px;
 		margin-left: auto;
 		margin-right: auto;
@@ -306,6 +306,8 @@ function formatDate(dateString) {
 	.hero-image img {
 		max-width: 100%;
 		height: auto;
+		object-fit: contain;
+		display: block;
 	}
 	
 	/* VisionOS-style button */
@@ -334,7 +336,7 @@ function formatDate(dateString) {
 	}
 	
 	.button-text {
-		font-size: 18px; 
+		font-size: clamp(16px, 4vw, 18px); 
 		font-weight: 500;
 		letter-spacing: -0.022em;
 	}
@@ -359,17 +361,29 @@ function formatDate(dateString) {
 	
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
-		.hero h1 {
-			font-size: 2.5rem;
+		.hero {
+			padding-top: var(--space-lg);
 		}
 		
 		.subtitle {
-			font-size: 1.1rem;
 			padding: 0 var(--space-sm);
+		}
+		
+		.hero-image {
+			padding: var(--space-sm) var(--space-sm);
+		}
+		
+		.hero-image img {
+			max-height: 400px;
 		}
 		
 		.visionos-button {
 			min-width: 200px;
+		}
+		
+		.blue-circle-icon {
+			width: 44px;
+			height: 44px;
 		}
 	}
 	
@@ -377,10 +391,9 @@ function formatDate(dateString) {
 	.features-area-wrapper {
 		background: linear-gradient(to bottom, #000000 0%, #121212 50%, #242424 100%);
 		padding-bottom: var(--space-xl);
-		width: 100vw;
-		position: relative;
-		left: 50%;
-		transform: translateX(-50%);
+		width: 100%;
+		margin-left: calc(-50vw + 50%);
+		margin-right: calc(-50vw + 50%);
 	}
 
 	.features-carousel-wrapper {
@@ -511,22 +524,22 @@ function formatDate(dateString) {
 	/* Responsive features carousel */
 	@media (max-width: 768px) {
 		.features-carousel-wrapper {
-			padding: 0 1rem;
-			margin: 4rem 0 0 0;
+			padding: 0 var(--space-sm);
+			margin: calc(var(--space-xl) * 1.5) 0 0 0;
 		}
 		
 		.features-grid {
-			padding: 1rem;
-			gap: 1rem;
+			padding: var(--space-sm);
+			gap: var(--space-sm);
 		}
 		
 		.feature-card {
-			width: 340px;
+			width: min(340px, calc(100vw - 2rem));
 			height: 510px;
 		}
 		
 		.feature-content {
-			padding: 2rem;
+			padding: var(--space-lg);
 		}
 		
 		.feature-headline {
@@ -534,11 +547,13 @@ function formatDate(dateString) {
 		}
 		
 		.feature-image.top-aligned img {
-			height: 340px;
+			height: 300px;
+			object-fit: cover;
 		}
 		
 		.feature-image.bottom-aligned img {
-			height: 375px;
+			height: 320px;
+			object-fit: cover;
 		}
 	}
 
@@ -553,14 +568,15 @@ function formatDate(dateString) {
 	}
 
 	.content-section h2 {
-		font-size: 2.5rem;
+		font-size: clamp(2rem, 7vw, 2.5rem);
 		margin-bottom: var(--space-md);
 		font-weight: 600;
 		color: var(--text-primary); /* Default for these sections */
+		line-height: 1.3;
 	}
 
 	.content-section p {
-		font-size: 1.3rem;
+		font-size: clamp(1.1rem, 4vw, 1.3rem);
 		max-width: 650px;
 		margin-left: auto;
 		margin-right: auto;
@@ -573,9 +589,9 @@ function formatDate(dateString) {
 	.full-width-gray-area {
 		background-color: #242424; /* Match end color of bento gradient */
 		position: relative; 
-		width: 100vw;
-		left: 50%;
-		transform: translateX(-50%);
+		width: 100%;
+		margin-left: calc(-50vw + 50%);
+		margin-right: calc(-50vw + 50%);
 		z-index: 0; /* Ensure it's above default, below higher z-index elements */
 	}
 	.full-width-gray-area h2,
@@ -588,9 +604,9 @@ function formatDate(dateString) {
 		background-color: #000;
 		position: relative; 
 		z-index: 1; /* To draw above the fixed .bg-gradient-transition */
-		width: 100vw;
-		left: 50%;
-		transform: translateX(-50%);
+		width: 100%;
+		margin-left: calc(-50vw + 50%);
+		margin-right: calc(-50vw + 50%);
 		padding-bottom: calc(var(--space-xl) + 60px);
 	}
 	/* Text color for p in black section will use .content-section p default (var(--text-secondary)) */
@@ -724,23 +740,19 @@ function formatDate(dateString) {
 		}
 
 		.laurel-left, .laurel-right {
-			width: 72px;
-			height: 72px;
-			top: 7.5px;
+			width: 60px;
+			height: 60px;
+			top: 6px;
 		}
 
 		.apple-logo {
-			width: 36px;
-			height: 36px;
+			width: 32px;
+			height: 32px;
 		}
 
-		.rating-number {
-			font-size: 3.375rem;
-		}
+		/* Font size handled by clamp() */
 
-		.rating-label {
-			font-size: 1.125rem;
-		}
+		/* Font size handled by clamp() */
 
 		.users-rating .laurel-left,
 		.users-rating .laurel-right {
@@ -749,13 +761,9 @@ function formatDate(dateString) {
 			top: 7.5px;
 		}
 
-		.users-number {
-			font-size: 3.375rem;
-		}
+		/* Font size handled by clamp() */
 
-		.users-label {
-			font-size: 1.125rem;
-		}
+		/* Font size handled by clamp() */
 	}
 
 	.reviews-carousel-wrapper {
@@ -816,7 +824,7 @@ function formatDate(dateString) {
 	}
 
 	.review-title {
-		font-size: 1.25rem;
+		font-size: clamp(1.125rem, 3.5vw, 1.25rem);
 		font-weight: 600;
 		color: var(--text-primary);
 		margin-bottom: 0.75rem;
@@ -825,7 +833,7 @@ function formatDate(dateString) {
 	}
 
 	.review-body {
-		font-size: 1rem;
+		font-size: clamp(0.9375rem, 3vw, 1rem);
 		color: rgba(255, 255, 255, 0.8);
 		line-height: 1.65;
 		flex-grow: 1; 
@@ -835,7 +843,7 @@ function formatDate(dateString) {
 	}
 
 	.review-meta {
-		font-size: 0.875rem;
+		font-size: clamp(0.8125rem, 2.5vw, 0.875rem);
 		color: rgba(255, 255, 255, 0.5);
 		display: flex;
 		justify-content: space-between;
@@ -899,16 +907,16 @@ function formatDate(dateString) {
 	/* Responsive reviews carousel */
 	@media (max-width: 768px) {
 		.reviews-carousel-wrapper {
-			padding: 0 1rem;
+			padding: 0 var(--space-sm);
 		}
 		
 		.reviews-grid {
-			padding: 1rem;
-			gap: 1rem;
+			padding: var(--space-sm);
+			gap: var(--space-sm);
 		}
 		
 		.review-card {
-			width: 340px;
+			width: min(340px, calc(100vw - 2rem));
 		}
 	}
 

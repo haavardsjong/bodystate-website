@@ -68,7 +68,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -109,9 +109,49 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 					</div>
 					{/* The download button link points to the App Store */}
 					<a href="https://apps.apple.com/no/app/bodystate/id6479940325" class="nav-download-btn apple-button-style" target="_blank" rel="noopener noreferrer">{t?.header?.downloadButton}</a>
+					{/* Mobile menu button */}
+					<button class="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
+						<span class="hamburger-line"></span>
+						<span class="hamburger-line"></span>
+					</button>
 				</div>
-				{/* TODO: Add hamburger button for mobile */}
 			</nav>
+			{/* Mobile menu overlay */}
+			<div class="mobile-menu-overlay">
+				<nav class="mobile-nav">
+					<ul class="mobile-nav-links">
+						<li><a href={localizedPath('/')} class:list={{ active: currentPath === localizedPath('/') }}>{t?.header?.homeLink}</a></li>
+						<li><a href={localizedPath('/faq')} class:list={{ active: currentPath === localizedPath('/faq') }}>{t?.header?.faqLink}</a></li>
+						<li><a href={localizedPath('/contact')} class:list={{ active: currentPath === localizedPath('/contact') }}>{t?.header?.contactLink}</a></li>
+					</ul>
+					<div class="mobile-menu-footer">
+						<div class="mobile-language-switcher">
+							<button type="button" class="mobile-switcher-button" aria-label="Select language">
+								<span class="current-lang-flag">{currentLocaleInfo.flag}</span>
+								<span>{currentLocaleInfo.name}</span>
+								<svg class="chevron-down" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							</button>
+							<ul class="mobile-dropdown-menu" role="menu">
+								{availableLocales.map(localeCode => {
+									const displayInfo = localeDisplayInfo[localeCode] || { name: localeCode, flag: '🌐' };
+									return (
+										<li role="presentation">
+											<a 
+												href={localizedPath(basePath, localeCode)} 
+												role="menuitem"
+												class:list={{ active: lang === localeCode }}
+											>
+												<span class="flag">{displayInfo.flag}</span> {displayInfo.name}
+											</a>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+						<a href="https://apps.apple.com/no/app/bodystate/id6479940325" class="mobile-download-btn" target="_blank" rel="noopener noreferrer">{t?.header?.downloadButton}</a>
+					</div>
+				</nav>
+			</div>
 		</header>
 		<main class="content-container">
 			<slot /> {/* Page content will be injected here */}
@@ -219,6 +259,59 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
         });
       });
     </script>
+    
+    {/* Mobile menu interaction script */}
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const body = document.body;
+        
+        if (!mobileMenuButton || !mobileMenuOverlay) return;
+        
+        const toggleMobileMenu = () => {
+          const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+          mobileMenuButton.setAttribute('aria-expanded', !isOpen);
+          mobileMenuButton.classList.toggle('is-active');
+          mobileMenuOverlay.classList.toggle('is-open');
+          body.classList.toggle('menu-open');
+        };
+        
+        const closeMobileMenu = () => {
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+          mobileMenuButton.classList.remove('is-active');
+          mobileMenuOverlay.classList.remove('is-open');
+          body.classList.remove('menu-open');
+        };
+        
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        
+        // Close menu when clicking on a link
+        const mobileNavLinks = mobileMenuOverlay.querySelectorAll('.mobile-nav-links a');
+        mobileNavLinks.forEach(link => {
+          link.addEventListener('click', closeMobileMenu);
+        });
+        
+        // Mobile language switcher
+        const mobileSwitcherButton = document.querySelector('.mobile-switcher-button');
+        const mobileDropdownMenu = document.querySelector('.mobile-dropdown-menu');
+        
+        if (mobileSwitcherButton && mobileDropdownMenu) {
+          mobileSwitcherButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = mobileSwitcherButton.classList.contains('dropdown-open');
+            mobileSwitcherButton.classList.toggle('dropdown-open');
+            mobileDropdownMenu.classList.toggle('show');
+          });
+          
+          // Close dropdown when clicking outside
+          document.addEventListener('click', () => {
+            mobileSwitcherButton.classList.remove('dropdown-open');
+            mobileDropdownMenu.classList.remove('show');
+          });
+        }
+      });
+    </script>
 	</body>
 </html>
 
@@ -245,12 +338,12 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		--text-secondary: rgba(255, 255, 255, 0.7);
 		--text-tertiary: rgba(255, 255, 255, 0.5);
 		
-		/* Spacing */
-		--space-xs: 0.5rem;
-		--space-sm: 1rem;
-		--space-md: 1.5rem;
-		--space-lg: 2rem;
-		--space-xl: 3rem;
+		/* Spacing - responsive values */
+		--space-xs: clamp(0.375rem, 1.5vw, 0.5rem);
+		--space-sm: clamp(0.75rem, 2vw, 1rem);
+		--space-md: clamp(1rem, 3vw, 1.5rem);
+		--space-lg: clamp(1.5rem, 4vw, 2rem);
+		--space-xl: clamp(2rem, 5vw, 3rem);
 		
 		--nav-height: 79px;
 	}
@@ -260,6 +353,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		background-color: #000;
 		color: var(--text-primary);
 		overflow-x: hidden;
+		width: 100%;
 	}
 	
 	body {
@@ -270,12 +364,21 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		min-height: 100vh;
 		position: relative;
 		line-height: 1.6;
+		-webkit-text-size-adjust: 100%;
+		overflow-x: hidden;
+		width: 100%;
 	}
 	
 	main {
 		flex-grow: 1;
 		position: relative;
 		margin-bottom: var(--space-xl); /* Add margin to prevent overlap with footer */
+	}
+	
+	@media (max-width: 768px) {
+		main {
+			margin-bottom: var(--space-lg);
+		}
 	}
 	
 	/* Glassmorphism class */
@@ -343,24 +446,51 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		letter-spacing: 0.5px;
 	}
 	
-	/* Typography */
+	/* Typography - Fluid responsive sizing */
+	:root {
+		/* Base font sizes with clamp() for smooth scaling */
+		--font-size-base: clamp(16px, 4vw, 18px);
+		--font-size-sm: clamp(14px, 3.5vw, 16px);
+		--font-size-lg: clamp(18px, 4.5vw, 20px);
+		--font-size-xl: clamp(20px, 5vw, 24px);
+		--font-size-h1: clamp(32px, 8vw, 48px);
+		--font-size-h2: clamp(24px, 6vw, 36px);
+		--font-size-h3: clamp(20px, 5vw, 28px);
+	}
+	
+	html {
+		font-size: var(--font-size-base);
+	}
+	
 	h1 {
 		font-weight: 600;
-		font-size: 2.5rem;
+		font-size: var(--font-size-h1);
 		margin-bottom: var(--space-lg);
 		letter-spacing: -0.5px;
+		line-height: 1.2;
 	}
 	
 	h2 {
 		font-weight: 500;
-		font-size: 1.75rem;
+		font-size: var(--font-size-h2);
 		color: var(--text-primary);
 		letter-spacing: -0.3px;
+		line-height: 1.3;
+	}
+	
+	h3 {
+		font-weight: 500;
+		font-size: var(--font-size-h3);
+		color: var(--text-primary);
+		letter-spacing: -0.2px;
+		line-height: 1.4;
 	}
 	
 	p {
 		color: var(--text-secondary);
 		font-weight: 400;
+		line-height: 1.6;
+		font-size: var(--font-size-base);
 	}
 	
 	a {
@@ -380,6 +510,12 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		padding: 0 var(--space-md);
 		width: 100%;
 		box-sizing: border-box;
+	}
+	
+	@media (max-width: 768px) {
+		.content-container {
+			padding: 0 var(--space-sm);
+		}
 	}
 	
 	/* Download button overlay */
@@ -446,13 +582,18 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		gap: var(--space-lg);
 	}
 	
-	nav a {
-		padding: var(--space-xs) 0;
+	nav ul.nav-links a {
+		padding: 12px 16px;
 		font-weight: 300;
 		letter-spacing: 0.3px;
 		position: relative;
 		font-family: var(--font-main);
 		font-size: 14px;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		border-radius: var(--radius-sm);
+		transition: background 0.2s ease;
 	}
 	
 	nav ul.nav-links > li > a.active { /* Made selector more specific */
@@ -545,6 +686,8 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		color: var(--text-secondary);
 		text-decoration: none;
 		transition: color 0.2s ease;
+		display: inline-block;
+		padding: 8px 0;
 	}
 	.footer-links a:hover, .footer-legal a:hover, .footer-extra-links a:hover {
 		color: var(--color-accent);
@@ -566,6 +709,8 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		font-size: 0.9rem; /* Adjusted to match other footer links */
 		text-decoration: none;
 		transition: color 0.2s ease;
+		display: inline-block;
+		padding: 8px 0;
 	}
 	.footer-social .social-icons a:hover {
 		color: var(--color-accent);
@@ -626,7 +771,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		background: none;
 		border: 1px solid var(--glass-border);
 		color: var(--text-secondary);
-		padding: 6px 10px;
+		padding: 10px 14px;
 		border-radius: var(--radius-md);
 		cursor: pointer;
 		display: flex;
@@ -634,6 +779,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		gap: 6px;
 		font-family: inherit;
 		transition: all 0.2s ease;
+		min-height: 44px;
 	}
 	.switcher-button:hover {
 		border-color: rgba(255, 255, 255, 0.3);
@@ -684,13 +830,14 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		display: flex; /* Use flex for alignment */
 		align-items: center;
 		gap: var(--space-sm);
-		padding: var(--space-sm);
+		padding: 12px 16px;
 		border-radius: var(--radius-sm);
 		text-decoration: none;
 		color: var(--text-secondary);
 		font-size: 14px;
 		white-space: nowrap;
 		transition: background-color 0.2s ease, color 0.2s ease;
+		min-height: 44px;
 	}
 	.dropdown-menu li a:hover {
 		background-color: rgba(255, 255, 255, 0.05); /* Make hover even more subtle */
@@ -729,6 +876,303 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		.footer-buttons {
 			align-items: center;
 			text-align: center;
+		}
+	}
+	
+	/* Mobile menu button - Minimal design */
+	.mobile-menu-button {
+		display: none;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		width: 48px;
+		height: 48px;
+		position: relative;
+		z-index: 11;
+	}
+	
+	.hamburger-line {
+		display: block;
+		width: 24px;
+		height: 1.5px;
+		background: var(--text-primary);
+		margin: 6px auto;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transform-origin: center;
+	}
+	
+	.mobile-menu-button.is-active .hamburger-line:nth-child(1) {
+		transform: rotate(45deg) translateY(4px);
+	}
+	
+	.mobile-menu-button.is-active .hamburger-line:nth-child(2) {
+		transform: rotate(-45deg) translateY(-4px);
+	}
+	
+	/* Mobile menu overlay - Modern design */
+	.mobile-menu-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.95);
+		backdrop-filter: blur(40px) saturate(180%);
+		-webkit-backdrop-filter: blur(40px) saturate(180%);
+		z-index: 9;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+		overflow-y: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.mobile-menu-overlay.is-open {
+		opacity: 1;
+		visibility: visible;
+	}
+	
+	body.menu-open {
+		overflow: hidden;
+	}
+	
+	.mobile-nav {
+		width: 100%;
+		max-width: 400px;
+		padding: var(--space-xl);
+		text-align: center;
+	}
+	
+	.mobile-nav-links {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 calc(var(--space-xl) * 1.5) 0;
+	}
+	
+	.mobile-nav-links li {
+		margin-bottom: var(--space-sm);
+		opacity: 0;
+		animation: fadeInUp 0.5s ease forwards;
+	}
+	
+	.mobile-nav-links li:nth-child(1) { animation-delay: 0.1s; }
+	.mobile-nav-links li:nth-child(2) { animation-delay: 0.2s; }
+	.mobile-nav-links li:nth-child(3) { animation-delay: 0.3s; }
+	
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	
+	.mobile-nav-links a {
+		display: block;
+		padding: var(--space-lg) var(--space-md);
+		font-size: 1.75rem;
+		font-weight: 300;
+		color: rgba(255, 255, 255, 0.85);
+		text-decoration: none;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border-radius: var(--radius-lg);
+		letter-spacing: -0.02em;
+		position: relative;
+		overflow: hidden;
+	}
+	
+	.mobile-nav-links a::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+		transform: translateX(-100%);
+		transition: transform 0.6s ease;
+	}
+	
+	.mobile-nav-links a:hover::before {
+		transform: translateX(100%);
+	}
+	
+	.mobile-nav-links a:hover {
+		color: var(--text-primary);
+		transform: translateX(5px);
+	}
+	
+	.mobile-nav-links a:active {
+		transform: scale(0.98);
+	}
+	
+	.mobile-nav-links a.active {
+		color: var(--text-primary);
+		font-weight: 400;
+		background: rgba(255, 255, 255, 0.05);
+	}
+	
+	.mobile-menu-footer {
+		padding-top: calc(var(--space-xl) * 1.5);
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		opacity: 0;
+		animation: fadeInUp 0.5s ease 0.4s forwards;
+	}
+	
+	.mobile-language-switcher {
+		margin-bottom: calc(var(--space-lg) * 1.5);
+		position: relative;
+	}
+	
+	.mobile-switcher-button {
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: var(--text-primary);
+		padding: 16px var(--space-lg);
+		border-radius: var(--radius-lg);
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-sm);
+		font-size: 1.0625rem;
+		font-family: inherit;
+		font-weight: 400;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		min-width: 220px;
+		justify-content: center;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+	
+	.mobile-switcher-button:hover {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(255, 255, 255, 0.15);
+		transform: translateY(-1px);
+	}
+	
+	.mobile-switcher-button:active {
+		transform: scale(0.98);
+	}
+	
+	.mobile-dropdown-menu {
+		position: absolute;
+		bottom: calc(100% + var(--space-md));
+		left: 50%;
+		transform: translateX(-50%);
+		background: rgba(30, 30, 35, 0.98);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: var(--radius-lg);
+		padding: var(--space-sm);
+		margin: 0;
+		list-style: none;
+		min-width: 280px;
+		backdrop-filter: blur(40px) saturate(180%);
+		-webkit-backdrop-filter: blur(40px) saturate(180%);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(-50%) translateY(10px);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		max-height: 320px;
+		overflow-y: auto;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+	}
+	
+	.mobile-dropdown-menu.show {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(-50%) translateY(0);
+	}
+	
+	.mobile-dropdown-menu li a {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		padding: var(--space-md);
+		border-radius: var(--radius-sm);
+		text-decoration: none;
+		color: var(--text-secondary);
+		font-size: 1rem;
+		transition: all 0.2s ease;
+	}
+	
+	.mobile-dropdown-menu li a:active {
+		background: rgba(255, 255, 255, 0.1);
+	}
+	
+	.mobile-dropdown-menu li a.active {
+		color: var(--text-primary);
+		font-weight: 500;
+		background: rgba(255, 255, 255, 0.1);
+	}
+	
+	.mobile-download-btn {
+		display: inline-block;
+		background: #0071e3;
+		color: white;
+		padding: 18px var(--space-xl);
+		border-radius: 100px;
+		font-size: 1.125rem;
+		font-weight: 500;
+		text-decoration: none;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		width: 100%;
+		max-width: 280px;
+		text-align: center;
+		box-shadow: 0 4px 20px rgba(0, 113, 227, 0.3);
+		letter-spacing: -0.01em;
+	}
+	
+	.mobile-download-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 30px rgba(0, 113, 227, 0.4);
+	}
+	
+	.mobile-download-btn:active {
+		transform: translateY(0);
+		box-shadow: 0 2px 10px rgba(0, 113, 227, 0.3);
+	}
+	
+	/* Mobile-specific touch target improvements */
+	@media (max-width: 768px) {
+		.footer-links a, .footer-legal a, .footer-social .social-icons a, .footer-extra-links a {
+			padding: 12px 8px;
+			min-height: 44px;
+			display: flex;
+			align-items: center;
+		}
+	}
+	
+	/* Media queries for mobile navigation */
+	@media (max-width: 768px) {
+		nav {
+			padding: 0 var(--space-sm);
+		}
+		
+		.nav-right {
+			gap: 0;
+		}
+		
+		.nav-links,
+		.language-switcher-dropdown,
+		.nav-download-btn {
+			display: none !important;
+		}
+		
+		.mobile-menu-button {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.brand-name {
+			font-size: 20px;
 		}
 	}
 </style> 
