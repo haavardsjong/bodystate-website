@@ -724,7 +724,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		font-size: 1rem;
 		font-weight: 500;
 		color: var(--text-primary);
-		margin-bottom: var(--space-md);
+		margin-bottom: var(--space-sm);
 	}
 
 	.footer-links ul, .footer-legal ul, .footer-extra-links ul {
@@ -734,7 +734,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	}
 
 	.footer-links li, .footer-legal li, .footer-extra-links li {
-		margin-bottom: var(--space-sm);
+		margin-bottom: var(--space-xs);
 	}
 
 	.footer-links a, .footer-legal a, .footer-extra-links a {
@@ -756,7 +756,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	}
 
 	.footer-social li { /* Added rule for li elements */
-		margin-bottom: var(--space-sm);
+		margin-bottom: var(--space-xs);
 	}
 
 	.footer-social .social-icons a {
@@ -773,10 +773,15 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 
 	.footer-copyright {
 		text-align: center;
-		padding-top: var(--space-sm);
+		padding-top: var(--space-lg);
 		border-top: 1px solid var(--glass-border);
-		font-size: 0.85rem;
-		color: var(--text-tertiary);
+		color: var(--text-secondary);
+	}
+	
+	.footer-copyright p {
+		font-size: 0.9rem;
+		margin: 0;
+		color: var(--text-secondary);
 	}
 	
 	.footer-copyright a {
@@ -888,14 +893,14 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		display: flex; /* Use flex for alignment */
 		align-items: center;
 		gap: var(--space-sm);
-		padding: 12px 16px;
+		padding: 6px 16px;
 		border-radius: var(--radius-sm);
 		text-decoration: none;
 		color: var(--text-secondary);
 		font-size: 14px;
 		white-space: nowrap;
 		transition: background-color 0.2s ease, color 0.2s ease;
-		min-height: 44px;
+		min-height: 32px;
 	}
 	.dropdown-menu li a:hover {
 		background-color: rgba(255, 255, 255, 0.05); /* Make hover even more subtle */
@@ -1151,7 +1156,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
-		padding: var(--space-md);
+		padding: 10px var(--space-md);
 		border-radius: var(--radius-sm);
 		text-decoration: none;
 		color: var(--text-secondary);
