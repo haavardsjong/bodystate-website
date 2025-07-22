@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import * as i18nUtils from '../i18n/utils';
+import { createTranslationHelper } from '../i18n/enhanced-utils';
 
 // Get current language
 const lang = i18nUtils.getLangFromUrl(Astro.url);
+const { t } = createTranslationHelper(lang);
 
 // Map languages to App Store territories (using 3-letter ISO codes)
 const languageToTerritory = {
@@ -116,12 +118,12 @@ function formatDate(dateString) {
 }
 
 ---
-<BaseLayout title="BodyState - Give Your Body a Voice">
+<BaseLayout title={t('pages.index.pageTitle')}>
 	<div class="hero">
-		<h1>Give your body a voice.</h1>
-		<p class="subtitle">Your body is complex. BodyState helps you understand it. It translates your health data into a battery for body and mind.</p>
+		<h1>{t('pages.index.hero.title')}</h1>
+		<p class="subtitle">{t('pages.index.hero.subtitle')}</p>
 		<div class="hero-image">
-			<img src="/bodystate_hand.png" alt="BodyState App on Hand" />
+			<img src="/bodystate_hand.png" alt={t('pages.index.hero.imageAlt')} />
 		</div>
 	</div>
 	
@@ -129,73 +131,30 @@ function formatDate(dateString) {
 	<div class="features-area-wrapper">
 		<div class="features-carousel-wrapper" id="featuresCarouselWrapper">
 			<div class="features-grid" id="featuresGrid">
-				<!-- Feature 1 -->
-				<div class="feature-card">
-					<div class="feature-content bottom-aligned">
-						<h2 class="feature-headline">Track metrics that matter.</h2>
-					</div>
-					<div class="feature-image top-aligned">
-						<img src="/features/01_metrics.jpg" alt="BodyState detailed metrics screen" />
-					</div>
-				</div>
-				
-				<!-- Feature 2 -->
-				<div class="feature-card">
-					<div class="feature-content top-aligned">
-						<h2 class="feature-headline">Stay close to your heart.</h2>
-					</div>
-					<div class="feature-image bottom-aligned">
-						<img src="/features/02_heart.jpg" alt="BodyState heart rate insights" />
-					</div>
-				</div>
-				
-				<!-- Feature 3 -->
-				<div class="feature-card">
-					<div class="feature-content bottom-aligned">
-						<h2 class="feature-headline">Optimize your energy.</h2>
-					</div>
-					<div class="feature-image top-aligned">
-						<img src="/features/03_energy.jpg" alt="BodyState energy optimization" />
-					</div>
-				</div>
-				
-				<!-- Feature 4 -->
-				<div class="feature-card">
-					<div class="feature-content top-aligned">
-						<h2 class="feature-headline">Fuel your fitness.</h2>
-					</div>
-					<div class="feature-image bottom-aligned">
-						<img src="/features/04_fitness.jpg" alt="BodyState fitness tracking" />
-					</div>
-				</div>
-				
-				<!-- Feature 5 -->
-				<div class="feature-card">
-					<div class="feature-content bottom-aligned">
-						<h2 class="feature-headline">Quantify how you're feeling.</h2>
-					</div>
-					<div class="feature-image top-aligned">
-						<img src="/features/05_fatigue.jpg" alt="BodyState fatigue management" />
-					</div>
-				</div>
-				
-				<!-- Feature 6 -->
-				<div class="feature-card">
-					<div class="feature-content top-aligned">
-						<h2 class="feature-headline">Become an expert on you.</h2>
-					</div>
-					<div class="feature-image bottom-aligned">
-						<img src="/features/06_insights.png" alt="BodyState personalized insights" />
-					</div>
-				</div>
+				{t('pages.index.features.carousel.items').map((item, index) => {
+					const imageNumber = (index + 1).toString().padStart(2, '0');
+					const imagePath = `/features/${imageNumber}_${['metrics', 'heart', 'energy', 'fitness', 'fatigue', 'insights'][index]}.${index === 5 ? 'png' : 'jpg'}`;
+					const isEven = index % 2 === 0;
+					
+					return (
+						<div class="feature-card">
+							<div class={`feature-content ${isEven ? 'bottom-aligned' : 'top-aligned'}`}>
+								<h2 class="feature-headline">{item.headline}</h2>
+							</div>
+							<div class={`feature-image ${isEven ? 'top-aligned' : 'bottom-aligned'}`}>
+								<img src={imagePath} alt={item.imageAlt} />
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 		<div class="features-nav-buttons-container content-container">
 			<div class="features-nav-buttons">
-				<button id="prevFeature" aria-label="Previous feature">
+				<button id="prevFeature" aria-label={t('pages.index.features.carousel.previousButtonAriaLabel')}>
 					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 2L3 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 				</button>
-				<button id="nextFeature" aria-label="Next feature">
+				<button id="nextFeature" aria-label={t('pages.index.features.carousel.nextButtonAriaLabel')}>
 					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 2L11 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 				</button>
 			</div>
@@ -212,19 +171,19 @@ function formatDate(dateString) {
 						<div class="app-store-rating">
 							<img src="/icons/laurel.leading.svg" alt="" class="laurel-left" />
 							<img src="/icons/apple.logo.svg" alt="Apple" class="apple-logo" />
-							<span class="rating-number">4.7+</span>
+							<span class="rating-number">{t('pages.index.reviews.stats.appStoreRating.value')}</span>
 							<img src="/icons/laurel.trailing.svg" alt="" class="laurel-right" />
 						</div>
-						<p class="rating-label">App Store Rating</p>
+						<p class="rating-label">{t('pages.index.reviews.stats.appStoreRating.label')}</p>
 					</div>
 					
 					<div class="stat-item">
 						<div class="users-rating">
 							<img src="/icons/laurel.leading.svg" alt="" class="laurel-left" />
-							<span class="users-number">200K+</span>
+							<span class="users-number">{t('pages.index.reviews.stats.usersWorldwide.value')}</span>
 							<img src="/icons/laurel.trailing.svg" alt="" class="laurel-right" />
 						</div>
-						<p class="users-label">Users Worldwide</p>
+						<p class="users-label">{t('pages.index.reviews.stats.usersWorldwide.label')}</p>
 					</div>
 				</div>
 			</div>
@@ -245,7 +204,7 @@ function formatDate(dateString) {
 						</div>
 					)) : (
 						<div class="content-container">
-							<p class="no-reviews-message">No reviews available at the moment. Check back later!</p>
+							<p class="no-reviews-message">{t('pages.index.reviews.carousel.noReviewsMessage')}</p>
 						</div>
 					)}
 				</div>
@@ -253,10 +212,10 @@ function formatDate(dateString) {
 			{reviews.length > 1 && (
 				<div class="reviews-nav-buttons-container content-container">
 					<div class="reviews-nav-buttons">
-						<button id="prevReview" aria-label="Previous review">
+						<button id="prevReview" aria-label={t('pages.index.reviews.carousel.previousButtonAriaLabel')}>
 							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 2L3 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 						</button>
-						<button id="nextReview" aria-label="Next review">
+						<button id="nextReview" aria-label={t('pages.index.reviews.carousel.nextButtonAriaLabel')}>
 							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 2L11 7L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 						</button>
 					</div>
@@ -301,13 +260,15 @@ function formatDate(dateString) {
 	}
 	
 	.subtitle {
-		font-size: clamp(1.1rem, 4vw, 1.3rem);
+		font-size: clamp(1rem, 3.5vw, 1.2rem);
 		max-width: 650px;
 		margin-left: auto;
 		margin-right: auto;
-		font-weight: 300;
+		font-weight: 400;
 		line-height: 1.6;
 		margin-bottom: var(--space-lg);
+		font-family: 'Inter', system-ui, sans-serif;
+		color: #86868B;
 	}
 	
 	.hero-image {

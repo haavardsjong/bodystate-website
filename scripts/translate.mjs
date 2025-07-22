@@ -63,7 +63,7 @@ async function getBatchTranslations(keysToTranslate, targetLang) {
   console.log(` -> Calling OpenAI to translate ${Object.keys(keysToTranslate).length} keys to ${fullLanguageName}...`);
 
   const requestBody = {
-    model: 'gpt-3.5-turbo', // Or a model known for good JSON output like gpt-4o if available
+    model: 'gpt-4o', // Using GPT-4o for better translation quality
     messages: [
       {
         role: 'system',

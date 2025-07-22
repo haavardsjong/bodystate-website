@@ -81,5 +81,101 @@
     "h2_9": "9. 联系信息",
     "p9_1": "如果您对这些条款有任何疑问或疑虑，请通过{contactLink}与我们联系。",
     "contactLinkText": "此处"
+  },
+  "contactPage": {
+    "infoBox": {
+      "emailMethod": {
+        "h3": "电子邮件",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "社交",
+        "p1": "@BodyStateApp"
+      },
+      "h2": "联系我们",
+      "p1": "我们的团队随时准备回答您关于BodyState以及如何帮助您更好地了解您的身体的问题。"
+    },
+    "form": {
+      "nameLabel": "姓名",
+      "namePlaceholder": "您的姓名",
+      "emailLabel": "电子邮件",
+      "emailPlaceholder": "您的电子邮件地址",
+      "subjectLabel": "主题",
+      "subjectSelectDefault": "选择一个主题",
+      "subjectOptionQuestion": "一般问题",
+      "subjectOptionFeedback": "反馈",
+      "subjectOptionSupport": "技术支持",
+      "subjectOptionPartnership": "合作伙伴关系",
+      "messageLabel": "消息",
+      "messagePlaceholder": "您的消息",
+      "submitButtonText": "发送"
+    },
+    "pageTitle": "BodyState - 联系我们",
+    "h1": "联系<span class=\\\"accent\\\">我们</span>",
+    "subtitle": "对BodyState有疑问吗？我们在这里帮助您。"
+  },
+  "pages": {
+    "index": {
+      "hero": {
+        "title": "让你的身体发声。",
+        "subtitle": "你的身体很复杂。BodyState 帮助你理解它。它将你的健康数据转化为身体和心灵的能量。",
+        "imageAlt": "手持 BodyState 应用"
+      },
+      "features": {
+        "carousel": {
+          "items": {
+            "0": {
+              "headline": "追踪重要指标。",
+              "imageAlt": "BodyState 详细指标屏幕"
+            },
+            "1": {
+              "headline": "贴近你的心脏。",
+              "imageAlt": "BodyState 心率洞察"
+            },
+            "2": {
+              "headline": "优化你的能量。",
+              "imageAlt": "BodyState 能量优化"
+            },
+            "3": {
+              "headline": "为你的健身加油。",
+              "imageAlt": "BodyState 健身追踪"
+            },
+            "4": {
+              "headline": "量化你的感受。",
+              "imageAlt": "BodyState 疲劳管理"
+            },
+            "5": {
+              "headline": "成为自己的专家。",
+              "imageAlt": "BodyState 个性化洞察"
+            }
+          },
+          "previousButtonAriaLabel": "上一个功能",
+          "nextButtonAriaLabel": "下一个功能"
+        }
+      },
+      "reviews": {
+        "stats": {
+          "appStoreRating": {
+            "value": "4.7+",
+            "label": "App Store 评分"
+          },
+          "usersWorldwide": {
+            "value": "200K+",
+            "label": "全球用户"
+          }
+        },
+        "carousel": {
+          "noReviewsMessage": "目前没有评论。请稍后查看！",
+          "previousButtonAriaLabel": "上一个评论",
+          "nextButtonAriaLabel": "下一个评论"
+        }
+      },
+      "contactSuccess": {
+        "title": "谢谢！",
+        "message": "您的信息已成功发送。我们会尽快回复您。",
+        "backToHome": "返回首页"
+      },
+      "pageTitle": "BodyState - 让你的身体发声"
+    }
   }
 }

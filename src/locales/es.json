@@ -90,7 +90,378 @@
       "emailPlaceholder": "Tu correo electrónico",
       "messageLabel": "Mensaje",
       "messagePlaceholder": "Tu mensaje",
-      "submitButtonText": "Enviar"
+      "submitButtonText": "Enviar",
+      "nameLabel": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "subjectLabel": "Asunto",
+      "subjectSelectDefault": "Selecciona un asunto",
+      "subjectOptionQuestion": "Pregunta general",
+      "subjectOptionFeedback": "Comentarios",
+      "subjectOptionSupport": "Soporte técnico",
+      "subjectOptionPartnership": "Asociación"
+    },
+    "infoBox": {
+      "emailMethod": {
+        "h3": "Correo electrónico",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "Redes sociales",
+        "p1": "@BodyStateApp"
+      },
+      "h2": "Ponte en contacto",
+      "p1": "Nuestro equipo está listo para responder tus preguntas sobre BodyState y cómo puede ayudarte a entender mejor tu cuerpo."
+    },
+    "subtitle": "¿Tienes preguntas sobre BodyState? Estamos aquí para ayudarte."
+  },
+  "pages": {
+    "index": {
+      "hero": {
+        "title": "Dale voz a tu cuerpo.",
+        "subtitle": "Tu cuerpo es complejo. BodyState te ayuda a entenderlo. Traduce tus datos de salud en una batería para cuerpo y mente.",
+        "imageAlt": "Aplicación BodyState en Mano"
+      },
+      "features": {
+        "carousel": {
+          "items": {
+            "0": {
+              "headline": "Rastrea métricas que importan.",
+              "imageAlt": "Pantalla de métricas detalladas de BodyState"
+            },
+            "1": {
+              "headline": "Mantente cerca de tu corazón.",
+              "imageAlt": "Insights de frecuencia cardíaca de BodyState"
+            },
+            "2": {
+              "headline": "Optimiza tu energía.",
+              "imageAlt": "Optimización de energía de BodyState"
+            },
+            "3": {
+              "headline": "Alimenta tu estado físico.",
+              "imageAlt": "Seguimiento de fitness de BodyState"
+            },
+            "4": {
+              "headline": "Cuantifica cómo te sientes.",
+              "imageAlt": "Gestión de fatiga de BodyState"
+            },
+            "5": {
+              "headline": "Conviértete en un experto en ti.",
+              "imageAlt": "Insights personalizados de BodyState"
+            }
+          },
+          "previousButtonAriaLabel": "Característica anterior",
+          "nextButtonAriaLabel": "Siguiente característica"
+        }
+      },
+      "reviews": {
+        "stats": {
+          "appStoreRating": {
+            "value": "4.7+",
+            "label": "Calificación en App Store"
+          },
+          "usersWorldwide": {
+            "value": "200K+",
+            "label": "Usuarios en Todo el Mundo"
+          }
+        },
+        "carousel": {
+          "noReviewsMessage": "No hay reseñas disponibles en este momento. ¡Vuelve más tarde!",
+          "previousButtonAriaLabel": "Reseña anterior",
+          "nextButtonAriaLabel": "Siguiente reseña"
+        }
+      },
+      "contactSuccess": {
+        "title": "¡Gracias!",
+        "message": "Tu mensaje ha sido enviado con éxito. Nos pondremos en contacto contigo pronto.",
+        "backToHome": "Volver al Inicio"
+      },
+      "pageTitle": "BodyState - Dale Voz a Tu Cuerpo"
+    },
+    "faq": {
+      "pageTitle": "Preguntas Frecuentes",
+      "heading": "Preguntas Frecuentes",
+      "sections": {
+        "userGuide": {
+          "title": "Guía del Usuario",
+          "questions": {
+            "whatIsBodyState": {
+              "question": "¿Qué es BodyState?",
+              "answer": {
+                "p1": "BodyState transforma tus datos de salud en una batería para cuerpo y mente, ayudándote a personalizar tu estilo de vida, hábitos y programas de entrenamiento para desbloquear tu máximo potencial.",
+                "p2": "En su núcleo, BodyState calcula una puntuación de 1 a 100, que representa tu vitalidad general y preparación. Una puntuación más cercana a 100 indica que estás bien descansado y listo para enfrentar los desafíos de la vida.",
+                "p3": "La base de BodyState se construye sobre cuatro métricas cruciales: sueño, fatiga, variabilidad de la frecuencia cardíaca y frecuencia cardíaca en reposo. Estas métricas impactan significativamente tu salud y se miden contra tus líneas base personales de 6 semanas para evaluar tu estado actual.",
+                "p4": "Recargas tu batería mientras duermes. Qué tan bien recargues depende de tu sueño, VFC y frecuencia cardíaca.",
+                "p5": "Durante el día, tu batería se agota, y la velocidad de agotamiento está influenciada por tu nivel de actividad y presión del sueño. La alta actividad agota la batería más rápidamente, mientras que la presión del sueño aumenta cuanto más tiempo permaneces despierto."
+              }
+            },
+            "howDoesScoreWork": {
+              "question": "¿Cómo funciona la puntuación de BodyState?",
+              "answer": {
+                "p1": "La puntuación de BodyState varía de 1 a 100, representando tu vitalidad general y preparación. Una puntuación más cercana a 100 indica que estás bien descansado y preparado para enfrentar los desafíos de la vida, mientras que una puntuación más baja sugiere que podrías necesitar descanso y recuperación. La puntuación de BodyState no debe necesariamente dictar tus actividades diarias, pero debe ayudarte a ser consciente de cómo te sientes y tomar decisiones acertadas sobre el tipo o intensidad de tus actividades, priorizando potencialmente más descanso si es necesario.",
+                "p2": "La puntuación se calcula basándose en cuatro factores clave: sueño, fatiga, variabilidad de la frecuencia cardíaca durante el sueño (VFC) y frecuencia cardíaca durante el sueño. En términos simples, lo siguiente generalmente conducirá a una puntuación más alta:",
+                "list": [
+                  "Más sueño comparado con tu promedio.",
+                  "Estar bien descansado comparado con tu nivel de actividad habitual.",
+                  "Una frecuencia cardíaca más baja que tu promedio (pero no demasiado baja)",
+                  "Una VFC más alta que tu promedio (pero no demasiado alta)."
+                ],
+                "p3": "La parte crucial es cómo tus mediciones diarias se comparan con tu línea base, que es tu rango promedio de valores de los últimos 60 días. Por ejemplo, si tu línea base de frecuencia cardíaca durante el sueño está entre 55 y 65, este rango se utilizará para evaluar tu frecuencia cardíaca actual. Los valores más cercanos al extremo inferior son mejores.",
+                "p4": "A lo largo del día, tu puntuación de BodyState disminuirá. La velocidad de esta disminución depende de tu nivel de actividad y cuánto tiempo has estado despierto. Si estás principalmente en reposo durante el día, tu puntuación disminuirá gradualmente, mientras que una sesión de ejercicio causará una caída más inmediata en tu puntuación de BodyState."
+              }
+            },
+            "whatAreBaselines": {
+              "question": "¿Qué son las Líneas Base?",
+              "answer": {
+                "p1": "Una línea base es esencialmente tu rango promedio personal de la métrica de salud dada.",
+                "p2": "En el contexto de BodyState, las líneas base se calculan evaluando un mínimo de 7 días, y hasta 60 días de tus datos rastreados. Este enfoque asegura que la evaluación de tus métricas de salud actuales sea personalizada y confiable.",
+                "p3": "Usar líneas base para evaluar el estado de hoy es crucial porque las métricas de salud varían ampliamente entre individuos. Una línea base proporciona un marco de referencia personalizado, haciendo que tu puntuación de BodyState sea únicamente adaptada a ti.",
+                "h4": "Cómo se Calculan las Líneas Base",
+                "p4": "Para calcular una línea base, usamos métodos estadísticos para determinar el promedio (media) y la variabilidad (desviación estándar) de tus métricas de salud durante el período elegido.",
+                "p5": "Aquí hay un ejemplo simplificado usando datos de sueño, que se aplica de manera similar a otras métricas como frecuencia cardíaca y VFC:",
+                "steps": [
+                  "<strong>Recopilar Datos</strong>: Reunir datos de sueño de los últimos 60 días.",
+                  "<strong>Calcular la Media</strong>: Determinar la duración promedio del sueño durante este período.",
+                  "<strong>Calcular la Desviación Estándar</strong>: Medir la variabilidad en tu duración del sueño.",
+                  "<strong>Establecer el Rango de Línea Base</strong>: Establecer tu línea base como un rango desde una desviación estándar por debajo de la media hasta una desviación estándar por encima de la media."
+                ],
+                "p6": "Por ejemplo, si la duración media del sueño durante 60 días es de 7 horas, y la desviación estándar es de 1 hora, tu rango de línea base sería de 6 a 8 horas."
+              }
+            },
+            "aboutSleep": {
+              "question": "Acerca del Sueño",
+              "answer": {
+                "p1": "El sueño es la piedra angular de BodyState. Establece un protocolo consistente para medir métricas clave. El sueño no solo es una entrada crucial para tu BodyState, sino que también es el período cuando se miden la VFC y la frecuencia cardíaca en reposo y se comparan con tu historial para evaluar tu estado actual. El sueño de alta calidad es vital para reponer la energía de tu cuerpo, mejorando significativamente tu preparación diaria y vitalidad general."
+              }
+            },
+            "aboutFatigue": {
+              "question": "Acerca de la Fatiga",
+              "answer": {
+                "p1": "La fatiga, también conocida como Carga de Entrenamiento Aguda (ATL), mide tus niveles de actividad recientes. Promedia tu gasto energético activo diario durante los últimos siete días, priorizando los recientes. ATL se centra en la carga de trabajo total, no en el tipo de entrenamiento. El método proporciona una imagen clara del esfuerzo reciente y te ayuda a gestionar tus necesidades de recuperación."
+              }
+            },
+            "aboutHRV": {
+              "question": "Acerca de la Variabilidad de la Frecuencia Cardíaca durante el Sueño (VFC)",
+              "answer": {
+                "p1": "La Variabilidad de la Frecuencia Cardíaca (VFC) es una métrica clave para evaluar la recuperación y la salud general. Una VFC alta señala descanso y preparación, mientras que una VFC baja indica estrés o fatiga. Mantener la VFC estable dentro de tu línea base personal es crucial, ya que los valores muy altos también pueden ser preocupantes. BodyState monitorea tu VFC durante el sueño para evaluar de manera confiable los efectos de tu estilo de vida en tu bienestar."
+              }
+            },
+            "aboutHR": {
+              "question": "Acerca de la Frecuencia Cardíaca durante el Sueño (FC)",
+              "answer": {
+                "p1": "La Frecuencia Cardíaca durante el Sueño (FC) es una métrica clave para comprender tu nivel de condición física y salud cardiovascular. La FC es el número de latidos por minuto mientras estás en reposo, mostrando qué tan eficientemente funciona tu corazón cuando está inactivo. Generalmente, una frecuencia cardíaca en reposo más baja significa mejor condición cardiovascular y función cardíaca más eficiente, ya que tu corazón bombea más sangre con menos latidos."
+              }
+            }
+          }
+        },
+        "general": {
+          "title": "General",
+          "questions": {
+            "noDataAfterInstall": {
+              "question": "Acabo de empezar a usar BodyState y no veo ningún dato en la aplicación.",
+              "answer": {
+                "p1": "Si acabas de descargar BodyState y tus datos no se están poblando en la aplicación, sigue estos pasos:",
+                "steps": [
+                  "Primero ten en cuenta que necesitarás 7 días completos de datos de sueño de tu Apple Watch antes de que BodyState pueda comenzar a mostrarte métricas. Esto se debe a que BodyState solo puede evaluar tus datos de salud si tiene algún historial de salud como punto de referencia. El seguimiento del sueño con tu iPhone no es compatible. Si no estás seguro de si tus datos de sueño se están rastreando usando tu iPhone, verifica la aplicación Salud. Los datos rastreados por el iPhone generalmente aparecen como valores \"en cama\".",
+                  "Asegúrate de haber otorgado permiso para que BodyState acceda a tus datos de salud desde Apple Health. Si no, lee cómo hacerlo en la sección de Acceso a Salud en esta página.",
+                  "Si el problema persiste, puedes intentar resolverlo reinstalando la aplicación BodyState."
+                ]
+              }
+            },
+            "increaseAccuracy": {
+              "question": "¿Cómo puedo aumentar la precisión de BodyState?",
+              "answer": {
+                "p1": "Aunque no es obligatorio, se recomienda que actives el Historial de AFib en tu Apple Watch para que pueda registrar más muestras de frecuencia cardíaca durante el sueño. Sin embargo, ten en cuenta que activar el Historial de AFib podría potencialmente desactivar las alertas de frecuencia cardíaca alta en tu Apple Watch, así que procede con precaución.",
+                "p2": "En tu iPhone, abre la aplicación Salud.",
+                "steps": [
+                  "Toca Explorar, luego toca Corazón.",
+                  "Toca Historial de AFib.",
+                  "Toca Configurar, luego toca Comenzar.",
+                  "Ingresa tu Fecha de Nacimiento.",
+                  "Selecciona Sí para indicar que has sido diagnosticado con AFib por un médico, luego toca Continuar.",
+                  "Toca Continuar para aprender más sobre el Historial de AFib, los resultados que puedes ver y los factores de vida.",
+                  "Toca Listo."
+                ]
+              }
+            },
+            "issuesAfterReinstall": {
+              "question": "Tengo problemas y ya he reinstalado la aplicación",
+              "answer": {
+                "p1": "Si tus datos siguen faltando después de reinstalar BodyState, verifica Apple Health para confirmar que tus otras aplicaciones o dispositivos están escribiendo correctamente sus datos en tu dispositivo. Si ves datos en Apple Health como calorías activas y reportes detallados de sueño y no se están incorporando a BodyState, debes reportar esto como un error a nosotros. De lo contrario, esto puede indicar un problema con otra aplicación o dispositivo."
+              }
+            },
+            "whyDataDiffers": {
+              "question": "¿Por qué mi sueño, VFC o FC difieren de la aplicación Salud?",
+              "answer": {
+                "p1": "La duración del sueño puede diferir de la aplicación Salud porque Apple incluye la etapa de despierto en la duración del sueño, mientras que BodyState no.",
+                "p2": "La VFC difiere de la aplicación Salud porque BodyState calcula tu VFC promedio durante el sueño, mientras que Apple usa todas las lecturas de VFC para calcular el promedio.",
+                "p3": "La Frecuencia Cardíaca en Reposo (FC) difiere de la aplicación Salud porque BodyState calcula tu FC promedio durante el sueño, mientras que Apple usa las lecturas de FC mientras estás en reposo, como sentado, para calcular la métrica."
+              }
+            },
+            "widgetNotUpdating": {
+              "question": "Mi widget de iPhone no se actualiza",
+              "answer": {
+                "p1": "<strong>Hay varias razones por las que tu widget podría no actualizarse</strong>, muchas de las cuales provienen de las estrictas restricciones de procesamiento en segundo plano de iOS diseñadas para preservar la vida de la batería. Aquí hay algunos factores comunes que podrían afectar las actualizaciones del widget:",
+                "reasons": [
+                  "<strong>Configuración de Actualización en Segundo Plano</strong>: El widget depende de que la aplicación actualice el contenido en segundo plano. Si la Actualización en Segundo Plano está desactivada para BodyState (Configuración > General > Actualización en Segundo Plano), el widget puede no actualizarse como se espera. Asegúrate de que esta configuración esté habilitada para BodyState.",
+                  "<strong>Modo de Bajo Consumo</strong>: Cuando tu iPhone está en Modo de Bajo Consumo, las actividades en segundo plano, incluidas las actualizaciones del widget, se reducen significativamente para conservar batería. Esto puede evitar que el widget obtenga nuevos datos.",
+                  "<strong>Conectividad de Red</strong>: Una conexión a internet estable es necesaria para que la aplicación obtenga los datos más recientes. Si tu dispositivo tiene conectividad pobre o nula, el widget no se actualizará.",
+                  "<strong>Frecuencia de Actualización del Widget de iOS</strong>: iOS controla con qué frecuencia pueden actualizarse los widgets para administrar la vida de la batería y el rendimiento del sistema. Los widgets no son pantallas en tiempo real y tienen límites sobre con qué frecuencia pueden actualizarse. Esto significa que podría haber un ligero retraso entre cuando los nuevos datos están disponibles en la aplicación y cuando aparecen en el widget.",
+                  "<strong>Actividad de la Aplicación</strong>: Los widgets a menudo se actualizan con más frecuencia si la aplicación principal se usa regularmente. Si no has abierto BodyState en un tiempo, iOS podría reducir la frecuencia de las actualizaciones de su widget.",
+                  "<strong>Fallos del Widget</strong>: Ocasionalmente, los widgets pueden experimentar fallos temporales. Eliminar el widget de tu pantalla de inicio y agregarlo de nuevo a veces puede resolver estos problemas.",
+                  "<strong>Actualizaciones de la Aplicación</strong>: Asegúrate de que BodyState esté actualizado a la última versión desde la App Store. Las actualizaciones a menudo incluyen correcciones de errores y mejoras de rendimiento que pueden afectar la funcionalidad del widget.",
+                  "<strong>Actualizaciones de iOS</strong>: De manera similar, mantener tu iOS actualizado es crucial, ya que Apple frecuentemente lanza actualizaciones que pueden afectar el rendimiento del widget y el procesamiento en segundo plano.",
+                  "<strong>Reinicia tu Dispositivo</strong>: Un simple reinicio de tu iPhone a menudo puede resolver fallos menores de software que podrían estar afectando las actualizaciones del widget."
+                ],
+                "p2": "Si has verificado estos factores y el widget aún no se actualiza, contacta con el soporte para obtener más ayuda."
+              }
+            },
+            "watchAppNotSyncing": {
+              "question": "¿Por qué no se sincroniza mi aplicación del reloj?",
+              "answer": {
+                "p1": "Si la aplicación watchOS de BodyState muestra \"Abre BodyState en iPhone para sincronizar\" durante tu primer uso de la aplicación, asegúrate de que la aplicación BodyState se abra primero en tu reloj y luego en tu iPhone. La aplicación de iOS debe mostrar tu BodyState actual sin errores para una sincronización exitosa. También es necesario que tu reloj esté correctamente conectado. Para verificar que tu Apple Watch esté conectado a tu iPhone, abre el Centro de Control presionando el botón lateral y busca el ícono de estado Conectado, que generalmente aparece como un símbolo de iPhone verde.",
+                "p2": "Si encuentras un error relacionado con el acceso a la salud, el acceso a los datos o la ausencia de datos de sueño, este mensaje continuará apareciendo en tu reloj hasta que el problema se resuelva en tu iPhone.",
+                "p3": "Si has seguido estos pasos y tu reloj no se sincroniza cuando abres la aplicación de iOS, intenta reiniciar la aplicación del reloj. Si el problema persiste, considera reinstalar tanto las aplicaciones de iOS como de watchOS."
+              }
+            },
+            "watchComplicationsOutOfSync": {
+              "question": "¿Por qué no están sincronizadas las Complicaciones del Reloj entre mi aplicación del Reloj y del Teléfono?",
+              "answer": {
+                "p1": "El tiempo de actualización de las complicaciones está controlado por el SO del reloj para optimización de batería. Las complicaciones se actualizarán aproximadamente cada hora durante el día. Antes de una actualización, puedes esperar que la complicación esté ligeramente fuera de sincronización con la aplicación de iOS ya que no se actualizan al mismo tiempo."
+              }
+            }
+          }
+        },
+        "sleepTracking": {
+          "title": "Seguimiento del Sueño",
+          "questions": {
+            "howToTrackSleep": {
+              "question": "¿Cómo Rastro Mi Sueño?",
+              "answer": {
+                "p1": "<strong>BodyState requiere que rastrees tu sueño usando tu Apple Watch o un dispositivo que se sincronice con la aplicación Salud.</strong> El seguimiento del sueño en el Apple Watch implica habilitar el modo Concentración de Sueño. Tienes la opción de activar manualmente este modo cada noche antes de acostarte y desactivarlo cada mañana, o configurar un horario de sueño que lo maneje automáticamente. Recomendamos controlar manualmente el modo Concentración de Sueño, ya que los horarios de sueño pueden variar.",
+                "h4_1": "Comenzando con el Seguimiento del Sueño en iPhone:",
+                "steps1": [
+                  "Abre la aplicación Salud.",
+                  "Toca \"Explorar\" en la parte inferior de la pantalla.",
+                  "Selecciona \"Sueño\".",
+                  "Toca \"Comenzar\" bajo \"Configurar Sueño\".",
+                  "Sigue las indicaciones para definir tus Objetivos de Sueño, Hora de Dormir, Horas de Despertar y activar Concentración de Sueño."
+                ],
+                "h4_2": "Comenzando con el Seguimiento del Sueño en Apple Watch:",
+                "steps2": [
+                  "Inicia la aplicación Sueño.",
+                  "Completa la configuración en pantalla para crear un horario de sueño."
+                ],
+                "h4_3": "Para Activar Concentración de Sueño por la Noche:",
+                "steps3": [
+                  "Presiona el botón lateral para abrir el Centro de Control.",
+                  "Toca el ícono de la luna.",
+                  "Elige \"Sueño\" del menú; un pequeño ícono de cama azul verdoso aparecerá en la parte superior de la carátula del reloj."
+                ],
+                "h4_4": "Para Desactivar Concentración de Sueño por la Mañana:",
+                "steps4": [
+                  "Accede al Centro de Control nuevamente",
+                  "Toca el ícono de la luna.",
+                  "Selecciona \"Sueño\" y tócalo para desactivar Concentración de Sueño."
+                ],
+                "h4_5": "Consideraciones Importantes",
+                "considerations": [
+                  "<strong>Seguimiento del Sueño:</strong> Necesita al menos cuatro horas de datos de sueño cada noche para ser efectivo.",
+                  "<strong>Carga de Batería:</strong> Asegúrate de que tu dispositivo tenga al menos un 30% de carga antes de ir a dormir."
+                ]
+              }
+            },
+            "sleepDataNotAppearing": {
+              "question": "Mis Datos de Sueño No Aparecen. ¿Qué Debo Hacer?",
+              "answer": {
+                "p1": "Si estás rastreando el sueño pero encuentras un error que muestra que no hay datos de sueño, aquí hay pasos para solucionar el problema.",
+                "h4_1": "Verificación Inicial:",
+                "check": "Para que BodyState funcione correctamente, debe estar disponible un informe detallado de sueño en la aplicación Salud. Para verificar esto, abre la aplicación Salud en tu iPhone, navega a la sección Sueño y busca un informe que cubra la noche actual, incluyendo etapas como sueño central y profundo. El seguimiento del sueño con tu iPhone no es compatible. Si no estás seguro de si tus datos de sueño se están rastreando usando tu iPhone, verifica la aplicación Salud. Los datos rastreados por el iPhone generalmente aparecen como valores \"en cama\". Si no ves un informe detallado de sueño, a pesar de rastrear tu sueño, considera los siguientes pasos:",
+                "h4_2": "Acelerar la Sincronización:",
+                "speedUp": "Para acelerar la sincronización, intenta abrir el dispositivo o aplicación fuente. Por ejemplo, abre la aplicación Sueño en tu Apple Watch, o si usas AutoSleep, abre la aplicación para iniciar el proceso de sincronización. Si usas un dispositivo Garmin, abre connect y asegúrate de que los datos del sueño estén sincronizados.",
+                "h4_3": "Solución de problemas general:",
+                "general": "<strong>Cambiar Fuente de Sueño:</strong> Puedes intentar cambiar manualmente la fuente de sueño si tienes otros dispositivos o aplicaciones que escriben en la aplicación Salud. Para hacer esto, en BodyState navega a Configuración > Prioridad de Datos de Sueño.",
+                "h4_4": "Solución de Problemas del Apple Watch:",
+                "troubleshooting": [
+                  "<strong>Conectividad Bluetooth:</strong> Asegúrate de que Bluetooth esté habilitado en tu dispositivo. Es fácil apagarlo accidentalmente.",
+                  "<strong>Modo Avión:</strong> Verifica si tu iPhone o Apple Watch está en modo avión, lo que podría evitar la sincronización de datos.",
+                  "<strong>Código de Acceso</strong>: Cuando tu reloj está bloqueado con un código de acceso, los datos del sueño se registrarán pero no aparecerán hasta que el reloj esté desbloqueado. Muchos usuarios cargan su reloj antes de dormir y se lo ponen justo antes de dormir, lo que solicita la necesidad de ingresar el código de acceso.",
+                  "<strong>Configuración de Seguimiento del Sueño:</strong> Verifica si 'Rastrear Sueño con Apple Watch' está activado. Esta configuración es vital para usar Etapas del Sueño. Para habilitarlo, ve a la aplicación Apple Watch en tu iPhone, desplázate hasta 'Sueño' y activa la opción 'Rastrear Sueño con Apple Watch'.",
+                  "<strong>Horarios de Sueño y Concentración:</strong> Si estás usando los horarios de sueño de Apple, asegúrate de que la opción 'Usar Horario para Concentración de Sueño' esté configurada correctamente. Las configuraciones incorrectas aquí pueden llevar a que Concentración de Sueño se apague en momentos inapropiados, afectando la captura de datos.",
+                  "<strong>Niveles de Batería:</strong> Verifica si la batería de tu Apple Watch cayó al 10% o menos. El reloj necesita suficiente energía para registrar los datos de frecuencia cardíaca de fondo esenciales para el seguimiento del sueño.",
+                  "<strong>Detección de Muñeca:</strong> Confirma que la detección de muñeca esté habilitada en tu Apple Watch. Esta función es necesaria para recopilar datos de frecuencia cardíaca de fondo. Habilítala en la aplicación Apple Watch bajo la configuración 'Código de acceso' activando 'Detección de muñeca'."
+                ]
+              }
+            },
+            "selectAnotherSleepSource": {
+              "question": "¿Cómo Selecciono Otra Fuente de Sueño?",
+              "answer": {
+                "p1": "Tienes la opción de elegir manualmente qué fuente de sueño debe priorizar BodyState, como una aplicación de terceros como Autosleep o un reloj Garmin.",
+                "p2": "Para hacer esto, navega a Configuración > Datos y Fuentes > Prioridad de Fuente.",
+                "p3": "En la aplicación BodyState, accede a la configuración tocando el ícono de engranaje en la esquina superior derecha. Luego, toca en Datos y Fuentes, luego selecciona Prioridad de Fuente y elige tu fuente preferida.",
+                "p4": "Después de seleccionar una nueva fuente, la aplicación necesitará recargar todos los datos para incorporar esta fuente para calcular las líneas base y los valores de hoy. Es esencial que esta fuente se haya usado lo suficiente para proporcionar datos suficientes (al menos 7 noches de datos de sueño) para líneas base precisas."
+              }
+            },
+            "trackWithOtherDevices": {
+              "question": "¿Puedo Rastrear el Sueño con Dispositivos Distintos al Apple Watch o Aplicaciones de Terceros?",
+              "answer": {
+                "p1": "BodyState es compatible con cualquier dispositivo que pueda transferir sus datos a Apple Health. Sin embargo, no todos los dispositivos pueden integrarse sin problemas con Apple Health.",
+                "p2": "Por defecto, BodyState da prioridad a los datos del Apple Watch. Sin embargo, tienes la opción de elegir manualmente qué fuente de sueño debe priorizar BodyState, como una aplicación de terceros como Autosleep o un reloj Garmin.",
+                "p3": "Para hacer esto, en BodyState navega a Configuración > Datos y Fuentes > Prioridad de Fuente."
+              }
+            },
+            "doNapsImprove": {
+              "question": "¿Las Siestas Mejoran Mi BodyState?",
+              "answer": {
+                "p1": "Sí, las siestas mejoran la puntuación de BodyState."
+              }
+            }
+          }
+        },
+        "healthAccess": {
+          "title": "Acceso a Salud",
+          "questions": {
+            "howToEnableHealthAccess": {
+              "question": "¿Cómo Habilito el Acceso a Salud?",
+              "answer": {
+                "steps": [
+                  "Abre la aplicación de configuración en tu teléfono.",
+                  "(Si estás en iOS 18, desplázate hacia abajo y toca en \"Aplicaciones\")",
+                  "Desplázate hacia abajo y toca en \"Salud\".",
+                  "Toca en \"Acceso a Datos y Dispositivos\".",
+                  "Desplázate hacia abajo y toca en \"BodyState\"",
+                  "Toca en \"Activar Todas las Categorías\""
+                ]
+              }
+            },
+            "healthAccessError": {
+              "question": "He habilitado el acceso pero aún experimento un error de acceso a salud",
+              "answer": {
+                "p1": "Si has habilitado el acceso a salud en la configuración pero aún experimentas problemas, intenta lo siguiente.",
+                "steps": [
+                  "Primero, intenta desactivar y luego volver a activar el botón que dice \"Activar Todas las Categorías\" en la configuración de acceso a salud.",
+                  "Apaga y enciende el dispositivo nuevamente. Esto a menudo lo resuelve.",
+                  "Si aún enfrentas problemas, intenta eliminar BodyState y reinstalarlo."
+                ]
+              }
+            },
+            "blankScreenInSettings": {
+              "question": "Veo una pantalla en blanco en Acceso a Datos y Dispositivos > BodyState",
+              "answer": {
+                "p1": "Si no tienes la opción de proporcionar acceso a salud bajo Configuración > Aplicaciones > Salud > Acceso a Datos y Dispositivos > BodyState. En otras palabras, hay una pantalla en blanco, intenta eliminar la aplicación y reinstalarla. En algunos casos también tienes que reiniciar tu teléfono."
+              }
+            },
+            "whatIsHealthAccess": {
+              "question": "¿Qué es el acceso a salud y por qué lo necesita BodyState?",
+              "answer": {
+                "p1": "La aplicación Salud fue creada para ayudar a organizar tu información de salud importante y hacer que sea fácil acceder a ella en un lugar central y seguro.",
+                "p2": "Recopila datos de salud y estado físico de tu iPhone, iPad, los sensores integrados en tu Apple Watch, dispositivos de terceros compatibles y aplicaciones que usan HealthKit.",
+                "p3": "La aplicación Salud está diseñada para mantener tus datos seguros y proteger tu privacidad. Tus datos están encriptados y siempre tienes el control de tu información de salud.",
+                "p4": "BodyState necesita acceso a algunas categorías de tus datos de salud para funcionar, ya que es la base para calcular la puntuación de BodyState."
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

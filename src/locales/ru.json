@@ -81,5 +81,101 @@
     "h2_9": "9. Контактная информация",
     "p9_1": "Если у вас есть вопросы или проблемы, касающиеся этих Условий, пожалуйста, свяжитесь с нами {contactLink}.",
     "contactLinkText": "здесь"
+  },
+  "contactPage": {
+    "infoBox": {
+      "emailMethod": {
+        "h3": "Электронная почта",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "Социальные сети",
+        "p1": "@BodyStateApp"
+      },
+      "h2": "Связаться с нами",
+      "p1": "Наша команда готова ответить на ваши вопросы о BodyState и как он может помочь вам лучше понять свое тело."
+    },
+    "form": {
+      "nameLabel": "Имя",
+      "namePlaceholder": "Ваше имя",
+      "emailLabel": "Электронная почта",
+      "emailPlaceholder": "Ваш адрес электронной почты",
+      "subjectLabel": "Тема",
+      "subjectSelectDefault": "Выберите тему",
+      "subjectOptionQuestion": "Общий вопрос",
+      "subjectOptionFeedback": "Обратная связь",
+      "subjectOptionSupport": "Техническая поддержка",
+      "subjectOptionPartnership": "Партнерство",
+      "messageLabel": "Сообщение",
+      "messagePlaceholder": "Ваше сообщение",
+      "submitButtonText": "Отправить"
+    },
+    "pageTitle": "BodyState - Контакты",
+    "h1": "Свяжитесь <span class=\\\"accent\\\">с нами</span>",
+    "subtitle": "Есть вопросы о BodyState? Мы здесь, чтобы помочь."
+  },
+  "pages": {
+    "index": {
+      "hero": {
+        "title": "Дайте вашему телу голос.",
+        "subtitle": "Ваше тело сложно. BodyState помогает вам его понять. Он переводит ваши данные о здоровье в батарею для тела и разума.",
+        "imageAlt": "Приложение BodyState в руке"
+      },
+      "features": {
+        "carousel": {
+          "items": {
+            "0": {
+              "headline": "Отслеживайте важные метрики.",
+              "imageAlt": "Экран подробных метрик BodyState"
+            },
+            "1": {
+              "headline": "Будьте ближе к своему сердцу.",
+              "imageAlt": "Инсайты по частоте сердечных сокращений BodyState"
+            },
+            "2": {
+              "headline": "Оптимизируйте свою энергию.",
+              "imageAlt": "Оптимизация энергии BodyState"
+            },
+            "3": {
+              "headline": "Питайтесь для фитнеса.",
+              "imageAlt": "Отслеживание фитнеса BodyState"
+            },
+            "4": {
+              "headline": "Квантифицируйте свои ощущения.",
+              "imageAlt": "Управление усталостью BodyState"
+            },
+            "5": {
+              "headline": "Станьте экспертом по себе.",
+              "imageAlt": "Персонализированные инсайты BodyState"
+            }
+          },
+          "previousButtonAriaLabel": "Предыдущая функция",
+          "nextButtonAriaLabel": "Следующая функция"
+        }
+      },
+      "reviews": {
+        "stats": {
+          "appStoreRating": {
+            "value": "4.7+",
+            "label": "Рейтинг в App Store"
+          },
+          "usersWorldwide": {
+            "value": "200K+",
+            "label": "Пользователи по всему миру"
+          }
+        },
+        "carousel": {
+          "noReviewsMessage": "Отзывов пока нет. Проверьте позже!",
+          "previousButtonAriaLabel": "Предыдущий отзыв",
+          "nextButtonAriaLabel": "Следующий отзыв"
+        }
+      },
+      "contactSuccess": {
+        "title": "Спасибо!",
+        "message": "Ваше сообщение успешно отправлено. Мы скоро с вами свяжемся.",
+        "backToHome": "Вернуться на главную"
+      },
+      "pageTitle": "BodyState - Дайте вашему телу голос"
+    }
   }
 }

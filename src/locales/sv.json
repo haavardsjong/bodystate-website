@@ -81,5 +81,101 @@
     "h2_9": "9. Kontaktinformation",
     "p9_1": "Om du har några frågor eller funderingar angående dessa Villkor, vänligen kontakta oss {contactLink}.",
     "contactLinkText": "här"
+  },
+  "contactPage": {
+    "infoBox": {
+      "emailMethod": {
+        "h3": "E-post",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "Sociala medier",
+        "p1": "@BodyStateApp"
+      },
+      "h2": "Kom i kontakt",
+      "p1": "Vårt team är redo att svara på dina frågor om BodyState och hur det kan hjälpa dig att bättre förstå din kropp."
+    },
+    "form": {
+      "nameLabel": "Namn",
+      "namePlaceholder": "Ditt namn",
+      "emailLabel": "E-post",
+      "emailPlaceholder": "Din e-postadress",
+      "subjectLabel": "Ämne",
+      "subjectSelectDefault": "Välj ett ämne",
+      "subjectOptionQuestion": "Generell fråga",
+      "subjectOptionFeedback": "Feedback",
+      "subjectOptionSupport": "Teknisk support",
+      "subjectOptionPartnership": "Partnerskap",
+      "messageLabel": "Meddelande",
+      "messagePlaceholder": "Ditt meddelande",
+      "submitButtonText": "Skicka"
+    },
+    "pageTitle": "BodyState - Kontakt",
+    "h1": "Kontakta <span class=\\\"accent\\\">oss</span>",
+    "subtitle": "Har du frågor om BodyState? Vi är här för att hjälpa till."
+  },
+  "pages": {
+    "index": {
+      "hero": {
+        "title": "Ge din kropp en röst.",
+        "subtitle": "Din kropp är komplex. BodyState hjälper dig att förstå den. Det översätter din hälsodata till ett batteri för kropp och sinne.",
+        "imageAlt": "BodyState App i handen"
+      },
+      "features": {
+        "carousel": {
+          "items": {
+            "0": {
+              "headline": "Spåra viktiga mätvärden.",
+              "imageAlt": "BodyState detaljerad mätvärdesskärm"
+            },
+            "1": {
+              "headline": "Håll dig nära ditt hjärta.",
+              "imageAlt": "BodyState hjärtfrekvensinsikter"
+            },
+            "2": {
+              "headline": "Optimera din energi.",
+              "imageAlt": "BodyState energioptimering"
+            },
+            "3": {
+              "headline": "Bränsle för din träning.",
+              "imageAlt": "BodyState träningstracking"
+            },
+            "4": {
+              "headline": "Kvantifiera hur du mår.",
+              "imageAlt": "BodyState trötthetshantering"
+            },
+            "5": {
+              "headline": "Bli expert på dig själv.",
+              "imageAlt": "BodyState personliga insikter"
+            }
+          },
+          "previousButtonAriaLabel": "Föregående funktion",
+          "nextButtonAriaLabel": "Nästa funktion"
+        }
+      },
+      "reviews": {
+        "stats": {
+          "appStoreRating": {
+            "value": "4.7+",
+            "label": "App Store-betyg"
+          },
+          "usersWorldwide": {
+            "value": "200K+",
+            "label": "Användare världen över"
+          }
+        },
+        "carousel": {
+          "noReviewsMessage": "Inga recensioner tillgängliga för tillfället. Kom tillbaka senare!",
+          "previousButtonAriaLabel": "Föregående recension",
+          "nextButtonAriaLabel": "Nästa recension"
+        }
+      },
+      "contactSuccess": {
+        "title": "Tack!",
+        "message": "Ditt meddelande har skickats framgångsrikt. Vi återkommer till dig snart.",
+        "backToHome": "Tillbaka till startsidan"
+      },
+      "pageTitle": "BodyState - Ge din kropp en röst"
+    }
   }
 }

@@ -81,5 +81,101 @@
     "h2_9": "9. 連絡先情報",
     "p9_1": "これらの規約に関するご質問やご不明な点がある場合は、{contactLink}までお問い合わせください。",
     "contactLinkText": "こちら"
+  },
+  "contactPage": {
+    "infoBox": {
+      "emailMethod": {
+        "h3": "メール",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "ソーシャル",
+        "p1": "@BodyStateApp"
+      },
+      "h2": "お問い合わせ",
+      "p1": "当社のチームは、BodyStateに関するご質問や、あなたの体をよりよく理解するのにどのように役立つかについてお答えする準備ができています。"
+    },
+    "form": {
+      "nameLabel": "名前",
+      "namePlaceholder": "あなたの名前",
+      "emailLabel": "メール",
+      "emailPlaceholder": "あなたのメールアドレス",
+      "subjectLabel": "件名",
+      "subjectSelectDefault": "件名を選択",
+      "subjectOptionQuestion": "一般的な質問",
+      "subjectOptionFeedback": "フィードバック",
+      "subjectOptionSupport": "技術サポート",
+      "subjectOptionPartnership": "提携",
+      "messageLabel": "メッセージ",
+      "messagePlaceholder": "メッセージを入力",
+      "submitButtonText": "送信"
+    },
+    "pageTitle": "BodyState - お問い合わせ",
+    "h1": "お問い合わせ<span class=\\\"accent\\\">する</span>",
+    "subtitle": "BodyStateに関する質問はありますか？お手伝いいたします。"
+  },
+  "pages": {
+    "index": {
+      "hero": {
+        "title": "あなたの体に声を与えましょう。",
+        "subtitle": "あなたの体は複雑です。BodyStateはそれを理解する手助けをします。あなたの健康データを体と心のためのバッテリーに変換します。",
+        "imageAlt": "手に持ったBodyStateアプリ"
+      },
+      "features": {
+        "carousel": {
+          "items": {
+            "0": {
+              "headline": "重要な指標を追跡。",
+              "imageAlt": "BodyState詳細指標画面"
+            },
+            "1": {
+              "headline": "心臓に近づく。",
+              "imageAlt": "BodyState心拍数インサイト"
+            },
+            "2": {
+              "headline": "エネルギーを最適化。",
+              "imageAlt": "BodyStateエネルギー最適化"
+            },
+            "3": {
+              "headline": "フィットネスを燃料に。",
+              "imageAlt": "BodyStateフィットネストラッキング"
+            },
+            "4": {
+              "headline": "自分の気持ちを定量化。",
+              "imageAlt": "BodyState疲労管理"
+            },
+            "5": {
+              "headline": "自分の専門家になる。",
+              "imageAlt": "BodyStateパーソナライズされたインサイト"
+            }
+          },
+          "previousButtonAriaLabel": "前の機能",
+          "nextButtonAriaLabel": "次の機能"
+        }
+      },
+      "reviews": {
+        "stats": {
+          "appStoreRating": {
+            "value": "4.7+",
+            "label": "App Store評価"
+          },
+          "usersWorldwide": {
+            "value": "200K+",
+            "label": "世界中のユーザー"
+          }
+        },
+        "carousel": {
+          "noReviewsMessage": "現在利用可能なレビューはありません。後で再度ご確認ください！",
+          "previousButtonAriaLabel": "前のレビュー",
+          "nextButtonAriaLabel": "次のレビュー"
+        }
+      },
+      "contactSuccess": {
+        "title": "ありがとうございます！",
+        "message": "メッセージは正常に送信されました。すぐにご連絡いたします。",
+        "backToHome": "ホームに戻る"
+      },
+      "pageTitle": "BodyState - あなたの体に声を与える"
+    }
   }
 }

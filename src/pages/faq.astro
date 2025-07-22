@@ -1,338 +1,337 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { createTranslationHelper } from '../i18n/enhanced-utils.js';
 
-const pageTitle = "Frequently Asked Questions";
+// Accept lang as a prop, default to 'en' for base route
+const { lang = 'en' } = Astro.props;
+const { t } = createTranslationHelper(lang);
+
+const pageTitle = t('pages.faq.pageTitle');
 ---
 <BaseLayout title={pageTitle}>
 	<div class="faq-container">
-		<h1>{pageTitle}</h1>
+		<h1>{t('pages.faq.heading')}</h1>
 
 		<section class="faq-section">
-			<h2>User Guide</h2>
+			<h2>{t('pages.faq.sections.userGuide.title')}</h2>
 
 			<details class="faq-item">
 				<summary>
-					<h3>What is BodyState</h3>
+					<h3>{t('pages.faq.sections.userGuide.questions.whatIsBodyState.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>BodyState transforms your health data into a battery for body and mind, helping you tailor your lifestyle, habits, and training programs to unlock your full potential.</p>
-					<p>At its core, BodyState calculates a score from 1 to 100, representing your overall vitality and readiness. A score closer to 100 indicates that you are well-rested and ready to tackle life's challenges.</p>
-					<p>The foundation of BodyState is built on four crucial metrics: sleep, fatigue, heart rate variability, and resting heart rate. These metrics significantly impact your health and are measured against your personal 6-week baselines to assess your current state.</p>
-					<p>You recharge your battery while you sleep. How well you recharge depends on your sleep, HRV, and heart rate.</p>
-					<p>During the day, your battery depletes, and the rate of depletion is influenced by your activity level and sleep pressure. High activity drains the battery more quickly, while sleep pressure builds the longer you stay awake.</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatIsBodyState.answer.p1')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatIsBodyState.answer.p2')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatIsBodyState.answer.p3')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatIsBodyState.answer.p4')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatIsBodyState.answer.p5')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>How does the BodyState Score work</h3>
+					<h3>{t('pages.faq.sections.userGuide.questions.howDoesScoreWork.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>The BodyState score ranges from 1 to 100, representing your overall vitality and readiness. A score closer to 100 indicates that you are well-rested and prepared to tackle life's challenges, while a lower score suggests that you might need rest and recovery. The BodyState score shouldn't necessarily dictate your daily activities, but it should help you be mindful of how you feel and make sound decisions about the type or intensity of your activities, potentially prioritizing more rest if needed.</p>
-					<p>The score is calculated based on four key factors: sleep, fatigue, sleeping heart rate variability (HRV), and sleeping heart rate. In simple terms the following will generally lead to a higher score:</p>
+					<p>{t('pages.faq.sections.userGuide.questions.howDoesScoreWork.answer.p1')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.howDoesScoreWork.answer.p2')}</p>
 					<ul>
-						<li>More sleep compared to your average.</li>
-						<li>Being well-rested compared to your usual activity level.</li>
-						<li>A lower heart rate than your average (but not too low)</li>
-						<li>A higher HRV than your average (but not too high).</li>
+						{Array.isArray(t('pages.faq.sections.userGuide.questions.howDoesScoreWork.answer.list')) && 
+						 t('pages.faq.sections.userGuide.questions.howDoesScoreWork.answer.list').map((item) => (
+							<li>{item}</li>
+						))}
 					</ul>
-					<p>The crucial part is how your daily measurements stack up against your baseline, which is your average range of values from the past 60 days. For instance, if your baseline sleeping heart rate is between 55 and 65, this range will be used to assess your current heart rate. Values closer to the lower end are better.</p>
-					<p>Throughout the day, your BodyState score will decrease. The rate of this decrease depends on your level of activity and how long you've been awake. If you are mostly at rest during the day, your score will decrease gradually, while an exercise session will cause a more immediate drop in your BodyState score.</p>
+					<p>{t('pages.faq.sections.userGuide.questions.howDoesScoreWork.answer.p3')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.howDoesScoreWork.answer.p4')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>What are Baselines</h3>
+					<h3>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>A baseline is essentially your personal average range of the given health metric.</p>
-					<p>In the context of BodyState, baselines are computed by evaluating at minimum 7 days, and up to 60 days of your tracked data. This approach ensures that the evaluation of your current health metrics is both personalized and reliable.</p>
-					<p>Using baselines to evaluate today's state is crucial because health metrics vary widely among individuals. A baseline provides a personalized frame of reference, making your BodyState score uniquely tailored to you.</p>
-					<h4>How Baselines Are Computed</h4>
-					<p>To calculate a baseline, we use statistical methods to determine the average (mean) and the variability (standard deviation) of your health metrics over the chosen period.</p>
-					<p>Here's a simplified example using sleep data, which applies similarly to other metrics like heart rate and HRV:</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.p1')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.p2')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.p3')}</p>
+					<h4>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.h4')}</h4>
+					<p>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.p4')}</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.p5')}</p>
 					<ol>
-						<li><strong>Collect Data</strong>: Gather sleep data for the past 60 days.</li>
-						<li><strong>Calculate Mean</strong>: Determine the average sleep duration over this period.</li>
-						<li><strong>Calculate Standard Deviation</strong>: Measure the variability in your sleep duration.</li>
-						<li><strong>Set Baseline Range</strong>: Establish your baseline as a range from one standard deviation below the mean to one standard deviation above the mean.</li>
+						{Array.isArray(t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.steps')) && 
+						 t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.steps').map((step) => (
+							<li set:html={step}></li>
+						))}
 					</ol>
-					<p>For example, if the mean sleep duration over 60 days is 7 hours, and the standard deviation is 1 hour, your baseline range would be 6 to 8 hours.</p>
+					<p>{t('pages.faq.sections.userGuide.questions.whatAreBaselines.answer.p6')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>About Sleep</h3>
+					<h3>{t('pages.faq.sections.userGuide.questions.aboutSleep.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>Sleep is the cornerstone of BodyState. It establishes a consistent protocol for measuring key metrics. Not only is sleep a crucial input for your BodyState, but it is also the period when HRV and resting heart rate are measured and compared to your history to assess your current state. High-quality sleep is vital for replenishing your body's energy, significantly enhancing your daily readiness and overall vitality.</p>
+					<p>{t('pages.faq.sections.userGuide.questions.aboutSleep.answer.p1')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>About Fatigue</h3>
+					<h3>{t('pages.faq.sections.userGuide.questions.aboutFatigue.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>Fatigue, also known as Acute Training Load (ATL), measures your recent activity levels. It averages your daily active energy expenditure over the past seven days, prioritizing recent ones. ATL focuses on total workload, not training type. The method provides a clear picture of recent exertion and helps you manage your recovery needs.</p>
+					<p>{t('pages.faq.sections.userGuide.questions.aboutFatigue.answer.p1')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>About Sleeping Heart Rate Variability (HRV)</h3>
+					<h3>{t('pages.faq.sections.userGuide.questions.aboutHRV.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>Heart Rate Variability (HRV) is a key metric for assessing recovery and overall health. High HRV signals restfulness and readiness, while low HRV indicates stress or fatigue. Keeping HRV stable within your personal baseline is crucial, as very high values can also be concerning. BodyState monitors your HRV during sleep to reliably assess the effects of your lifestyle on your well-being.</p>
+					<p>{t('pages.faq.sections.userGuide.questions.aboutHRV.answer.p1')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>About Sleeping Heart Rate (HR)</h3>
+					<h3>{t('pages.faq.sections.userGuide.questions.aboutHR.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>Sleeping Heart Rate (HR) is a key metric for understanding your fitness level and cardiovascular health. HR is the number of heartbeats per minute while at rest, showing how efficiently your heart works when inactive. Generally, a lower resting heart rate means better cardiovascular fitness and more efficient heart function, as your heart pumps more blood with fewer beats.</p>
+					<p>{t('pages.faq.sections.userGuide.questions.aboutHR.answer.p1')}</p>
 				</div>
 			</details>
 		</section>
 
 		<section class="faq-section">
-			<h2>General</h2>
+			<h2>{t('pages.faq.sections.general.title')}</h2>
 			<details class="faq-item">
 				<summary>
-					<h3>I just started using BodyState and I don't see any data in the app.</h3>
+					<h3>{t('pages.faq.sections.general.questions.noDataAfterInstall.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>If you just downloaded BodyState and your data is not populating into the app, please follow these steps:</p>
+					<p>{t('pages.faq.sections.general.questions.noDataAfterInstall.answer.p1')}</p>
 					<ol>
-						<li>First note that you will need 7 full days of sleep data from your Apple Watch before BodyState can start showing you metrics. That's because BodyState can only assess your health data if it has some health history as a reference point. Sleep tracking with your iPhone is not supported. If you're unsure whether your sleep data is being tracked using your iPhone, check the Health app. Data tracked by the iPhone typically appears as "in bed" values.</li>
-						<li>Ensure that you have granted permission for BodyState to access your health data from Apple Health. If not read how to under the Health Access section in this page.</li>
-						<li>If the problem persists, you can attempt to resolve it by reinstalling the BodyState app.</li>
+						{Array.isArray(t('pages.faq.sections.general.questions.noDataAfterInstall.answer.steps')) && 
+						 t('pages.faq.sections.general.questions.noDataAfterInstall.answer.steps').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>How can I increase the accuracy of BodyState?</h3>
+					<h3>{t('pages.faq.sections.general.questions.increaseAccuracy.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>While not required, it is recommended that you turn on AFib History on your Apple Watch so it can record more heart rate samples during sleep. However, please note that turning on AFib History could potentially disable high heart rate alerts on your Apple Watch, so proceed with caution.</p>
-					<p>On your iPhone, open the Health app.</p>
+					<p>{t('pages.faq.sections.general.questions.increaseAccuracy.answer.p1')}</p>
+					<p>{t('pages.faq.sections.general.questions.increaseAccuracy.answer.p2')}</p>
 					<ol>
-						<li>Tap Browse, then tap Heart.</li>
-						<li>Tap AFib History.</li>
-						<li>Tap Set Up, then tap Get Started.</li>
-						<li>Enter your Date of Birth.</li>
-						<li>Select Yes to indicate that you have been diagnosed with AFib by a doctor, then tap Continue.</li>
-						<li>Tap Continue to learn more about AFib History, the results you may see, and life factors.</li>
-						<li>Tap Done.</li>
+						{Array.isArray(t('pages.faq.sections.general.questions.increaseAccuracy.answer.steps')) && 
+						 t('pages.faq.sections.general.questions.increaseAccuracy.answer.steps').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>I'm having issues and have already reinstalled the app</h3>
+					<h3>{t('pages.faq.sections.general.questions.issuesAfterReinstall.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>If your data is still missing after resintalling BodyState, please check Apple Health to confirm that your other apps or devices are correctly writing their data to your device. If you see data in Apple Health such as active calories and a detailed sleep reports and it is not being pulled in to BodyState, you should report this as a bug to us. Otherwise, this may indicate an issue with another app or device.</p>
+					<p>{t('pages.faq.sections.general.questions.issuesAfterReinstall.answer.p1')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>Why does my sleep, HRV or HR differ from the Health App?</h3>
+					<h3>{t('pages.faq.sections.general.questions.whyDataDiffers.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>Sleep duration can differ from the Health app because Apple includes the awake stage in the sleep duration, while BodyState does not.</p>
-					<p>HRV differs from the Health App because BodyState computes your average HRV during sleep, while Apple uses all HRV readings to compute the average.</p>
-					<p>Resting Heart Rate (HR) differs from the Health App because BodyState computes your average HR during sleep, while Apple uses HR readings while you are at rest such as sitting down to compute the metric.</p>
+					<p>{t('pages.faq.sections.general.questions.whyDataDiffers.answer.p1')}</p>
+					<p>{t('pages.faq.sections.general.questions.whyDataDiffers.answer.p2')}</p>
+					<p>{t('pages.faq.sections.general.questions.whyDataDiffers.answer.p3')}</p>
 				</div>
 			</details>
 			
 			<details class="faq-item">
 				<summary>
-					<h3>My iPhone widget is not updating</h3>
+					<h3>{t('pages.faq.sections.general.questions.widgetNotUpdating.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p><strong>There are several reasons why your widget might not be updating</strong>, many of which stem from iOS's stringent background processing restrictions designed to preserve battery life. Here are some common factors that could impact widget updates:</p>
+					<p set:html={t('pages.faq.sections.general.questions.widgetNotUpdating.answer.p1')}></p>
 					<ol>
-						<li><strong>Background App Refresh Settings</strong>: The widget relies on the app to refresh content in the background. If Background App Refresh is disabled for BodyState (Settings > General > Background App Refresh), the widget may not update as expected. Ensure this setting is enabled for BodyState.</li>
-						<li><strong>Low Power Mode</strong>: When your iPhone is in Low Power Mode, background activities, including widget updates, are significantly reduced to conserve battery. This can prevent the widget from fetching new data.</li>
-						<li><strong>Network Connectivity</strong>: A stable internet connection is necessary for the app to fetch the latest data. If your device has poor or no connectivity, the widget will not update.</li>
-						<li><strong>iOS Widget Update Frequency</strong>: iOS controls how often widgets can update to manage battery life and system performance. Widgets are not real-time displays and have limits on how frequently they can refresh. This means there might be a slight delay between when new data is available in the app and when it appears on the widget.</li>
-						<li><strong>App Activity</strong>: Widgets often update more frequently if the main app is used regularly. If you haven't opened BodyState in a while, iOS might reduce the frequency of its widget updates.</li>
-						<li><strong>Widget Glitches</strong>: Occasionally, widgets may experience temporary glitches. Removing the widget from your Home Screen and adding it back can sometimes resolve these issues.</li>
-						<li><strong>App Updates</strong>: Ensure BodyState is updated to the latest version from the App Store. Updates often include bug fixes and performance improvements that can affect widget functionality.</li>
-						<li><strong>iOS Updates</strong>: Similarly, keeping your iOS updated is crucial, as Apple frequently releases updates that can impact widget performance and background processing.</li>
-						<li><strong>Restart Your Device</strong>: A simple restart of your iPhone can often resolve minor software glitches that might be affecting widget updates.</li>
+						{Array.isArray(t('pages.faq.sections.general.questions.widgetNotUpdating.answer.reasons')) && 
+						 t('pages.faq.sections.general.questions.widgetNotUpdating.answer.reasons').map((reason) => (
+							<li set:html={reason}></li>
+						))}
 					</ol>
-					<p>If you have checked these factors and the widget still isn't updating, please contact support for further assistance.</p>
+					<p>{t('pages.faq.sections.general.questions.widgetNotUpdating.answer.p2')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>Why doesn't my Watch app sync?</h3>
+					<h3>{t('pages.faq.sections.general.questions.watchAppNotSyncing.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>If the BodyState watchOS app displays "Open Bodystate on iPhone to sync" during your first use of the app, ensure that the BodyState app is opened first on your watch and then on your iPhone. The iOS app should display your current BodyState without any errors for successful syncing. It is also necessary that your watch is properly connected. To verify that your Apple Watch is connected to your iPhone, open the Control Center by pressing the side button and look for the Connected status icon, which typically appears as a green iPhone symbol.</p>
-					<p>If you encounter an error related to health access, data access, or the absence of sleep data, this message will continue to appear on your watch until the issue is resolved on your iPhone.</p>
-					<p>If you've followed these steps and your watch doesn't sync when you open the iOS app, try restarting the watch app. If the issue persists, consider reinstalling both the iOS and watchOS apps.</p>
+					<p>{t('pages.faq.sections.general.questions.watchAppNotSyncing.answer.p1')}</p>
+					<p>{t('pages.faq.sections.general.questions.watchAppNotSyncing.answer.p2')}</p>
+					<p>{t('pages.faq.sections.general.questions.watchAppNotSyncing.answer.p3')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
 				<summary>
-					<h3>Why aren't the Watch Complications in sync between my Watch and Phone app?</h3>
+					<h3>{t('pages.faq.sections.general.questions.watchComplicationsOutOfSync.question')}</h3>
 				</summary>
 				<div class="faq-content">
-					<p>The refresh time for complications is controlled by the Watch OS for battery optimization. Complications will update roughly each hour throughout the day. Before a refresh you can expect the complication to be slightly off sync from the iOS app as they do not update at the same time.</p>
+					<p>{t('pages.faq.sections.general.questions.watchComplicationsOutOfSync.answer.p1')}</p>
 				</div>
 			</details>
 		</section>
 
 		<section class="faq-section">
-			<h2>Sleep Tracking</h2>
+			<h2>{t('pages.faq.sections.sleepTracking.title')}</h2>
 			<details class="faq-item">
-				<summary><h3>How Do I Track My Sleep?</h3></summary>
+				<summary><h3>{t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.question')}</h3></summary>
 				<div class="faq-content">
-					<p><strong>BodyState requires you to track your sleep using your Apple Watch or a device that syncs with the Health app.</strong> Sleep tracking on the Apple Watch involves enabling Sleep Focus mode. You have the option to manually activate this mode each night before bed and deactivate it each morning, or set up a sleep schedule that automatically handles this. We recommend manually controlling Sleep Focus mode, as sleep schedules can vary.</p>
-					<h4>Getting Started with Sleep Tracking on iPhone:</h4>
+					<p set:html={t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.p1')}></p>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.h4_1')}</h4>
 					<ol>
-						<li>Open the Health app.</li>
-						<li>Tap "Browse" at the bottom of the screen.</li>
-						<li>Select "Sleep."</li>
-						<li>Tap "Get Started" under "Set Up Sleep."</li>
-						<li>Follow the prompts to define your Sleep Goals, Bedtime, Wake-Up Times, and activate Sleep Focus.</li>
+						{Array.isArray(t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps1')) && 
+						 t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps1').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
-					<h4>Getting Started with Sleep Tracking on Apple Watch:</h4>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.h4_2')}</h4>
 					<ol>
-						<li>Launch the Sleep app.</li>
-						<li>Complete the onscreen setup to create a sleep schedule.</li>
+						{Array.isArray(t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps2')) && 
+						 t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps2').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
-					<h4>To Activate Sleep Focus at Night:</h4>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.h4_3')}</h4>
 					<ol>
-						<li>Press the side button to open Control Center.</li>
-						<li>Tap the moon icon.</li>
-						<li>Choose "Sleep" from the menu; a small greenish-blue bed icon will then appear at the top of the watch face.</li>
+						{Array.isArray(t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps3')) && 
+						 t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps3').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
-					<h4>To Deactivate Sleep Focus in the Morning:</h4>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.h4_4')}</h4>
 					<ol>
-						<li>Access the Control Center again</li>
-						<li>Tap the moon icon.</li>
-						<li>Select "Sleep" and tap it to turn off Sleep Focus.</li>
+						{Array.isArray(t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps4')) && 
+						 t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.steps4').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
-					<h4>Important Considerations</h4>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.h4_5')}</h4>
 					<ul>
-						<li><strong>Sleep Tracking:</strong> Needs at least four hours of sleep data each night to be effective.</li>
-						<li><strong>Battery Charge:</strong> Ensure your device has at least a 30% charge before going to bed.</li>
+						{Array.isArray(t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.considerations')) && 
+						 t('pages.faq.sections.sleepTracking.questions.howToTrackSleep.answer.considerations').map((item) => (
+							<li set:html={item}></li>
+						))}
 					</ul>
 				</div>
 			</details>
 
 			<details class="faq-item">
-				<summary><h3>My Sleep Data Isn't Appearing. What Should I Do?</h3></summary>
+				<summary><h3>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.question')}</h3></summary>
 				<div class="faq-content">
-					<p>If you're tracking sleep but encountering an error that shows no sleep data, here are steps to troubleshoot the issue.</p>
-					<h4>Initial Check:</h4>
+					<p>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.p1')}</p>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.h4_1')}</h4>
 					<ul>
-						<li>For BodyState to function properly, a detailed sleep report must be available in the Health app. To verify this, open the Health app on your iPhone, navigate to the Sleep section, and check for a report covering the current night, including stages like core and deep sleep. Sleep tracking with your iPhone is not supported. If you're unsure whether your sleep data is being tracked using your iPhone, check the Health app. Data tracked by the iPhone typically appears as "in bed" values. If you don't see a detailed sleep report, despite tracking your sleep, consider the following steps:</li>
+						<li>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.check')}</li>
 					</ul>
-					<h4>Speed Up Syncing:</h4>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.h4_2')}</h4>
 					<ul>
-						<li>To speed up syncing, try opening the source device or app. For example, open the Sleep app on your Apple Watch, or if you use AutoSleep, open the app to kick-start the syncing process. If you use a Garmin device, open connect and make sure sleep data is synced.</li>
+						<li>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.speedUp')}</li>
 					</ul>
-					<h4>General troubleshooting:</h4>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.h4_3')}</h4>
 					<ul>
-						<li><strong>Change Sleep Source:</strong> You can manually try to change the sleep source if you have other devices or apps that write to the Health App. To do this, in BodyState navigate to Settings > Sleep Data Priority.</li>
+						<li set:html={t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.general')}></li>
 					</ul>
-					<h4>Apple Watch Troubleshooting:</h4>
+					<h4>{t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.h4_4')}</h4>
 					<ul>
-						<li><strong>Bluetooth Connectivity:</strong> Ensure Bluetooth is enabled on your device. It's easy to accidentally turn it off.</li>
-						<li><strong>Airplane Mode:</strong> Check if either your iPhone or Apple Watch is in airplane mode, which could prevent data synchronization.</li>
-						<li><strong>Passcode</strong>: When your watch is locked with a passcode, sleep data will be recorded but will not appear until the watch is unlocked. Many users charge their watch before bed and put it on just before sleeping, which prompts the need to enter the passcode.</li>
-						<li><strong>Sleep Tracking Setting:</strong> Check if 'Track Sleep with Apple Watch' is activated. This setting is vital for using Sleep Stages. To enable it, go to the Apple Watch App on your iPhone, scroll down to 'Sleep,' and toggle the 'Track Sleep with Apple Watch' option.</li>
-						<li><strong>Sleep Schedules and Focus:</strong> If you are using Apple's sleep schedules, make sure the 'Use Schedule for Sleep Focus' option is correctly configured. Incorrect settings here can lead to Sleep Focus turning off at inappropriate times, affecting data capture.</li>
-						<li><strong>Battery Levels:</strong> Verify if your Apple Watch battery dropped to 10% or lower. The watch needs sufficient power to record background heart rate data essential for sleep tracking.</li>
-						<li><strong>Wrist Detection:</strong> Confirm that wrist detection is enabled on your Apple Watch. This feature is necessary for gathering background heart rate data. Enable it in the Apple Watch app under the 'Passcode' settings by turning on 'Wrist Detection.'</li>
+						{Array.isArray(t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.troubleshooting')) && 
+						 t('pages.faq.sections.sleepTracking.questions.sleepDataNotAppearing.answer.troubleshooting').map((item) => (
+							<li set:html={item}></li>
+						))}
 					</ul>
 				</div>
 			</details>
 
 			<details class="faq-item">
-				<summary><h3>How Do I Select Another Sleep Source?</h3></summary>
+				<summary><h3>{t('pages.faq.sections.sleepTracking.questions.selectAnotherSleepSource.question')}</h3></summary>
 				<div class="faq-content">
-					<p>You have the option to manually choose which sleep source BodyState should prioritize, such as a third-party app like Autosleep or a Garmin watch.</p>
-					<p>To do this, navigate to Settings > Data & Sources > Source Priority.</p>
-					<p>In the BodyState app, access the settings by tapping the cog icon in the top right corner. Next, tap on Data & Sources, then select Source Priority, and choose your preferred source.</p>
-					<p>After selecting a new source, the app will need to reload all data to incorporate this source for computing baselines and today's values. It is essential that this source has been used enough to provide sufficient data (at least 7 nights of sleep data) for accurate baselines.</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.selectAnotherSleepSource.answer.p1')}</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.selectAnotherSleepSource.answer.p2')}</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.selectAnotherSleepSource.answer.p3')}</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.selectAnotherSleepSource.answer.p4')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
-				<summary><h3>Can I Track Sleep with Devices Other Than Apple Watch or Third-Party Apps?</h3></summary>
+				<summary><h3>{t('pages.faq.sections.sleepTracking.questions.trackWithOtherDevices.question')}</h3></summary>
 				<div class="faq-content">
-					<p>Bodystate is compatible with any device that can transfer its data to Apple Health. However, not every device may integrate smoothly with Apple Health.</p>
-					<p>By default, BodyState gives priority to data from the Apple Watch. However, you have the option to manually choose which sleep source BodyState should prioritize, such as a third-party app like Autosleep or a Garmin watch.</p>
-					<p>To do this, in BodyState navigate to Settings > Data & Sources > Source Priority.</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.trackWithOtherDevices.answer.p1')}</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.trackWithOtherDevices.answer.p2')}</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.trackWithOtherDevices.answer.p3')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
-				<summary><h3>Does Naps Improve My BodyState?</h3></summary>
+				<summary><h3>{t('pages.faq.sections.sleepTracking.questions.doNapsImprove.question')}</h3></summary>
 				<div class="faq-content">
-					<p>Yes, naps improve the BodyState score.</p>
+					<p>{t('pages.faq.sections.sleepTracking.questions.doNapsImprove.answer.p1')}</p>
 				</div>
 			</details>
 		</section>
 
 		<section class="faq-section">
-			<h2>Health Access</h2>
+			<h2>{t('pages.faq.sections.healthAccess.title')}</h2>
 			<details class="faq-item">
-				<summary><h3>How do I Enable Health Access?</h3></summary>
+				<summary><h3>{t('pages.faq.sections.healthAccess.questions.howToEnableHealthAccess.question')}</h3></summary>
 				<div class="faq-content">
 					<ol>
-						<li>Open the settings app on your phone.</li>
-						<li>(If on iOS 18, scroll down and tap on "Apps")</li>
-						<li>Scroll down and tap on "Health".</li>
-						<li>Tap on "Data Access & Devices".</li>
-						<li>Scroll down and tap on "BodyState"</li>
-						<li>Tap on "Turn All Categories On"</li>
+						{Array.isArray(t('pages.faq.sections.healthAccess.questions.howToEnableHealthAccess.answer.steps')) && 
+						 t('pages.faq.sections.healthAccess.questions.howToEnableHealthAccess.answer.steps').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
 				</div>
 			</details>
 
 			<details class="faq-item">
-				<summary><h3>I've enabled access but still experience an health access error</h3></summary>
+				<summary><h3>{t('pages.faq.sections.healthAccess.questions.healthAccessError.question')}</h3></summary>
 				<div class="faq-content">
-					<p>If you've enabled health access in settings but still experience issues, please try the following.</p>
+					<p>{t('pages.faq.sections.healthAccess.questions.healthAccessError.answer.p1')}</p>
 					<ol>
-						<li>First, try to un-toggle and then re-toggle the button that says "Turn All Categories On" in the health access settings.</li>
-						<li>Turn device on and off again. This often resolves it.</li>
-						<li>If you still face issues, try deleting BodyState and reinstalling it.</li>
+						{Array.isArray(t('pages.faq.sections.healthAccess.questions.healthAccessError.answer.steps')) && 
+						 t('pages.faq.sections.healthAccess.questions.healthAccessError.answer.steps').map((step) => (
+							<li>{step}</li>
+						))}
 					</ol>
 				</div>
 			</details>
 
 			<details class="faq-item">
-				<summary><h3>I see a blank screen in Data Access & Devices > Bodystate</h3></summary>
+				<summary><h3>{t('pages.faq.sections.healthAccess.questions.blankScreenInSettings.question')}</h3></summary>
 				<div class="faq-content">
-					<p>If you don't have the option to provide health access under Settings > Apps > Health > Data Access & Devices > BodyState. In other words, there is blank screen, please try to delete the app and reinstalling. In some instances you also have to restart your phone.</p>
+					<p>{t('pages.faq.sections.healthAccess.questions.blankScreenInSettings.answer.p1')}</p>
 				</div>
 			</details>
 
 			<details class="faq-item">
-				<summary><h3>What is health access and why does BodyState need it?</h3></summary>
+				<summary><h3>{t('pages.faq.sections.healthAccess.questions.whatIsHealthAccess.question')}</h3></summary>
 				<div class="faq-content">
-					<p>The Health app was created to help organize your important health information and make it easy to access in a central and secure place.</p>
-					<p>It collects health and fitness data from your iPhone, iPad, the built-in sensors on your Apple Watch, compatible third-party devices, and apps that use HealthKit.</p>
-					<p>The Health app is built to keep your data secure and protect your privacy. Your data is encrypted and you are always in control of your health information.</p>
-					<p>BodyState needs access to some categories of your health data to function as it is the basis for computing the BodyState score.</p>
+					<p>{t('pages.faq.sections.healthAccess.questions.whatIsHealthAccess.answer.p1')}</p>
+					<p>{t('pages.faq.sections.healthAccess.questions.whatIsHealthAccess.answer.p2')}</p>
+					<p>{t('pages.faq.sections.healthAccess.questions.whatIsHealthAccess.answer.p3')}</p>
+					<p>{t('pages.faq.sections.healthAccess.questions.whatIsHealthAccess.answer.p4')}</p>
 				</div>
 			</details>
 		</section>

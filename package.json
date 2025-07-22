@@ -6,11 +6,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "translate": "node scripts/translate.mjs",
+    "translation:status": "node scripts/translation-status.mjs",
+    "translation:extract": "node scripts/extract-content.mjs"
   },
   "dependencies": {
     "astro": "^5.7.10",
     "dotenv": "^16.5.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "marked": "^16.1.1"
   }
 }

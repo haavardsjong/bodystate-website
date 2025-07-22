@@ -81,5 +81,101 @@
     "h2_9": "9. Informações de Contato",
     "p9_1": "Se você tiver alguma dúvida ou preocupação sobre estes Termos, entre em contato conosco {contactLink}.",
     "contactLinkText": "aqui"
+  },
+  "contactPage": {
+    "infoBox": {
+      "emailMethod": {
+        "h3": "Email",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "Redes Sociais",
+        "p1": "@BodyStateApp"
+      },
+      "h2": "Entre em contato",
+      "p1": "Nossa equipe está pronta para responder às suas perguntas sobre o BodyState e como ele pode ajudá-lo a entender melhor o seu corpo."
+    },
+    "form": {
+      "nameLabel": "Nome",
+      "namePlaceholder": "Seu nome",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Seu endereço de email",
+      "subjectLabel": "Assunto",
+      "subjectSelectDefault": "Selecione um assunto",
+      "subjectOptionQuestion": "Pergunta Geral",
+      "subjectOptionFeedback": "Feedback",
+      "subjectOptionSupport": "Suporte Técnico",
+      "subjectOptionPartnership": "Parceria",
+      "messageLabel": "Mensagem",
+      "messagePlaceholder": "Sua mensagem",
+      "submitButtonText": "Enviar"
+    },
+    "pageTitle": "BodyState - Contacto",
+    "h1": "Contacte <span class=\\\"accent\\\">connosco</span>",
+    "subtitle": "Tem perguntas sobre o BodyState? Estamos aqui para ajudar."
+  },
+  "pages": {
+    "index": {
+      "hero": {
+        "title": "Dê voz ao seu corpo.",
+        "subtitle": "Seu corpo é complexo. O BodyState ajuda você a entendê-lo. Ele traduz seus dados de saúde em uma bateria para corpo e mente.",
+        "imageAlt": "Aplicativo BodyState na Mão"
+      },
+      "features": {
+        "carousel": {
+          "items": {
+            "0": {
+              "headline": "Acompanhe métricas que importam.",
+              "imageAlt": "Tela de métricas detalhadas do BodyState"
+            },
+            "1": {
+              "headline": "Fique próximo ao seu coração.",
+              "imageAlt": "Insights de frequência cardíaca do BodyState"
+            },
+            "2": {
+              "headline": "Otimize sua energia.",
+              "imageAlt": "Otimização de energia do BodyState"
+            },
+            "3": {
+              "headline": "Alimente seu condicionamento físico.",
+              "imageAlt": "Rastreamento de fitness do BodyState"
+            },
+            "4": {
+              "headline": "Quantifique como você está se sentindo.",
+              "imageAlt": "Gestão de fadiga do BodyState"
+            },
+            "5": {
+              "headline": "Torne-se um especialista em você.",
+              "imageAlt": "Insights personalizados do BodyState"
+            }
+          },
+          "previousButtonAriaLabel": "Recurso anterior",
+          "nextButtonAriaLabel": "Próximo recurso"
+        }
+      },
+      "reviews": {
+        "stats": {
+          "appStoreRating": {
+            "value": "4.7+",
+            "label": "Classificação na App Store"
+          },
+          "usersWorldwide": {
+            "value": "200K+",
+            "label": "Usuários no Mundo Todo"
+          }
+        },
+        "carousel": {
+          "noReviewsMessage": "Nenhuma avaliação disponível no momento. Volte mais tarde!",
+          "previousButtonAriaLabel": "Avaliação anterior",
+          "nextButtonAriaLabel": "Próxima avaliação"
+        }
+      },
+      "contactSuccess": {
+        "title": "Obrigado!",
+        "message": "Sua mensagem foi enviada com sucesso. Entraremos em contato em breve.",
+        "backToHome": "Voltar para Início"
+      },
+      "pageTitle": "BodyState - Dê Voz ao Seu Corpo"
+    }
   }
 }

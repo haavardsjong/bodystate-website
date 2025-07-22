@@ -81,5 +81,37 @@
     "h2_9": "9. 聯絡資訊",
     "p9_1": "如果您對這些條款有任何問題或疑慮，請聯繫我們{contactLink}。",
     "contactLinkText": "這裡"
+  },
+  "contactPage": {
+    "infoBox": {
+      "emailMethod": {
+        "h3": "電子郵件",
+        "p1": "support@bodystate.app"
+      },
+      "socialMethod": {
+        "h3": "社交媒體",
+        "p1": "@BodyStateApp"
+      },
+      "h2": "聯絡我們",
+      "p1": "我們的團隊隨時準備回答您有關BodyState以及如何幫助您更好了解您的身體的問題。"
+    },
+    "form": {
+      "nameLabel": "姓名",
+      "namePlaceholder": "您的姓名",
+      "emailLabel": "電子郵件",
+      "emailPlaceholder": "您的電子郵件地址",
+      "subjectLabel": "主題",
+      "subjectSelectDefault": "選擇一個主題",
+      "subjectOptionQuestion": "一般問題",
+      "subjectOptionFeedback": "反饋意見",
+      "subjectOptionSupport": "技術支援",
+      "subjectOptionPartnership": "合作夥伴關係",
+      "messageLabel": "訊息",
+      "messagePlaceholder": "您的訊息",
+      "submitButtonText": "發送"
+    },
+    "pageTitle": "BodyState - 聯絡我們",
+    "h1": "聯絡<span class=\\\"accent\\\">我們</span>",
+    "subtitle": "對於BodyState有任何問題嗎？我們樂意協助。"
   }
 }

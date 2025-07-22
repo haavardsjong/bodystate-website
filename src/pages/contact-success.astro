@@ -1,16 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import * as i18nUtils from '../i18n/utils';
+import { useTranslations, getLangFromUrl } from '../i18n/utils';
 
-const lang = i18nUtils.getLangFromUrl(Astro.url);
-const t = i18nUtils.useTranslations(lang);
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Get the appropriate home URL based on language
+const homeUrl = lang === 'en' ? '/' : `/${lang}/`;
 ---
-<BaseLayout title="Message Sent - BodyState">
+<BaseLayout title={`${t.pages.index.contactSuccess.title} - BodyState`}>
 	<div class="success-container">
 		<div class="success-icon">✓</div>
-		<h1>Thank You!</h1>
-		<p>Your message has been sent successfully. We'll get back to you soon.</p>
-		<a href="/" class="back-button">Back to Home</a>
+		<h1>{t.pages.index.contactSuccess.title}</h1>
+		<p>{t.pages.index.contactSuccess.message}</p>
+		<a href={homeUrl} class="back-button">{t.pages.index.contactSuccess.backToHome}</a>
 	</div>
 </BaseLayout>
 

@@ -71,12 +71,12 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<header class="glass">
 			<nav class="content-container">
-				<div class="brand-name">{t?.header?.brandName}</div>
+				<a href={localizedPath('/')} class="brand-name">{t?.header?.brandName}</a>
 				<div class="nav-right">
 					<ul class="nav-links">
 						<li><a href={localizedPath('/')} class:list={{ active: currentPath === localizedPath('/') }}>{t?.header?.homeLink}</a></li>
@@ -626,6 +626,13 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		letter-spacing: 0px;
 		color: var(--text-primary);
 		font-family: var(--font-main);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+	
+	.brand-name:hover {
+		color: var(--text-primary);
+		opacity: 0.8;
 	}
 	
 	.nav-right {
