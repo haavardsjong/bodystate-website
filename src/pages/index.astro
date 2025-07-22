@@ -131,51 +131,61 @@ function formatDate(dateString) {
 			<div class="features-grid" id="featuresGrid">
 				<!-- Feature 1 -->
 				<div class="feature-card">
-					<div class="feature-content top-aligned">
-						<h2 class="feature-headline">Give your body a voice.</h2>
+					<div class="feature-content bottom-aligned">
+						<h2 class="feature-headline">Track metrics that matter.</h2>
 					</div>
-					<div class="feature-image bottom-aligned">
-						<img src="/features/one_bottom.jpg" alt="BodyState main screen showing vitals" />
+					<div class="feature-image top-aligned">
+						<img src="/features/01_metrics.jpg" alt="BodyState detailed metrics screen" />
 					</div>
 				</div>
 				
 				<!-- Feature 2 -->
 				<div class="feature-card">
-					<div class="feature-content bottom-aligned">
-						<h2 class="feature-headline">Track metrics that matter.</h2>
+					<div class="feature-content top-aligned">
+						<h2 class="feature-headline">Stay close to your heart.</h2>
 					</div>
-					<div class="feature-image top-aligned">
-						<img src="/features/two_top.jpg" alt="BodyState detailed metrics screen" />
+					<div class="feature-image bottom-aligned">
+						<img src="/features/02_heart.jpg" alt="BodyState heart rate insights" />
 					</div>
 				</div>
 				
 				<!-- Feature 3 -->
 				<div class="feature-card">
-					<div class="feature-content top-aligned">
-						<h2 class="feature-headline">Understand your patterns.</h2>
+					<div class="feature-content bottom-aligned">
+						<h2 class="feature-headline">Optimize your energy.</h2>
 					</div>
-					<div class="feature-image bottom-aligned">
-						<img src="/features/three_bottom.jpg" alt="BodyState trends and insights" />
+					<div class="feature-image top-aligned">
+						<img src="/features/03_energy.jpg" alt="BodyState energy optimization" />
 					</div>
 				</div>
 				
 				<!-- Feature 4 -->
 				<div class="feature-card">
-					<div class="feature-content bottom-aligned">
-						<h2 class="feature-headline">Optimize your energy.</h2>
+					<div class="feature-content top-aligned">
+						<h2 class="feature-headline">Fuel your fitness.</h2>
 					</div>
-					<div class="feature-image top-aligned">
-						<img src="/features/four_top.jpg" alt="BodyState energy optimization" />
+					<div class="feature-image bottom-aligned">
+						<img src="/features/04_fitness.jpg" alt="BodyState fitness tracking" />
 					</div>
 				</div>
 				
 				<!-- Feature 5 -->
 				<div class="feature-card">
+					<div class="feature-content bottom-aligned">
+						<h2 class="feature-headline">Quantify how you're feeling.</h2>
+					</div>
+					<div class="feature-image top-aligned">
+						<img src="/features/05_fatigue.jpg" alt="BodyState fatigue management" />
+					</div>
+				</div>
+				
+				<!-- Feature 6 -->
+				<div class="feature-card">
 					<div class="feature-content top-aligned">
-						<h2 class="feature-headline">Live life fully charged.</h2>
+						<h2 class="feature-headline">Become an expert on you.</h2>
 					</div>
 					<div class="feature-image bottom-aligned">
-						<img src="/features/five_bottom.jpg" alt="BodyState lifestyle integration" />
+						<img src="/features/06_insights.png" alt="BodyState personalized insights" />
 					</div>
 				</div>
 			</div>
@@ -455,28 +465,26 @@ function formatDate(dateString) {
 		left: 0;
 		right: 0;
 		z-index: 2;
-		padding: 2rem 3rem;
+		padding: 0 3rem;
 		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 	}
 	
 	.feature-content.top-aligned {
+		/* Image is 495px tall at bottom, so text area is from 0 to (675-495)=180px */
+		/* Center of text area is at 90px */
 		top: 0;
-		bottom: auto;
-		height: calc(675px - 495px);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
+		height: 180px;
 	}
 	
 	.feature-content.bottom-aligned {
-		top: auto;
+		/* Image is 450px tall at top, so text area is from 450px to 675px = 225px tall */
+		/* Center of text area should be at 450 + 112.5 = 562.5px from top */
 		bottom: 0;
-		height: calc(675px - 450px);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
+		height: 225px;
 	}
 	
 	.feature-headline {
@@ -572,15 +580,17 @@ function formatDate(dateString) {
 		}
 		
 		.feature-content {
-			padding: 1rem 2rem;
+			padding: 0 2rem;
 		}
 		
 		.feature-content.top-aligned {
-			height: calc(510px - 360px);
+			/* Mobile: Image is 360px tall at bottom, text area is 150px */
+			height: 150px;
 		}
 		
 		.feature-content.bottom-aligned {
-			height: calc(510px - 340px);
+			/* Mobile: Image is 340px tall at top, text area is 170px */
+			height: 170px;
 		}
 		
 		.feature-headline {
