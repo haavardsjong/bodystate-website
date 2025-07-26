@@ -119,46 +119,45 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 					</button>
 				</div>
 			</nav>
-			{/* Mobile menu overlay */}
-			<div class="mobile-menu-overlay">
-				<nav class="mobile-nav">
-					<ul class="mobile-nav-links">
-						<li><a href={localizedPath('/')} class:list={{ active: currentPath === localizedPath('/') }}>{t?.header?.homeLink}</a></li>
-						<li><a href={localizedPath('/faq')} class:list={{ active: currentPath === localizedPath('/faq') }}>{t?.header?.faqLink}</a></li>
-						<li><a href={localizedPath('/contact')} class:list={{ active: currentPath === localizedPath('/contact') }}>{t?.header?.contactLink}</a></li>
-					</ul>
-					<div class="mobile-menu-footer">
-						<div class="mobile-language-switcher">
-							<button type="button" class="mobile-switcher-button" aria-label="Select language">
-								<span class="current-lang-flag">{currentLocaleInfo.flag}</span>
-								<span>{currentLocaleInfo.name}</span>
-								<svg class="chevron-down" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-							</button>
-							<ul class="mobile-dropdown-menu" role="menu">
-								{availableLocales.map(localeCode => {
-									const displayInfo = localeDisplayInfo[localeCode] || { name: localeCode, flag: '🌐' };
-									return (
-										<li role="presentation">
-											<a 
-												href={localizedPath(basePath, localeCode)} 
-												role="menuitem"
-												class:list={{ active: lang === localeCode }}
-											>
-												<span class="flag">{displayInfo.flag}</span> {displayInfo.name}
-											</a>
-										</li>
-									);
-								})}
-							</ul>
-						</div>
-						<a href="https://apps.apple.com/no/app/bodystate/id6479940325" class="mobile-download-btn" target="_blank" rel="noopener noreferrer">
-							<span class="full-text">{t?.header?.downloadButton}</span>
-							<span class="short-text">Download Now</span>
-						</a>
-					</div>
-				</nav>
-			</div>
 		</header>
+		{/* Mobile menu overlay */}
+		<div class="mobile-menu-overlay">
+			<button class="mobile-close-button" aria-label="Close menu">
+				<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<nav class="mobile-nav">
+				<ul class="mobile-nav-links">
+					<li><a href={localizedPath('/')} class:list={{ active: currentPath === localizedPath('/') }}>{t?.header?.homeLink}</a></li>
+					<li><a href={localizedPath('/faq')} class:list={{ active: currentPath === localizedPath('/faq') }}>{t?.header?.faqLink}</a></li>
+					<li><a href={localizedPath('/contact')} class:list={{ active: currentPath === localizedPath('/contact') }}>{t?.header?.contactLink}</a></li>
+					<li><a href="https://apps.apple.com/no/app/bodystate/id6479940325" target="_blank" rel="noopener noreferrer">Download</a></li>
+					<li class="mobile-language-item">
+						<a href="#" class="mobile-language-toggle" aria-label="Select language" onclick="return false;">
+							<span>{currentLocaleInfo.name}</span>
+							<svg class="chevron-down" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</a>
+						<ul class="mobile-dropdown-menu" role="menu">
+							{availableLocales.map(localeCode => {
+								const displayInfo = localeDisplayInfo[localeCode] || { name: localeCode, flag: '🌐' };
+								return (
+									<li role="presentation">
+										<a 
+											href={localizedPath(basePath, localeCode)} 
+											role="menuitem"
+											class:list={{ active: lang === localeCode }}
+										>
+											{displayInfo.name}
+										</a>
+									</li>
+								);
+							})}
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</div>
 		<main class="content-container">
 			<slot /> {/* Page content will be injected here */}
 		</main>
@@ -329,28 +328,40 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
         
         mobileMenuButton.addEventListener('click', toggleMobileMenu);
         
-        // Close menu when clicking on a link
-        const mobileNavLinks = mobileMenuOverlay.querySelectorAll('.mobile-nav-links a');
+        // Close button
+        const closeButton = document.querySelector('.mobile-close-button');
+        if (closeButton) {
+          closeButton.addEventListener('click', closeMobileMenu);
+        }
+        
+        // Close menu when clicking on a link (except language toggle)
+        const mobileNavLinks = mobileMenuOverlay.querySelectorAll('.mobile-nav-links a:not(.mobile-language-toggle)');
         mobileNavLinks.forEach(link => {
           link.addEventListener('click', closeMobileMenu);
         });
         
         // Mobile language switcher
-        const mobileSwitcherButton = document.querySelector('.mobile-switcher-button');
+        const mobileLanguageToggle = document.querySelector('.mobile-language-toggle');
         const mobileDropdownMenu = document.querySelector('.mobile-dropdown-menu');
         
-        if (mobileSwitcherButton && mobileDropdownMenu) {
-          mobileSwitcherButton.addEventListener('click', (e) => {
+        if (mobileLanguageToggle && mobileDropdownMenu) {
+          mobileLanguageToggle.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
-            const isOpen = mobileSwitcherButton.classList.contains('dropdown-open');
-            mobileSwitcherButton.classList.toggle('dropdown-open');
+            const isOpen = mobileLanguageToggle.classList.contains('dropdown-open');
+            mobileLanguageToggle.classList.toggle('dropdown-open');
             mobileDropdownMenu.classList.toggle('show');
           });
           
           // Close dropdown when clicking outside
           document.addEventListener('click', () => {
-            mobileSwitcherButton.classList.remove('dropdown-open');
+            mobileLanguageToggle.classList.remove('dropdown-open');
             mobileDropdownMenu.classList.remove('show');
+          });
+          
+          // Prevent dropdown from closing when clicking inside it
+          mobileDropdownMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
           });
         }
       });
@@ -822,10 +833,11 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	@media (max-width: 480px) {
 		.footer-content-grid {
 			grid-template-columns: 1fr; /* Stack everything */
-			text-align: center;
+			text-align: left;
+			padding: 0 var(--space-md);
 		}
 		.footer-social ul.social-icons { /* Adjusted selector */
-			justify-content: center; /* This will only apply if display is flex, which it isn't anymore. Text-align on parent will handle it. */
+			text-align: left;
 		}
 	}
 
@@ -986,18 +998,21 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100%;
+		height: 100vh;
+		height: 100dvh;
 		background: rgba(0, 0, 0, 0.95);
 		backdrop-filter: blur(40px) saturate(180%);
 		-webkit-backdrop-filter: blur(40px) saturate(180%);
-		z-index: 9;
+		z-index: 1001;
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
-		overflow-y: auto;
+		overflow: hidden;
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: flex-start; /* Changed from center to flex-start */
+		padding: var(--space-lg);
+		padding-left: var(--space-xl); /* Add more left padding for better alignment */
 	}
 	
 	.mobile-menu-overlay.is-open {
@@ -1009,21 +1024,55 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		overflow: hidden;
 	}
 	
+	/* Close button */
+	.mobile-close-button {
+		position: fixed;
+		bottom: 80px;
+		right: 80px;
+		background: none;
+		border: none;
+		width: 60px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		color: rgba(255, 255, 255, 0.9);
+		z-index: 1002;
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	.mobile-close-button svg {
+		width: 32px;
+		height: 32px;
+	}
+	
 	.mobile-nav {
 		width: 100%;
-		max-width: 400px;
-		padding: var(--space-xl);
-		text-align: center;
+		max-width: 320px;
+		padding: 0;
+		text-align: left; /* Changed from center to left */
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start; /* Changed from center to flex-start */
+		justify-content: center;
+		margin-left: 0; /* Ensure no left margin */
 	}
 	
 	.mobile-nav-links {
 		list-style: none;
 		padding: 0;
-		margin: 0 0 calc(var(--space-xl) * 1.5) 0;
+		margin: 0;
+		width: 100%;
+		max-width: 200px;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 4px; /* Reduced gap between items */
 	}
 	
 	.mobile-nav-links li {
-		margin-bottom: var(--space-sm);
+		margin-bottom: 0; /* Remove margin-bottom since we're using gap */
 		opacity: 0;
 		animation: fadeInUp 0.5s ease forwards;
 	}
@@ -1031,6 +1080,8 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	.mobile-nav-links li:nth-child(1) { animation-delay: 0.1s; }
 	.mobile-nav-links li:nth-child(2) { animation-delay: 0.2s; }
 	.mobile-nav-links li:nth-child(3) { animation-delay: 0.3s; }
+	.mobile-nav-links li:nth-child(4) { animation-delay: 0.4s; }
+	.mobile-nav-links li:nth-child(5) { animation-delay: 0.5s; }
 	
 	@keyframes fadeInUp {
 		from {
@@ -1045,76 +1096,87 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	
 	.mobile-nav-links a {
 		display: block;
-		padding: var(--space-lg) var(--space-md);
-		font-size: 1.75rem;
-		font-weight: 300;
-		color: rgba(255, 255, 255, 0.85);
+		padding: 12px var(--space-sm); /* Reduced vertical padding from var(--space-md) to 12px */
+		font-size: 1.125rem;
+		font-weight: 400;
+		color: rgba(255, 255, 255, 0.9);
 		text-decoration: none;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		border-radius: var(--radius-lg);
-		letter-spacing: -0.02em;
+		transition: all 0.2s ease;
+		border-radius: var(--radius-md);
+		letter-spacing: -0.01em;
+		line-height: 1.4;
 		position: relative;
 		overflow: hidden;
-	}
-	
-	.mobile-nav-links a::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
 		width: 100%;
-		height: 100%;
-		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-		transform: translateX(-100%);
-		transition: transform 0.6s ease;
-	}
-	
-	.mobile-nav-links a:hover::before {
-		transform: translateX(100%);
+		text-align: left;
+		-webkit-tap-highlight-color: transparent;
+		-webkit-touch-callout: none;
 	}
 	
 	.mobile-nav-links a:hover {
 		color: var(--text-primary);
-		transform: translateX(5px);
-	}
-	
-	.mobile-nav-links a:active {
-		transform: scale(0.98);
 	}
 	
 	.mobile-nav-links a.active {
 		color: var(--text-primary);
 		font-weight: 400;
-		background: rgba(255, 255, 255, 0.05);
+	}
+	
+	/* Language toggle styled as nav link */
+	.mobile-language-toggle {
+		display: flex !important;
+		align-items: center;
+		justify-content: flex-start;
+		gap: var(--space-xs);
+	}
+	
+	.mobile-language-toggle svg {
+		transition: transform 0.2s ease;
+	}
+	
+	.mobile-language-toggle.dropdown-open svg {
+		transform: rotate(180deg);
+	}
+	
+	.mobile-language-item {
+		position: relative;
 	}
 	
 	.mobile-menu-footer {
-		padding-top: calc(var(--space-xl) * 1.5);
+		padding-top: var(--space-md);
+		margin-top: var(--space-md);
 		border-top: 1px solid rgba(255, 255, 255, 0.1);
 		opacity: 0;
 		animation: fadeInUp 0.5s ease 0.4s forwards;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-sm);
+		width: 100%;
 	}
 	
 	.mobile-language-switcher {
-		margin-bottom: calc(var(--space-lg) * 1.5);
 		position: relative;
+		display: flex;
+		justify-content: center;
+		width: 100%;
 	}
 	
 	.mobile-switcher-button {
 		background: rgba(255, 255, 255, 0.05);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		color: var(--text-primary);
-		padding: 16px var(--space-lg);
-		border-radius: var(--radius-lg);
+		padding: 12px var(--space-md);
+		border-radius: var(--radius-md);
 		cursor: pointer;
 		display: inline-flex;
 		align-items: center;
-		gap: var(--space-sm);
-		font-size: 1.0625rem;
+		gap: var(--space-xs);
+		font-size: 0.875rem;
 		font-family: inherit;
 		font-weight: 400;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		min-width: 220px;
+		transition: all 0.2s ease;
+		min-width: 180px;
 		justify-content: center;
 		backdrop-filter: blur(10px);
 		-webkit-backdrop-filter: blur(10px);
@@ -1123,7 +1185,6 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	.mobile-switcher-button:hover {
 		background: rgba(255, 255, 255, 0.08);
 		border-color: rgba(255, 255, 255, 0.15);
-		transform: translateY(-1px);
 	}
 	
 	.mobile-switcher-button:active {
@@ -1132,67 +1193,66 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	
 	.mobile-dropdown-menu {
 		position: absolute;
-		bottom: calc(100% + var(--space-md));
-		left: 50%;
-		transform: translateX(-50%);
-		background: rgba(30, 30, 35, 0.98);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		border-radius: var(--radius-lg);
-		padding: var(--space-sm);
+		top: calc(100% - var(--space-xs));
+		left: 0;
+		right: 0;
+		background: transparent;
+		border: none;
+		padding: 0;
 		margin: 0;
 		list-style: none;
-		min-width: 280px;
-		backdrop-filter: blur(40px) saturate(180%);
-		-webkit-backdrop-filter: blur(40px) saturate(180%);
 		opacity: 0;
 		visibility: hidden;
-		transform: translateX(-50%) translateY(10px);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		max-height: 320px;
+		transform: translateY(-10px);
+		transition: all 0.2s ease;
+		max-height: 280px;
 		overflow-y: auto;
-		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+		z-index: 1002;
 	}
 	
 	.mobile-dropdown-menu.show {
 		opacity: 1;
 		visibility: visible;
-		transform: translateX(-50%) translateY(0);
+		transform: translateY(0);
+	}
+	
+	.mobile-dropdown-menu li {
+		margin-bottom: 2px; /* Reduced from var(--space-xs) */
 	}
 	
 	.mobile-dropdown-menu li a {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
-		padding: 10px var(--space-md);
-		border-radius: var(--radius-sm);
+		display: block;
+		padding: 8px var(--space-sm); /* Reduced vertical padding */
 		text-decoration: none;
-		color: var(--text-secondary);
+		color: rgba(255, 255, 255, 0.7);
 		font-size: 1rem;
 		transition: all 0.2s ease;
+		text-align: left;
+		line-height: 1.4;
 	}
 	
-	.mobile-dropdown-menu li a:active {
-		background: rgba(255, 255, 255, 0.1);
+	.mobile-dropdown-menu li a:hover {
+		color: rgba(255, 255, 255, 0.9);
 	}
 	
 	.mobile-dropdown-menu li a.active {
 		color: var(--text-primary);
 		font-weight: 500;
-		background: rgba(255, 255, 255, 0.1);
 	}
 	
 	.mobile-download-btn {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		background: #0071e3;
 		color: white;
-		padding: 18px var(--space-xl);
+		padding: 12px var(--space-lg);
 		border-radius: 100px;
-		font-size: 1.125rem;
+		font-size: 0.875rem;
 		font-weight: 500;
 		text-decoration: none;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		width: 100%;
-		max-width: 280px;
+		transition: all 0.2s ease;
+		width: 180px;
 		text-align: center;
 		box-shadow: 0 4px 20px rgba(0, 113, 227, 0.3);
 		letter-spacing: -0.01em;
@@ -1224,11 +1284,129 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	
 	/* Mobile-specific touch target improvements */
 	@media (max-width: 768px) {
-		.footer-links a, .footer-legal a, .footer-social .social-icons a, .footer-extra-links a {
+		.footer-links a, .footer-legal a, .footer-extra-links a {
 			padding: 12px 8px;
 			min-height: 44px;
 			display: flex;
 			align-items: center;
+		}
+		
+		/* Reset ALL footer styles for consistency */
+		.site-footer * {
+			margin: 0;
+			padding: 0;
+		}
+		
+		.site-footer {
+			padding: 64px 40px 32px 40px !important;
+		}
+		
+		/* Add spacing between footer sections */
+		.footer-links,
+		.footer-legal,
+		.footer-social,
+		.footer-extra-links {
+			margin-bottom: 48px !important;
+		}
+		
+		/* Consistent footer spacing on mobile */
+		.footer-links h4, 
+		.footer-legal h4, 
+		.footer-social h4, 
+		.footer-extra-links h4 {
+			margin: 0 0 20px 0 !important;
+			padding: 0 !important;
+			text-align: left;
+			line-height: 1.2 !important;
+			font-size: 17px !important;
+			font-weight: 600 !important;
+			color: rgba(255, 255, 255, 1) !important;
+		}
+		
+		/* Reset all lists */
+		.footer-links ul, 
+		.footer-legal ul, 
+		.footer-social ul,
+		.footer-extra-links ul {
+			margin: 0 !important;
+			padding: 0 !important;
+			list-style: none !important;
+		}
+		
+		/* Consistent spacing for ALL footer links */
+		.footer-links li, 
+		.footer-legal li, 
+		.footer-social li,
+		.footer-extra-links li {
+			margin: 0 0 20px 0 !important;
+			padding: 0 !important;
+			line-height: 1.8 !important;
+		}
+		
+		.footer-links li:last-child, 
+		.footer-legal li:last-child, 
+		.footer-social li:last-child,
+		.footer-extra-links li:last-child {
+			margin-bottom: 0 !important;
+		}
+		
+		.footer-links a, 
+		.footer-legal a, 
+		.footer-social .social-icons a,
+		.footer-extra-links a {
+			margin: 0 !important;
+			padding: 0 !important;
+			display: block !important;
+			text-align: left !important;
+			line-height: 1.5 !important;
+			min-height: auto !important;
+			font-size: 17px !important;
+			color: rgba(255, 255, 255, 0.8) !important;
+			font-weight: 400 !important;
+		}
+		
+		/* Footer copyright section */
+		.footer-copyright {
+			padding-top: 32px !important;
+			margin-top: 48px !important;
+			border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+			text-align: center !important;
+		}
+		
+		.footer-copyright p {
+			font-size: 15px !important;
+			color: rgba(255, 255, 255, 0.6) !important;
+			line-height: 1.5 !important;
+		}
+		
+		/* Support buttons alignment */
+		.footer-extra-links {
+			text-align: left !important;
+		}
+		
+		.footer-buttons {
+			display: flex !important;
+			flex-direction: column !important;
+			gap: 16px !important;
+			align-items: flex-start !important;
+		}
+		
+		.footer-button-item {
+			margin: 0 0 20px 0 !important;
+			transform: scale(0.8);
+			transform-origin: left center;
+		}
+		
+		/* Make Product Hunt button slightly bigger */
+		.footer-button-item:last-child {
+			margin-bottom: 0 !important;
+			transform: scale(1);
+		}
+		
+		/* Scale down the buttons on mobile */
+		.footer-button-item img {
+			max-width: 200px !important;
+			height: auto !important;
 		}
 	}
 	
@@ -1254,7 +1432,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	/* Media queries for mobile navigation */
 	@media (max-width: 768px) {
 		nav {
-			padding: 0 var(--space-sm);
+			padding: 0 var(--space-md); /* Use consistent padding with mobile menu */
 		}
 		
 		.nav-links,
@@ -1272,6 +1450,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		
 		.brand-name {
 			font-size: 20px;
+			margin-left: 0; /* Ensure no extra left margin */
 		}
 	}
 </style> 

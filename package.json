@@ -9,7 +9,8 @@
     "astro": "astro",
     "translate": "node scripts/translate.mjs",
     "translation:status": "node scripts/translation-status.mjs",
-    "translation:extract": "node scripts/extract-content.mjs"
+    "translation:extract": "node scripts/extract-content.mjs",
+    "content:sync": "node scripts/sync-content.mjs"
   },
   "dependencies": {
     "astro": "^5.7.10",
