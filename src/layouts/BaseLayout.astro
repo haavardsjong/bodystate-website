@@ -308,22 +308,52 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
         const mobileMenuButton = document.querySelector('.mobile-menu-button');
         const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
         const body = document.body;
+        let scrollPosition = 0;
         
         if (!mobileMenuButton || !mobileMenuOverlay) return;
         
         const toggleMobileMenu = () => {
           const isOpen = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+          
+          if (!isOpen) {
+            // Opening menu - store scroll position and lock body
+            scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            body.style.top = `-${scrollPosition}px`;
+            body.classList.add('menu-open');
+            
+            // Prevent touch scrolling on the overlay
+            mobileMenuOverlay.addEventListener('touchmove', preventScroll, { passive: false });
+          } else {
+            // Closing menu - restore scroll position
+            body.classList.remove('menu-open');
+            body.style.top = '';
+            window.scrollTo(0, scrollPosition);
+            
+            // Remove touch scroll prevention
+            mobileMenuOverlay.removeEventListener('touchmove', preventScroll);
+          }
+          
           mobileMenuButton.setAttribute('aria-expanded', !isOpen);
           mobileMenuButton.classList.toggle('is-active');
           mobileMenuOverlay.classList.toggle('is-open');
-          body.classList.toggle('menu-open');
         };
         
         const closeMobileMenu = () => {
+          // Restore scroll position
+          body.classList.remove('menu-open');
+          body.style.top = '';
+          window.scrollTo(0, scrollPosition);
+          
+          // Remove touch scroll prevention
+          mobileMenuOverlay.removeEventListener('touchmove', preventScroll);
+          
           mobileMenuButton.setAttribute('aria-expanded', 'false');
           mobileMenuButton.classList.remove('is-active');
           mobileMenuOverlay.classList.remove('is-open');
-          body.classList.remove('menu-open');
+        };
+        
+        const preventScroll = (e) => {
+          e.preventDefault();
         };
         
         mobileMenuButton.addEventListener('click', toggleMobileMenu);
@@ -998,6 +1028,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		top: 0;
 		left: 0;
 		width: 100%;
+		width: 100vw;
 		height: 100vh;
 		height: 100dvh;
 		background: rgba(0, 0, 0, 0.95);
@@ -1008,11 +1039,13 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		visibility: hidden;
 		transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
 		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: auto;
 		display: flex;
 		align-items: center;
-		justify-content: flex-start; /* Changed from center to flex-start */
+		justify-content: center;
 		padding: var(--space-lg);
-		padding-left: var(--space-xl); /* Add more left padding for better alignment */
+		box-sizing: border-box;
 	}
 	
 	.mobile-menu-overlay.is-open {
@@ -1022,6 +1055,10 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	
 	body.menu-open {
 		overflow: hidden;
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		-webkit-overflow-scrolling: touch;
 	}
 	
 	/* Close button */
@@ -1051,12 +1088,12 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		width: 100%;
 		max-width: 320px;
 		padding: 0;
-		text-align: left; /* Changed from center to left */
+		text-align: center;
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start; /* Changed from center to flex-start */
+		align-items: center;
 		justify-content: center;
-		margin-left: 0; /* Ensure no left margin */
+		margin: 0 auto;
 	}
 	
 	.mobile-nav-links {
@@ -1067,7 +1104,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		max-width: 200px;
 		display: flex;
 		flex-direction: column;
-		align-items: stretch;
+		align-items: center;
 		gap: 4px; /* Reduced gap between items */
 	}
 	
@@ -1108,7 +1145,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		position: relative;
 		overflow: hidden;
 		width: 100%;
-		text-align: left;
+		text-align: center;
 		-webkit-tap-highlight-color: transparent;
 		-webkit-touch-callout: none;
 	}
@@ -1126,7 +1163,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 	.mobile-language-toggle {
 		display: flex !important;
 		align-items: center;
-		justify-content: flex-start;
+		justify-content: center;
 		gap: var(--space-xs);
 	}
 	
@@ -1227,7 +1264,7 @@ const currentLocaleInfo = localeDisplayInfo[lang] || localeDisplayInfo[defaultLa
 		color: rgba(255, 255, 255, 0.7);
 		font-size: 1rem;
 		transition: all 0.2s ease;
-		text-align: left;
+		text-align: center;
 		line-height: 1.4;
 	}
 	
