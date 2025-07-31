@@ -226,8 +226,8 @@
               "answer": {
                 "p1": "BodyState transforms your health data into a battery for body and mind, helping you tailor your lifestyle, habits, and training programs to unlock your full potential.",
                 "p2": "At its core, BodyState calculates a score from 1 to 100, representing your overall vitality and readiness. A score closer to 100 indicates that you are well-rested and ready to tackle life's challenges.",
-                "p3": "The foundation of BodyState is built on four crucial metrics: sleep, fatigue, heart rate variability, and resting heart rate. These metrics significantly impact your health and are measured against your personal 6-week baselines to assess your current state.",
-                "p4": "You recharge your battery while you sleep. How well you recharge depends on your sleep, HRV, and heart rate.",
+                "p3": "The foundation of BodyState is built on six crucial metrics that significantly impact your health: sleep quality, heart rate variability (HRV), resting heart rate, fatigue (training load), respiratory rate, and wrist temperature. These metrics are measured against your personal 42-day baselines to assess your current state.",
+                "p4": "You recharge your battery while you sleep. How well you recharge depends on your sleep stages—deep sleep provides extra recovery benefits, while awake periods during the night reduce the effectiveness of your rest. BodyState analyzes the quality of your sleep by examining these stages alongside your HRV and heart rate.",
                 "p5": "During the day, your battery depletes, and the rate of depletion is influenced by your activity level and sleep pressure. High activity drains the battery more quickly, while sleep pressure builds the longer you stay awake."
               }
             },
@@ -235,18 +235,42 @@
               "question": "How does the BodyState Score work",
               "answer": {
                 "p1": "The BodyState score ranges from 1 to 100, representing your overall vitality and readiness. A score closer to 100 indicates that you are well-rested and prepared to tackle life's challenges, while a lower score suggests that you might need rest and recovery. The BodyState score shouldn't necessarily dictate your daily activities, but it should help you be mindful of how you feel and make sound decisions about the type or intensity of your activities, potentially prioritizing more rest if needed.",
-                "p2": "The score is calculated based on four key factors: sleep, fatigue, sleeping heart rate variability (HRV), and sleeping heart rate. In simple terms the following will generally lead to a higher score:"
+                "p2": "The score is calculated based on six key factors: sleep quality, fatigue (training load), sleeping heart rate variability (HRV), sleeping heart rate, respiratory rate, and wrist temperature. In simple terms the following will generally lead to a higher score:"
               }
             },
             "WhatareBaselines": {
               "question": "What are Baselines",
               "answer": {
                 "p1": "A baseline is essentially your personal average range of the given health metric.",
-                "p2": "In the context of BodyState, baselines are computed by evaluating at minimum 7 days, and up to 60 days of your tracked data. This approach ensures that the evaluation of your current health metrics is both personalized and reliable.",
+                "p2": "In the context of BodyState, baselines are computed using up to 42 days of your tracked data. This approach ensures that the evaluation of your current health metrics is both personalized and reliable.",
                 "p3": "Using baselines to evaluate today's state is crucial because health metrics vary widely among individuals. A baseline provides a personalized frame of reference, making your BodyState score uniquely tailored to you.",
                 "h4": "How Baselines Are Computed",
                 "p4": "To calculate a baseline, we use statistical methods to determine the average (mean) and the variability (standard deviation) of your health metrics over the chosen period.",
                 "p5": "Here's a simplified example using sleep data, which applies similarly to other metrics like heart rate and HRV:"
+              }
+            },
+            "AboutSleep": {
+              "question": "About Sleep",
+              "answer": {
+                "p1": "Sleep is the cornerstone of BodyState. It establishes a consistent protocol for measuring key metrics. Not only is sleep a crucial input for your BodyState, but it is also the period when HRV and resting heart rate are measured and compared to your history to assess your current state. High-quality sleep is vital for replenishing your body's energy, significantly enhancing your daily readiness and overall vitality."
+              }
+            },
+            "AboutFatigue": {
+              "question": "About Fatigue",
+              "answer": {
+                "p1": "Fatigue, also known as Acute Training Load (ATL), measures your recent activity levels. It averages your daily active energy expenditure over the past seven days, prioritizing recent ones. ATL focuses on total workload, not training type. The method provides a clear picture of recent exertion and helps you manage your recovery needs."
+              }
+            },
+            "AboutSleepingHeartRateVariabilityHRV": {
+              "question": "About Sleeping Heart Rate Variability (HRV)",
+              "answer": {
+                "p1": "Heart Rate Variability (HRV) is a key metric for assessing recovery and overall health. High HRV signals restfulness and readiness, while low HRV indicates stress or fatigue. Keeping HRV stable within your personal baseline is crucial, as very high values can also be concerning. BodyState monitors your HRV during sleep to reliably assess the effects of your lifestyle on your well-being."
+              }
+            },
+            "AboutSleepingHeartRateHR": {
+              "question": "About Sleeping Heart Rate (HR)",
+              "answer": {
+                "p1": "Sleeping Heart Rate (HR) is a key metric for understanding your fitness level and cardiovascular health. HR is the number of heartbeats per minute while at rest, showing how efficiently your heart works when inactive. Generally, a lower resting heart rate means better cardiovascular fitness and more efficient heart function, as your heart pumps more blood with fewer beats."
               }
             }
           }
@@ -254,29 +278,154 @@
         "generalquestions": {
           "title": "General Questions",
           "questions": {
-            "Addyourgeneralquestionshere": {
-              "question": "Add your general questions here...",
-              "answer": {}
+            "IjuststartedusingBodyStateandIdontseeanydataintheapp": {
+              "question": "I just started using BodyState and I don't see any data in the app",
+              "answer": {
+                "p1": "If you just downloaded BodyState and your data is not populating into the app, please follow these steps:",
+                "p2": "First note that you will need 7 full days of sleep data from your Apple Watch before BodyState can start showing you metrics. That's because BodyState can only assess your health data if it has some health history as a reference point. Sleep tracking with your iPhone is not supported. If you're unsure whether your sleep data is being tracked using your iPhone, check the Health app. Data tracked by the iPhone typically appears as \"in bed\" values.",
+                "p3": "Ensure that you have granted permission for BodyState to access your health data from Apple Health. If not read how to under the Health Access section in this page.",
+                "p4": "If the problem persists, you can attempt to resolve it by reinstalling the BodyState app."
+              }
+            },
+            "HowcanIincreasetheaccuracyofBodyState": {
+              "question": "How can I increase the accuracy of BodyState",
+              "answer": {
+                "p1": "While not required, it is recommended that you turn on AFib History on your Apple Watch so it can record more heart rate samples during sleep. However, please note that turning on AFib History could potentially disable high heart rate alerts on your Apple Watch, so proceed with caution."
+              }
+            },
+            "Imhavingissuesandhavealreadyreinstalledtheapp": {
+              "question": "I'm having issues and have already reinstalled the app",
+              "answer": {
+                "p1": "If your data is still missing after reinstalling BodyState, please check Apple Health to confirm that your other apps or devices are correctly writing their data to your device. If you see data in Apple Health such as active calories and a detailed sleep reports and it is not being pulled in to BodyState, you should report this as a bug to us. Otherwise, this may indicate an issue with another app or device."
+              }
+            },
+            "WhydoesmysleepHRVorHRdifferfromtheHealthApp": {
+              "question": "Why does my sleep, HRV or HR differ from the Health App",
+              "answer": {
+                "p1": "Sleep duration can differ from the Health app because Apple includes the awake stage in the sleep duration, while BodyState does not.",
+                "p2": "HRV differs from the Health App because BodyState computes your average HRV during sleep, while Apple uses all HRV readings to compute the average.",
+                "p3": "Resting Heart Rate (HR) differs from the Health App because BodyState computes your average HR during sleep, while Apple uses HR readings while you are at rest such as sitting down to compute the metric."
+              }
+            },
+            "MyiPhonewidgetisnotupdating": {
+              "question": "My iPhone widget is not updating",
+              "answer": {
+                "p1": "There are several reasons why your widget might not be updating, many of which stem from iOS's stringent background processing restrictions designed to preserve battery life. Here are some common factors that could impact widget updates:",
+                "p2": "**Background App Refresh Settings**: The widget relies on the app to refresh content in the background. If Background App Refresh is disabled for BodyState (Settings > General > Background App Refresh), the widget may not update as expected. Ensure this setting is enabled for BodyState.",
+                "p3": "**Low Power Mode**: When your iPhone is in Low Power Mode, background activities, including widget updates, are significantly reduced to conserve battery. This can prevent the widget from fetching new data.",
+                "p4": "**Network Connectivity**: A stable internet connection is necessary for the app to fetch the latest data. If your device has poor or no connectivity, the widget will not update.",
+                "p5": "**iOS Widget Update Frequency**: iOS controls how often widgets can update to manage battery life and system performance. Widgets are not real-time displays and have limits on how frequently they can refresh. This means there might be a slight delay between when new data is available in the app and when it appears on the widget.",
+                "p6": "**App Activity**: Widgets often update more frequently if the main app is used regularly. If you haven't opened BodyState in a while, iOS might reduce the frequency of its widget updates.",
+                "p7": "**Widget Glitches**: Occasionally, widgets may experience temporary glitches. Removing the widget from your Home Screen and adding it back can sometimes resolve these issues.",
+                "p8": "**App Updates**: Ensure BodyState is updated to the latest version from the App Store. Updates often include bug fixes and performance improvements that can affect widget functionality.",
+                "p9": "**iOS Updates**: Similarly, keeping your iOS updated is crucial, as Apple frequently releases updates that can impact widget performance and background processing.",
+                "p10": "**Restart Your Device**: A simple restart of your iPhone can often resolve minor software glitches that might be affecting widget updates.",
+                "p11": "If you have checked these factors and the widget still isn't updating, please contact support for further assistance."
+              }
+            },
+            "WhydoesntmyWatchappsync": {
+              "question": "Why doesn't my Watch app sync",
+              "answer": {
+                "p1": "If the BodyState watchOS app displays \"Open Bodystate on iPhone to sync\" during your first use of the app, ensure that the BodyState app is opened first on your watch and then on your iPhone. The iOS app should display your current BodyState without any errors for successful syncing. It is also necessary that your watch is properly connected. To verify that your Apple Watch is connected to your iPhone, open the Control Center by pressing the side button and look for the Connected status icon, which typically appears as a green iPhone symbol.",
+                "p2": "If you encounter an error related to health access, data access, or the absence of sleep data, this message will continue to appear on your watch until the issue is resolved on your iPhone.",
+                "p3": "If you've followed these steps and your watch doesn't sync when you open the iOS app, try restarting the watch app. If the issue persists, consider reinstalling both the iOS and watchOS apps."
+              }
+            },
+            "WhyarenttheWatchComplicationsinsyncbetweenmyWatchandPhoneapp": {
+              "question": "Why aren't the Watch Complications in sync between my Watch and Phone app",
+              "answer": {
+                "p1": "The refresh time for complications is controlled by the Watch OS for battery optimization. Complications will update roughly each hour throughout the day. Before a refresh you can expect the complication to be slightly off sync from the iOS app as they do not update at the same time."
+              }
             }
           }
         },
         "sleeptracking": {
           "title": "Sleep Tracking",
           "questions": {
-            "Addsleeptrackingquestionshere": {
-              "question": "Add sleep tracking questions here...",
-              "answer": {}
+            "HowDoITrackMySleep": {
+              "question": "How Do I Track My Sleep",
+              "answer": {
+                "p1": "BodyState requires you to track your sleep using your Apple Watch or a device that syncs with the Health app.",
+                "p2": "Sleep tracking on the Apple Watch involves enabling Sleep Focus mode. You have the option to manually activate this mode each night before bed and deactivate it each morning, or set up a sleep schedule that automatically handles this. We recommend manually controlling Sleep Focus mode, as sleep schedules can vary.",
+                "p3": "**Getting Started with Sleep Tracking on iPhone:**"
+              }
+            },
+            "MySleepDataIsntAppearingWhatShouldIDo": {
+              "question": "My Sleep Data Isn't Appearing. What Should I Do",
+              "answer": {
+                "p1": "If you're tracking sleep but encountering an error that shows no sleep data, here are steps to troubleshoot the issue.",
+                "p2": "**Initial Check:**",
+                "p3": "For BodyState to function properly, a detailed sleep report must be available in the Health app. To verify this, open the Health app on your iPhone, navigate to the Sleep section, and check for a report covering the current night, including stages like core and deep sleep. Sleep tracking with your iPhone is not supported. If you're unsure whether your sleep data is being tracked using your iPhone, check the Health app. Data tracked by the iPhone typically appears as \"in bed\" values. If you don't see a detailed sleep report, despite tracking your sleep, consider the following steps:",
+                "p4": "**Speed Up Syncing:**",
+                "p5": "To speed up syncing, try opening the source device or app. For example, open the Sleep app on your Apple Watch, or if you use AutoSleep, open the app to kick-start the syncing process. If you use a Garmin device, open connect and make sure sleep data is synced.",
+                "p6": "**General troubleshooting:**",
+                "p7": "**Change Sleep Source:** You can manually try to change the sleep source if you have other devices or apps that write to the Health App. To do this, in BodyState navigate to Settings > Sleep Data Priority.",
+                "p8": "**Apple Watch Troubleshooting:**",
+                "p9": "**Bluetooth Connectivity:** Ensure Bluetooth is enabled on your device. It's easy to accidentally turn it off.",
+                "p10": "**Airplane Mode:** Check if either your iPhone or Apple Watch is in airplane mode, which could prevent data synchronization.",
+                "p11": "**Passcode**: When your watch is locked with a passcode, sleep data will be recorded but will not appear until the watch is unlocked. Many users charge their watch before bed and put it on just before sleeping, which prompts the need to enter the passcode.",
+                "p12": "**Sleep Tracking Setting:** Check if 'Track Sleep with Apple Watch' is activated. This setting is vital for using Sleep Stages. To enable it, go to the Apple Watch App on your iPhone, scroll down to 'Sleep,' and toggle the 'Track Sleep with Apple Watch' option.",
+                "p13": "**Sleep Schedules and Focus:** If you are using Apple's sleep schedules, make sure the 'Use Schedule for Sleep Focus' option is correctly configured. Incorrect settings here can lead to Sleep Focus turning off at inappropriate times, affecting data capture.",
+                "p14": "**Battery Levels:** Verify if your Apple Watch battery dropped to 10% or lower. The watch needs sufficient power to record background heart rate data essential for sleep tracking.",
+                "p15": "**Wrist Detection:** Confirm that wrist detection is enabled on your Apple Watch. This feature is necessary for gathering background heart rate data. Enable it in the Apple Watch app under the 'Passcode' settings by turning on 'Wrist Detection.'"
+              }
+            },
+            "HowDoISelectAnotherSleepSource": {
+              "question": "How Do I Select Another Sleep Source",
+              "answer": {
+                "p1": "You have the option to manually choose which sleep source BodyState should prioritize, such as a third-party app like Autosleep or a Garmin watch.",
+                "p2": "To do this, navigate to Settings > Data & Sources > Source Priority.",
+                "p3": "In the BodyState app, access the settings by tapping the cog icon in the top right corner. Next, tap on Data & Sources, then select Source Priority, and choose your preferred source.",
+                "p4": "After selecting a new source, the app will need to reload all data to incorporate this source for computing baselines and today's values. It is essential that this source has been used enough to provide sufficient data (at least 7 nights of sleep data) for accurate baselines."
+              }
+            },
+            "CanITrackSleepwithDevicesOtherThanAppleWatchorThirdPartyApps": {
+              "question": "Can I Track Sleep with Devices Other Than Apple Watch or Third-Party Apps",
+              "answer": {
+                "p1": "Bodystate is compatible with any device that can transfer its data to Apple Health. However, not every device may integrate smoothly with Apple Health.",
+                "p2": "By default, BodyState gives priority to data from the Apple Watch. However, you have the option to manually choose which sleep source BodyState should prioritize, such as a third-party app like Autosleep or a Garmin watch.",
+                "p3": "To do this, in BodyState navigate to Settings > Data & Sources > Source Priority."
+              }
+            },
+            "DoesNapsImproveMyBodyState": {
+              "question": "Does Naps Improve My BodyState",
+              "answer": {
+                "p1": "Yes, naps improve the BodyState score."
+              }
             }
           }
         },
         "applehealthaccess": {
           "title": "Apple Health Access",
           "questions": {
-            "Addhealthaccessquestionshere": {
-              "question": "Add health access questions here...",
+            "HowdoIEnableHealthAccess": {
+              "question": "How do I Enable Health Access",
+              "answer": {}
+            },
+            "Iveenabledaccessbutstillexperienceanhealthaccesserror": {
+              "question": "I've enabled access but still experience an health access error",
               "answer": {
-                "p1": "---",
-                "p2": "Note: Edit this markdown file and run `npm run content:sync` to update the website."
+                "p1": "If you've enabled health access in settings but still experience issues, please try the following.",
+                "p2": "First, try to un-toggle and then re-toggle the button that says \"Turn All Categories On\" in the health access settings.",
+                "p3": "Turn device on and off again. This often resolves it.",
+                "p4": "If you still face issues, try deleting BodyState and reinstalling it."
+              }
+            },
+            "IseeablankscreeninDataAccessDevicesBodystate": {
+              "question": "I see a blank screen in Data Access & Devices > Bodystate",
+              "answer": {
+                "p1": "If you don't have the option to provide health access under Settings > Apps > Health > Data Access & Devices > BodyState. In other words, there is blank screen, please try to delete the app and reinstalling. In some instances you also have to restart your phone."
+              }
+            },
+            "WhatishealthaccessandwhydoesBodyStateneedit": {
+              "question": "What is health access and why does BodyState need it",
+              "answer": {
+                "p1": "The Health app was created to help organize your important health information and make it easy to access in a central and secure place.",
+                "p2": "It collects health and fitness data from your iPhone, iPad, the built-in sensors on your Apple Watch, compatible third-party devices, and apps that use HealthKit.",
+                "p3": "The Health app is built to keep your data secure and protect your privacy. Your data is encrypted and you are always in control of your health information.",
+                "p4": "BodyState needs access to some categories of your health data to function as it is the basis for computing the BodyState score.",
+                "p5": "---",
+                "p6": "Note: Edit this markdown file and run `npm run content:sync` to update the website."
               }
             }
           }
